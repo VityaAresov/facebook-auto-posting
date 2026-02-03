@@ -479,7 +479,7 @@ chrome.action.onClicked.addListener(async (tab) => {
     });
 
     // If injection succeeds, send the message.
-    chrome.tabs.sendMessage(tab.id, "OpenGroupPosting", (response) => {
+    chrome.tabs.sendMessage(tab.id, "OpenAutoPoster", (response) => {
       // Check for errors
       if (chrome.runtime.lastError) {
         const msg = chrome.runtime.lastError.message;
@@ -1112,10 +1112,10 @@ chrome.runtime.onInstalled.addListener((details) => {
       console.log("Set tutorialShown flag to false for new install.");
     });
     ensureLicenseBypass();
-    chrome.tabs.create({ url: "https://groupposting.com/welcome" });
+    // No external welcome page in standalone mode
     const samplePosts = [
       {
-        title: "Welcome to GroupPosting!",
+        title: "Welcome to Auto Poster!",
         text: "<p>🚀 <strong>Hey everyone!</strong></p><p><br></p><p>I'm excited to share {something amazing|this great opportunity|some valuable insights} with this group today!</p><p><br></p><p>Have you ever wondered how to {save time posting to Facebook groups|automate your social media workflow|reach more people with less effort}?</p><p><br></p><p>Let me know in the comments if you'd like to learn more about {increasing your online visibility|growing your audience|saving hours of work every week}!</p><p><br></p><p>👇 Drop a comment with \"YES\" if you're interested!</p>",
         images: [],
         links: [],
@@ -4258,7 +4258,8 @@ function shouldApplyDelay(currentGroupIndex, groupNumberForDelay) {
   return (currentGroupIndex + 1) % groupNumberForDelay === 0;
 }
 
-chrome.runtime.setUninstallURL("https://groupposting.com/uninstall/");
+// Standalone mode: no external uninstall URL
+// chrome.runtime.setUninstallURL("");
 
 // background.js
 

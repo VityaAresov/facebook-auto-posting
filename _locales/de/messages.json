@@ -54,7 +54,7 @@
       "message": "Geben Sie Details an, damit die KI den besten Post für Sie erstellt."
    },
    "aiModalTitle": {
-      "message": "GroupPostingAI Post-Generator"
+      "message": "AI Post-Generator"
    },
    "aiOptEmojis": {
       "message": "Emojis hinzufügen"
@@ -111,10 +111,10 @@
       "message": "Überzeugend & Verkaufsorientiert"
    },
    "appDescription": {
-      "message": "The #1 Facebook Group Auto Poster. Bulk post to FB groups, schedule campaigns, and generate content with AI. Safe & Ban-Free."
+      "message": "Auto post to Facebook groups, schedule campaigns, and generate content with AI."
    },
    "appName": {
-      "message": "Facebook™ Group Posting PRO: The #1 AI Auto Poster & Scheduler - FB™ Groups"
+      "message": "Facebook Group Auto Poster"
    },
    "backupErrMsg": {
       "message": "Ein Fehler ist aufgetreten: $ERR$",
@@ -1748,7 +1748,7 @@
       }
    },
    "overlayTitle": {
-      "message": "GroupPosting arbeitet"
+      "message": "Auto Poster arbeitet"
    },
    "overlayUnresponsive": {
       "message": "Button reagiert nicht. Versuche Wiederherstellung..."

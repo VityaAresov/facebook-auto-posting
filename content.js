@@ -3,20 +3,20 @@
  * You may not copy, modify, or distribute this software without express permission.
  */
 
-if (window.groupPostingProInjected) {
+if (window.autoPosterInjected) {
   // The first script already ran and set this flag to true.
   // This second script execution STOPS right here. It never tries to
   // re-declare `isIframeSrcAdded`, thus avoiding the error entirely.
   // The original script, with its original `onMessage` listener, is still
   // alive and waiting for messages.
 } else {
-  window.groupPostingProInjected = true;
+  window.autoPosterInjected = true;
 
   // Create an iframe and add it to the document
   let isIframeSrcAdded = false;
   let isIframeInitialized = false; // New flag to track if iframe has been fully initialized
   var iframe = document.createElement("iframe");
-  iframe.classList.add("GroupPosting");
+  iframe.classList.add("AutoPoster");
   var defaultWidth = "480px";
   var defaultHeight = "665px";
   var scaleFactor = 1; // Keep scale factor as 1 for easier calculations
@@ -253,7 +253,7 @@ if (window.groupPostingProInjected) {
     // Note: Removed 'async' from this specific function signature to handle sync responses correctly
     // for the toggle, while keeping the async return 'true' at the end for other actions.
 
-    if (msg === "OpenGroupPosting") {
+    if (msg === "OpenAutoPoster") {
       console.log("Toggle iframe visibility");
 
       // Always ensure iframe has src before toggling
@@ -287,7 +287,7 @@ if (window.groupPostingProInjected) {
   });
 
   // Don't initialize on page load - we'll wait for the toggle call
-  console.log("GroupPosting content script loaded - waiting for user action");
+  console.log("AutoPoster content script loaded - waiting for user action");
 
   let imagesButton;
   let shouldContinueScrolling = false;

@@ -111,10 +111,10 @@
       "message": "Persuasif & Vente"
    },
    "appDescription": {
-      "message": "The #1 Facebook Group Auto Poster. Bulk post to FB groups, schedule campaigns, and generate content with AI. Safe & Ban-Free."
+      "message": "Auto post to Facebook groups, schedule campaigns, and generate content with AI."
    },
    "appName": {
-      "message": "Facebook™ Group Posting PRO: The #1 AI Auto Poster & Scheduler - FB™ Groups"
+      "message": "Facebook Group Auto Poster"
    },
    "backupErrMsg": {
       "message": "Une erreur est survenue : $ERR$",
@@ -1748,7 +1748,7 @@
       }
    },
    "overlayTitle": {
-      "message": "GroupPosting travaille"
+      "message": "Auto Poster travaille"
    },
    "overlayUnresponsive": {
       "message": "Bouton inactif. Tentative de récupération..."

@@ -11061,3 +11061,17 @@ div[style*="border: 1px solid rgb(209, 213, 219)"]:focus-within {
   font-size: 11px;
   padding: 0 8px;
 }
+
+/* Standalone mode: hide upgrade/activation/trial UI */
+#proUpgradeModal,
+#activationPage,
+#headerUpgradeBtn,
+#headerActivateBtn,
+#freeTierBadge,
+#proTierBadge,
+#freePostsTracker,
+.trial-tracker,
+.btn-license,
+.pro-design-2 {
+  display: none !important;
+}

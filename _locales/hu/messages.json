@@ -54,7 +54,7 @@
       "message": "Adj meg részleteket, hogy az AI a legjobb posztot írhassa."
    },
    "aiModalTitle": {
-      "message": "GroupPostingAI Poszt Generátor"
+      "message": "AI Poszt Generátor"
    },
    "aiOptEmojis": {
       "message": "Emojik hozzáadása"
@@ -111,10 +111,10 @@
       "message": "Meggyőző és Értékesítő"
    },
    "appDescription": {
-      "message": "The #1 Facebook Group Auto Poster. Bulk post to FB groups, schedule campaigns, and generate content with AI. Safe & Ban-Free."
+      "message": "Auto post to Facebook groups, schedule campaigns, and generate content with AI."
    },
    "appName": {
-      "message": "Facebook™ Group Posting PRO: The #1 AI Auto Poster & Scheduler - FB™ Groups"
+      "message": "Facebook Group Auto Poster"
    },
    "backupErrMsg": {
       "message": "Hiba történt: $ERR$",
@@ -1762,7 +1762,7 @@
       }
    },
    "overlayTitle": {
-      "message": "A GroupPosting dolgozik"
+      "message": "A Auto Poster dolgozik"
    },
    "overlayUnresponsive": {
       "message": "A gomb nem reagál. Végső helyreállítási kísérlet..."

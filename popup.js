@@ -610,8 +610,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Pricing Card Buttons
   document.querySelectorAll(".btn-price-action").forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      const link = e.target.dataset.link;
-      if (link) window.open(link, "_blank");
+      e.preventDefault();
+      return; // No external links in standalone mode
     });
   });
   const headerActivateBtn = document.getElementById("headerActivateBtn");
@@ -820,7 +820,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   );
   activateLicenseButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      showActivationPage(); // Show the activation page when clicked
+      return; // Licensing disabled
     });
   });
 
@@ -829,10 +829,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   );
   startFreeTrialButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      window.open(
-        "https://groupposting.lemonsqueezy.com/buy/e3123eee-9901-4a5a-8282-b9c9194755ba?checkout[discount_code]=C5MDE4MW",
-        "_blank",
-      ); // Open the URL in a new tab
+      return; // Licensing disabled
     });
   });
   // --- Upgrade Card Logic ---
@@ -841,19 +838,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   if (toggleUpgradeBtn && upgradeDetailsPanel) {
     toggleUpgradeBtn.addEventListener("click", () => {
-      const isHidden =
-        upgradeDetailsPanel.style.display === "none" ||
-        upgradeDetailsPanel.style.display === "";
-
-      if (isHidden) {
-        upgradeDetailsPanel.style.display = "block";
-        toggleUpgradeBtn.innerHTML =
-          'Close <i class="fa fa-chevron-up ml-1"></i>';
-      } else {
-        upgradeDetailsPanel.style.display = "none";
-        toggleUpgradeBtn.innerHTML =
-          'Upgrade <i class="fa fa-chevron-down ml-1"></i>';
-      }
+      return; // Licensing disabled
     });
   }
 
@@ -861,10 +846,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const planLinks = document.querySelectorAll(".plan-link");
   planLinks.forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      const url = e.target.getAttribute("data-url");
-      if (url) {
-        window.open(url, "_blank");
-      }
+      e.preventDefault();
+      return; // Licensing disabled
     });
   });
 
@@ -888,13 +871,13 @@ document.addEventListener("DOMContentLoaded", async function () {
                 obj[key] = true;
                 chrome.storage.local.set(obj, () => {
                   console.log("Flag set for tab:", tab.id);
-                  chrome.tabs.sendMessage(tab.id, "OpenGroupPosting");
+                  chrome.tabs.sendMessage(tab.id, "OpenAutoPoster");
                 });
               },
             );
           } else {
             console.log("Script already injected in tab", tab.id);
-            chrome.tabs.sendMessage(tab.id, "OpenGroupPosting");
+            chrome.tabs.sendMessage(tab.id, "OpenAutoPoster");
           }
         });
       });
@@ -1446,10 +1429,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       const helpMessage = `
       <div style="text-align: center;">
         <p>${I18n.t("helpEmailIntro")}</p>
-        <a href="mailto:hello@groupposting.com">hello@groupposting.com</a>
-        <hr style="margin: 1rem 0;">
         <p>${I18n.t("helpPageIntro")}</p>
-        <a href="https://groupposting.com/help" target="_blank">groupposting.com/help</a>
       </div>
     `;
 
@@ -1467,7 +1447,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   initializeSchedulerViews(); // Add this line
 
   // in popup.js, inside DOMContentLoaded
-  initBlackFridayCampaign();
+  // initBlackFridayCampaign(); // Disabled in standalone mode
   const templateBtn = document.getElementById("templateSpintaxHelperBtn");
   if (templateBtn) {
     addSafeListener(templateBtn, "click", (e) => {
@@ -3973,82 +3953,7 @@ async function validateLicense(licenseKey, licenseProvider) {
 
 // --- BLACK FRIDAY CAMPAIGN LOGIC ---
 function initBlackFridayCampaign() {
-  const timerEl = document.getElementById("bfTimer");
-  const btnLifetime = document.getElementById("btnBfLifetime");
-  const btnYearly = document.getElementById("btnBfYearly"); // Targeting the card ID
-  const btnQuarterly = document.getElementById("btnBfQuarterly"); // Targeting the card ID
-
-  // 1. COUNTDOWN TIMER LOGIC
-  // Sets a rolling deadline 3 days from now to create urgency for every user
-  if (timerEl) {
-    const deadline = new Date();
-    deadline.setDate(deadline.getDate() + 7); // Ends 3 days from now
-    deadline.setHours(23, 59, 59); // At midnight
-
-    function updateTimer() {
-      const now = new Date();
-      const diff = deadline - now;
-
-      if (diff <= 0) {
-        timerEl.innerHTML =
-          "<span>00</span>d : <span>00</span>h : <span>00</span>m";
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-      );
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-      // Updates the spans inside your HTML
-      timerEl.innerHTML = `
-        <span>${String(days).padStart(2, "0")}</span>d : 
-        <span>${String(hours).padStart(2, "0")}</span>h : 
-        <span>${String(minutes).padStart(2, "0")}</span>m
-      `;
-    }
-
-    // Initialize and run every minute (seconds aren't displayed in your HTML)
-    updateTimer();
-    setInterval(updateTimer, 60000);
-  }
-
-  // 2. LINK HANDLERS
-  // IMPORTANT: Replace 'YOUR_VARIANT_ID' with your actual LemonSqueezy Product/Variant IDs
-
-  if (btnLifetime) {
-    btnLifetime.addEventListener("click", (e) => {
-      e.preventDefault(); // Prevent any default button behavior
-      // Lifetime Deal Link (57% OFF)
-      window.open(
-        "https://groupposting.lemonsqueezy.com/buy/425fe158-dfc9-49f7-a630-88a5208c940d?checkout[discount_code]=25BLCKFRDYLFT",
-        "_blank",
-      );
-    });
-  }
-
-  if (btnYearly) {
-    btnYearly.addEventListener("click", (e) => {
-      e.preventDefault();
-      // Yearly Deal Link (33% OFF)
-      window.open(
-        "https://groupposting.lemonsqueezy.com/buy/fc29721a-4333-4622-8ac6-babd94a00e93?checkout[discount_code]=25BLCKFRDYYLRY",
-        "_blank",
-      );
-    });
-  }
-
-  if (btnQuarterly) {
-    btnQuarterly.addEventListener("click", (e) => {
-      e.preventDefault();
-      // Quarterly Deal Link (25% OFF)
-      window.open(
-        "https://groupposting.lemonsqueezy.com/buy/41ed530e-8032-42a4-90fc-8541681d7d12?checkout[discount_code]=25BLCKFRDYQTRLY",
-        "_blank",
-      );
-    });
-  }
+  return;
 }
 // Create HTML for the free trial tracker
 function createFreeTrialTrackerHTML() {
@@ -10544,10 +10449,7 @@ function showAndSetupRatingModal() {
       });
       updateTierUI();
     }
-    window.open(
-      "https://chromewebstore.google.com/detail/group-posting-pro-faceboo/ihkdflhmhcaldfmliekcmbbfhfeeemie?authuser=0&hl=en",
-      "_blank",
-    );
+    // No external links in standalone mode
     closeElegantRatingModal();
   });
 
@@ -13205,6 +13107,7 @@ const throttledUpdateLoadingText = throttle((newText) => {
 // ACTION: Replace the sendAnonymousTelemetry function
 
 async function sendAnonymousTelemetry(postsCompleted, historyEntry) {
+  return; // Standalone mode: disable telemetry
   try {
     // 1. Check Consent
     const { allowTelemetry } = await chrome.storage.local.get({
@@ -13301,14 +13204,11 @@ async function sendAnonymousTelemetry(postsCompleted, historyEntry) {
 
     console.log("Sending detailed telemetry payload:", payload);
 
-    const response = await fetch(
-      "https://groupposting.com/wp-json/groupposting/v1/telemetry",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      },
-    );
+    const response = await fetch("", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
     if (!response.ok) {
       // Ignore errors silently to not disturb user
@@ -14223,7 +14123,7 @@ async function handleBackupData() {
       date.getMonth() + 1,
     ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
     a.href = url;
-    a.download = `groupposting_backup_${dateString}.json`;
+    a.download = `autoposter_backup_${dateString}.json`;
 
     document.body.appendChild(a);
     a.click();
@@ -14265,7 +14165,7 @@ function handleRestoreData(event) {
 
       if (!isValid) {
         throw new Error(
-          "The selected file is not a valid GroupPosting Pro backup file.",
+          "The selected file is not a valid backup file.",
         );
       }
 
