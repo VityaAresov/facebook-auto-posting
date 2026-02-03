@@ -3,31 +3,31 @@
       "message": "About"
    },
    "actBtn": {
-      "message": "Activate License"
+      "message": ""
    },
    "actContinueFree": {
-      "message": "Continue with Free Trial (Close this window)"
+      "message": ""
    },
    "actInfo": {
-      "message": "Enter your license key below. You can find this in the email we sent after your purchase."
+      "message": ""
    },
    "actNoKey": {
-      "message": "Don't have a license key?"
+      "message": ""
    },
    "actPh": {
       "message": "XXXX-XXXX-XXXX-XXXX"
    },
    "actPrice": {
-      "message": "License keys start from €9.9 / month."
+      "message": ""
    },
    "actSubtitle": {
-      "message": "Enter your license key to get started"
+      "message": ""
    },
    "actTitle": {
-      "message": "Activate Your License"
+      "message": ""
    },
    "actUpgradeLink": {
-      "message": "Upgrade now"
+      "message": ""
    },
    "aiBtnGenerate": {
       "message": "Generate Post"
@@ -137,10 +137,10 @@
       "message": "Backup Successful"
    },
    "badgeBestValue": {
-      "message": "BEST VALUE"
+      "message": ""
    },
    "badgeFree": {
-      "message": "Free:"
+      "message": ""
    },
    "badgePaused": {
       "message": "Paused"
@@ -167,22 +167,22 @@
       "message": "Scheduled posts are paused."
    },
    "benAI": {
-      "message": "AI Content Generation"
+      "message": ""
    },
    "benCampaigns": {
-      "message": "Campaign Workflows"
+      "message": ""
    },
    "benCancel": {
-      "message": "Cancel Anytime"
+      "message": ""
    },
    "benSpintax": {
-      "message": "Smart Spintax"
+      "message": ""
    },
    "benSupport": {
-      "message": "Priority Support"
+      "message": ""
    },
    "benUnlimited": {
-      "message": "Unlimited Posts"
+      "message": ""
    },
    "blockLoop": {
       "message": "Loop"
@@ -200,10 +200,10 @@
       "message": "Wait"
    },
    "btnActivate": {
-      "message": "Activate license"
+      "message": ""
    },
    "btnActivateKey": {
-      "message": "Activate License Key"
+      "message": ""
    },
    "btnAdd": {
       "message": "Add"
@@ -368,13 +368,13 @@
       "message": "Sure"
    },
    "btnUnlock": {
-      "message": "Upgrade to Unlock"
+      "message": ""
    },
    "btnUpgrade": {
-      "message": "Upgrade"
+      "message": ""
    },
    "btnUpgradeReq": {
-      "message": "Upgrade Required"
+      "message": ""
    },
    "btnView": {
       "message": "View"
@@ -454,7 +454,7 @@
       "message": "Resume"
    },
    "campActionUpgrade": {
-      "message": "Upgrade to Activate"
+      "message": ""
    },
    "campAuto": {
       "message": "Auto-Campaign"
@@ -588,7 +588,7 @@
       "message": "Small Biz: Launch a new menu item. Build hunger and offer a discount."
    },
    "canvasEmpty": {
-      "message": "Drag the \u003Cstrong>Trigger\u003C/strong> block here to start"
+      "message": "Drag the <strong>Trigger</strong> block here to start"
    },
    "cardGroupsTip": {
       "message": "Smart Group Management"
@@ -715,13 +715,13 @@
       "message": "Saves templates and group collections (no media)."
    },
    "descBilledMonthly": {
-      "message": "Billed monthly"
+      "message": ""
    },
    "descBilledQuarterly": {
-      "message": "Billed every 3 mo"
+      "message": ""
    },
    "descBilledYearly": {
-      "message": "Billed yearly"
+      "message": ""
    },
    "descClassic": {
       "message": "Visual automation. Good for video."
@@ -754,7 +754,7 @@
       "message": "Run a Quick or Scheduled post."
    },
    "descPro": {
-      "message": "Unlock unlimited power."
+      "message": ""
    },
    "descSafeDelay": {
       "message": "Wait full time even if post fails."
@@ -837,7 +837,7 @@
       "message": "OK, Start Scraping"
    },
    "extractConfirmMsg": {
-      "message": "A new, visible tab will open to your Facebook groups page. The extension will then scroll down automatically to find all your groups. \u003Cbr>\u003Cbr>\u003Cb>Please do not close this new tab;\u003C/b> it will close itself when the process is finished."
+      "message": "A new, visible tab will open to your Facebook groups page. The extension will then scroll down automatically to find all your groups. <br><br><b>Please do not close this new tab;</b> it will close itself when the process is finished."
    },
    "extractConfirmTitle": {
       "message": "Start Group Extraction?"
@@ -846,13 +846,13 @@
       "message": "Give Feedback & Get Posts"
    },
    "fbReward": {
-      "message": "As a thank you, we'll add 3 more free posts!"
+      "message": ""
    },
    "fbSorry": {
       "message": "We're sorry! How can we improve?"
    },
    "fileLargeMsg": {
-      "message": "The following files are too large for the browser extension to handle directly:\u003Cbr>\u003Cbr>\u003Cstrong>$FILES$\u003C/strong>\u003Cbr>\u003Cbr>Please compress them to under $SIZE$MB.",
+      "message": "The following files are too large for the browser extension to handle directly:<br><br><strong>$FILES$</strong><br><br>Please compress them to under $SIZE$MB.",
       "placeholders": {
          "files": {
             "content": "$1"
@@ -866,7 +866,7 @@
       "message": "Files Too Large"
    },
    "fileTypeMsg": {
-      "message": "The following files were skipped: \u003Cbr>\u003Cstrong>$FILES$\u003C/strong>",
+      "message": "The following files were skipped: <br><strong>$FILES$</strong>",
       "placeholders": {
          "files": {
             "content": "$1"
@@ -880,7 +880,7 @@
       "message": "DAILY"
    },
    "freqMonthly": {
-      "message": "MONTHLY"
+      "message": ""
    },
    "freqOnce": {
       "message": "ONCE"
@@ -889,7 +889,7 @@
       "message": "WEEKLY"
    },
    "freshCool": {
-      "message": "\u003Cstrong>Fresh/Cool (>7 days):\u003C/strong> $COUNT$ groups",
+      "message": "<strong>Fresh/Cool (>7 days):</strong> $COUNT$ groups",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -897,7 +897,7 @@
       }
    },
    "freshHot": {
-      "message": "\u003Cstrong>Hot (Last 2 days):\u003C/strong> $COUNT$ groups",
+      "message": "<strong>Hot (Last 2 days):</strong> $COUNT$ groups",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -908,7 +908,7 @@
       "message": "Freshness Analysis (when posted)"
    },
    "freshWarm": {
-      "message": "\u003Cstrong>Warm (3-7 days):\u003C/strong> $COUNT$ groups",
+      "message": "<strong>Warm (3-7 days):</strong> $COUNT$ groups",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -1030,7 +1030,7 @@
       "message": "Randomized duration"
    },
    "histFilterDate": {
-      "message": "Filtering by: \u003Cstrong>$DATE$\u003C/strong>",
+      "message": "Filtering by: <strong>$DATE$</strong>",
       "placeholders": {
          "date": {
             "content": "$1"
@@ -1068,7 +1068,7 @@
       "message": "Import from Group Collection"
    },
    "initLoading": {
-      "message": "Initializing Group Posting Pro..."
+      "message": ""
    },
    "keyRemovedMsg": {
       "message": "Your validation key has been removed successfully."
@@ -1220,7 +1220,7 @@
       "message": "How many groups to join?"
    },
    "lblLicenseKey": {
-      "message": "License key:"
+      "message": ""
    },
    "lblLoadTemp": {
       "message": "Loading templates..."
@@ -1235,7 +1235,7 @@
       "message": "mins"
    },
    "lblMonthly": {
-      "message": "Monthly"
+      "message": ""
    },
    "lblNightMode": {
       "message": "Avoid night posting"
@@ -1256,7 +1256,7 @@
       "message": "Pickup Options"
    },
    "lblPlansStart": {
-      "message": "Plans start from"
+      "message": ""
    },
    "lblPostContent": {
       "message": "Post Content"
@@ -1265,7 +1265,7 @@
       "message": "Post Score:"
    },
    "lblPrice": {
-      "message": "Price"
+      "message": ""
    },
    "lblProdName": {
       "message": "Product Title"
@@ -1274,7 +1274,7 @@
       "message": "Public Meetup"
    },
    "lblQuarterly": {
-      "message": "Quarterly"
+      "message": ""
    },
    "lblQuickGroups": {
       "message": "Select target group collections"
@@ -1361,7 +1361,7 @@
       "message": "variations"
    },
    "lblVer": {
-      "message": "GroupPosting PRO Version: $VER$",
+      "message": "",
       "placeholders": {
          "ver": {
             "content": "$1"
@@ -1375,13 +1375,13 @@
       "message": "Wait Time"
    },
    "lblYearly": {
-      "message": "Yearly"
+      "message": ""
    },
    "licIssueMsg": {
-      "message": "Your license key is invalid or has expired. Please check your key or purchase a new one."
+      "message": ""
    },
    "licIssueTitle": {
-      "message": "License Issue"
+      "message": ""
    },
    "loadingMsg": {
       "message": "Preparing to post..."
@@ -1390,25 +1390,25 @@
       "message": "Posting has started! You can browse other tabs - we'll continue in the background."
    },
    "lockAiEnhance": {
-      "message": "AI Text Enhancement is a \u003Cb>Pro Feature\u003C/b>.\u003Cbr>\u003Cbr>Instantly rewrite posts for conversion, grammar, or spintax.\u003Cbr>Upgrade to unlock."
+      "message": ""
    },
    "lockAiGen": {
-      "message": "AI Post Generation is a \u003Cb>Pro Feature\u003C/b>.\u003Cbr>\u003Cbr>Generate unlimited high-converting posts in seconds.\u003Cbr>Upgrade to unlock."
+      "message": ""
    },
    "lockAutoJoin": {
-      "message": "Auto-Joining Groups is a \u003Cb>Pro Feature\u003C/b>.\u003Cbr>Free users must join groups manually.\u003Cbr>\u003Cbr>Upgrade to automate your audience growth!"
+      "message": ""
    },
    "lockCampArch": {
-      "message": "The AI Campaign Architect is a \u003Cb>Pro Feature\u003C/b>.\u003Cbr>\u003Cbr>It analyzes your goal and builds entire multi-step campaigns automatically.\u003Cbr>Upgrade to unlock this power."
+      "message": ""
    },
    "lockCampResume": {
-      "message": "You have no free posts remaining. Please upgrade or activate a license to run campaigns."
+      "message": ""
    },
    "lockSchedule": {
-      "message": "Scheduling is a \u003Cb>Pro Feature\u003C/b>.\u003Cbr>Free users can only use 'Post Now'.\u003Cbr>\u003Cbr>Upgrade to unlock the Scheduler."
+      "message": ""
    },
    "lockScheduleSave": {
-      "message": "Scheduling posts for the future is a \u003Cb>Pro Feature\u003C/b>.\u003Cbr>Free users can only use 'Post Now'.\u003Cbr>\u003Cbr>Upgrade to unlock the Scheduler, Auto-Campaigns, and more!"
+      "message": ""
    },
    "menuAbout": {
       "message": "About"
@@ -1434,7 +1434,7 @@
       "message": "Action Queued"
    },
    "modalAiLock": {
-      "message": "AI Variations are a Pro feature. Please disable them or upgrade."
+      "message": ""
    },
    "modalCategoryTitle": {
       "message": "Manage Categories"
@@ -1449,7 +1449,7 @@
       "message": "Confirm Posting Details"
    },
    "modalDailyLimitBody": {
-      "message": "You have used your \u003Cb>$COUNT$ free posts\u003C/b> for today.",
+      "message": "",
       "placeholders": {
          "count": {
             "content": "$1",
@@ -1458,7 +1458,7 @@
       }
    },
    "modalDailyLimitTitle": {
-      "message": "Daily Limit Reached"
+      "message": ""
    },
    "modalDeleted": {
       "message": "The scheduled post has been deleted."
@@ -1476,13 +1476,13 @@
       "message": "Input Required"
    },
    "modalLicReq": {
-      "message": "License Required"
+      "message": ""
    },
    "modalLicReqBody": {
-      "message": "Your license is invalid or expired. You cannot run scheduled tasks.\u003Cbr>\u003Cbr>Please activate to continue."
+      "message": ""
    },
    "modalLimitBody": {
-      "message": "You selected \u003Cb>$TOTAL$ groups\u003C/b>, but the Free Tier is limited to \u003Cb>$LIMIT$ per run\u003C/b>.\u003Cbr>We will only post to the first $ACTUAL$ groups.",
+      "message": "You selected <b>$TOTAL$ groups</b>, but the Free Tier is limited to <b>$LIMIT$ per run</b>.<br>We will only post to the first $ACTUAL$ groups.",
       "placeholders": {
          "actual": {
             "content": "$3"
@@ -1505,19 +1505,19 @@
       "message": "Please select at least one group."
    },
    "modalProDesc": {
-      "message": "Remove daily limits, unlock AI, and scale."
+      "message": ""
    },
    "modalProFeature": {
-      "message": "Pro Feature"
+      "message": ""
    },
    "modalProTitle": {
-      "message": "Unlock Unlimited Power"
+      "message": ""
    },
    "modalQueuedImmediate": {
       "message": "The post has been queued to run immediately."
    },
    "modalRunNowBody": {
-      "message": "This will queue \u003Cstrong>\"$TITLE$\"\u003C/strong> to start immediately.\u003Cbr>\u003Cbr>The schedule will \u003Cstrong>not\u003C/strong> be deleted and will continue to run at its future times.",
+      "message": "This will queue <strong>\"$TITLE$\"</strong> to start immediately.<br><br>The schedule will <strong>not</strong> be deleted and will continue to run at its future times.",
       "placeholders": {
          "title": {
             "content": "$1"
@@ -1579,7 +1579,7 @@
       "message": "Notifications"
    },
    "notifMissedRecur": {
-      "message": "The recurring post \u003Cstrong>\"$TITLE$\"\u003C/strong> was missed on $DATE$. It has been automatically rescheduled.",
+      "message": "The recurring post <strong>\"$TITLE$\"</strong> was missed on $DATE$. It has been automatically rescheduled.",
       "placeholders": {
          "date": {
             "content": "$2"
@@ -1636,7 +1636,7 @@
       "message": "Inserting text"
    },
    "overlayJoined": {
-      "message": "($CURRENT$/$TOTAL$) Joined \"$GROUP$\". \u003Cbr>\u003Cb>Reminder:\u003C/b> Joining too many groups quickly can flag your account.",
+      "message": "($CURRENT$/$TOTAL$) Joined \"$GROUP$\". <br><b>Reminder:</b> Joining too many groups quickly can flag your account.",
       "placeholders": {
          "current": {
             "content": "$1"
@@ -1721,7 +1721,7 @@
       "message": "Scraping finished, but no group items were found. Ensure English(US) language."
    },
    "overlayScrapeSuccess": {
-      "message": "SUCCESS! $COUNT$ groups were saved to a new collection named \"$NAME$\".\u003Cbr>\u003Cbr>This tab will close automatically.",
+      "message": "SUCCESS! $COUNT$ groups were saved to a new collection named \"$NAME$\".<br><br>This tab will close automatically.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -1935,7 +1935,7 @@
       "message": "Your feedback directly helps us prioritize new features and fixes."
    },
    "rateBadText": {
-      "message": "We're sorry GroupPosting Pro didn't meet your expectations yet. Could you spare a moment to tell us how we can improve?"
+      "message": ""
    },
    "rateBadTitle": {
       "message": "Thanks for your honesty!"
@@ -1962,13 +1962,13 @@
       "message": "Your review helps other group admins find this tool!!"
    },
    "rateGoodText": {
-      "message": "Would you mind leaving a quick review on the Chrome Store? It helps us direct more users to GroupPosting Pro!"
+      "message": ""
    },
    "rateGoodTitle": {
       "message": "Awesome! Glad you like it!"
    },
    "rateText": {
-      "message": "How has your experience been with GroupPosting Pro? Your quick rating helps us improve!"
+      "message": ""
    },
    "rateTitle": {
       "message": "How are we doing?"
@@ -2119,7 +2119,7 @@
       "message": "Prioritizes account safety with longer delays, focused tab and more human-like behavior. Slowest but safest."
    },
    "securePayment": {
-      "message": "Secure payment via LemonSqueezy."
+      "message": ""
    },
    "spinAdd": {
       "message": "Add Another Variation"
@@ -2152,7 +2152,7 @@
       "message": "Please enter a valid number of pieces."
    },
    "splitFeedbackExact": {
-      "message": "Creates \u003Cstrong>$PIECES$\u003C/strong> collections with \u003Cstrong>$LINKS$\u003C/strong> links each.",
+      "message": "Creates <strong>$PIECES$</strong> collections with <strong>$LINKS$</strong> links each.",
       "placeholders": {
          "links": {
             "content": "$2"
@@ -2163,7 +2163,7 @@
       }
    },
    "splitFeedbackMixed": {
-      "message": "Creates \u003Cstrong>$PIECES$\u003C/strong> collections. $BIG$ will have $L1$ links, $SMALL$ will have $L2$.",
+      "message": "Creates <strong>$PIECES$</strong> collections. $BIG$ will have $L1$ links, $SMALL$ will have $L2$.",
       "placeholders": {
          "big": {
             "content": "$2"
@@ -2183,7 +2183,7 @@
       }
    },
    "splitInfo": {
-      "message": "This collection has \u003Cstrong>$COUNT$\u003C/strong> links.",
+      "message": "This collection has <strong>$COUNT$</strong> links.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2211,19 +2211,19 @@
       "message": "Campaign Automation"
    },
    "spotStepExtract": {
-      "message": "\u003Cstrong>Extract\u003C/strong>"
+      "message": "<strong>Extract</strong>"
    },
    "spotStepLoop": {
-      "message": "Set \u003Cstrong>Loop\u003C/strong>"
+      "message": "Set <strong>Loop</strong>"
    },
    "spotStepPost": {
-      "message": "Add \u003Cstrong>Post\u003C/strong> block"
+      "message": "Add <strong>Post</strong> block"
    },
    "spotStepSplit": {
-      "message": "\u003Cstrong>Split\u003C/strong> Lists"
+      "message": "<strong>Split</strong> Lists"
    },
    "spotStepWait": {
-      "message": "Add \u003Cstrong>Wait\u003C/strong> block"
+      "message": "Add <strong>Wait</strong> block"
    },
    "statFailedSkipped": {
       "message": "Failed/Skipped"
@@ -2253,7 +2253,7 @@
       "message": "Send a Post"
    },
    "stepPro": {
-      "message": "Activate Pro"
+      "message": ""
    },
    "stepTemplate": {
       "message": "Create Template"
@@ -2339,7 +2339,7 @@
       "message": "random groups"
    },
    "targeterLblAll": {
-      "message": "Will post to \u003Cstrong>all $COUNT$\u003C/strong> of them.",
+      "message": "Will post to <strong>all $COUNT$</strong> of them.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2347,7 +2347,7 @@
       }
    },
    "targeterLblRandom": {
-      "message": "Will post to \u003Cstrong>$COUNT$\u003C/strong> of them randomly.",
+      "message": "Will post to <strong>$COUNT$</strong> of them randomly.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2379,7 +2379,7 @@
       "message": "Select collections or groups to see options."
    },
    "targeterSummaryMain": {
-      "message": "You have selected \u003Cstrong>$COUNT$\u003C/strong> unique target groups.",
+      "message": "You have selected <strong>$COUNT$</strong> unique target groups.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2417,7 +2417,7 @@
       }
    },
    "timeSoon": {
-      "message": "in \u003C 1 min"
+      "message": "in < 1 min"
    },
    "tipFmtBold": {
       "message": "Try using bold text to emphasize points."
@@ -2462,7 +2462,7 @@
       "message": "Potentially problematic language detected. Consider revising."
    },
    "tipSegment": {
-      "message": "\u003Cstrong>Segment\u003C/strong> by Niche"
+      "message": "<strong>Segment</strong> by Niche"
    },
    "tipSentEx": {
       "message": "Excellent! Very positive tone likely to boost engagement."
@@ -2474,22 +2474,22 @@
       "message": "Consider adding more positive language."
    },
    "tipStepAI": {
-      "message": "\u003Cstrong>AI\u003C/strong> Rewrite"
+      "message": "<strong>AI</strong> Rewrite"
    },
    "tipStepExtract": {
-      "message": "\u003Cstrong>Extract\u003C/strong>"
+      "message": "<strong>Extract</strong>"
    },
    "tipStepSeg": {
-      "message": "\u003Cstrong>Segment\u003C/strong> by Niche"
+      "message": "<strong>Segment</strong> by Niche"
    },
    "tipStepSpin": {
-      "message": "Use \u003Cstrong>Spintax\u003C/strong>"
+      "message": "Use <strong>Spintax</strong>"
    },
    "tipStepSplit": {
-      "message": "\u003Cstrong>Split\u003C/strong> Lists"
+      "message": "<strong>Split</strong> Lists"
    },
    "tipStepVar": {
-      "message": "Create \u003Cstrong>Variations\u003C/strong>"
+      "message": "Create <strong>Variations</strong>"
    },
    "tipTemplates": {
       "message": "Power Up Your Templates"
@@ -2501,7 +2501,7 @@
       "message": "The safest, most powerful way to automate your Facebook group outreach."
    },
    "tour1Title": {
-      "message": "Welcome to GroupPosting Pro!"
+      "message": ""
    },
    "tour2Text": {
       "message": "Start here. Create reusable Post Templates and organize your target groups into Collections."
@@ -2570,10 +2570,10 @@
       "message": "Quick Post uses Classic mode & default settings."
    },
    "welcomeProMsg": {
-      "message": "License activated successfully! All features are now unlocked."
+      "message": ""
    },
    "welcomeProTitle": {
-      "message": "Welcome to Pro"
+      "message": ""
    },
    "wizAnalyzing": {
       "message": "Analyzing goal against $COUNT$ groups...",
@@ -2622,7 +2622,7 @@
       "message": "Please select at least one template to use."
    },
    "wizSuccessMsg": {
-      "message": "AI successfully created \u003Cb>$COUNT$ steps\u003C/b> based on your goal.\u003Cbr>\u003Cbr>Review the setup and click \u003Cb>Save\u003C/b> to launch!",
+      "message": "AI successfully created <b>$COUNT$ steps</b> based on your goal.<br><br>Review the setup and click <b>Save</b> to launch!",
       "placeholders": {
          "count": {
             "content": "$1"

@@ -2434,22 +2434,13 @@ async function showHiddenPage() {
   }, 10);
 
   // The rest of the function for populating data remains the same
-  chrome.storage.local.get(
-    ["licenseVerified", "licenseExpiration", "license_key", "licenseProvider"],
-    function (result) {
-      if (result.licenseVerified) {
-        document.getElementById("verifiedBool").value = "Verified";
-        document.getElementById("licenseKey").value =
-          result.license_key || "Not Available";
-        document.getElementById("platformBought").value =
-          result.licenseProvider || "Not Available";
-      } else {
-        document.getElementById("verifiedBool").value = "Not Activated";
-        document.getElementById("licenseKey").value = "Missing";
-        document.getElementById("platformBought").value = "---";
-      }
-    },
-  );
+  // Licensing disabled: always show active status without keys
+  const statusInput = document.getElementById("verifiedBool");
+  const keyInput = document.getElementById("licenseKey");
+  const platformInput = document.getElementById("platformBought");
+  if (statusInput) statusInput.value = "Active";
+  if (keyInput) keyInput.value = "---";
+  if (platformInput) platformInput.value = "---";
 
   const anonymousIdInput = document.getElementById("anonymousId");
   if (anonymousIdInput) {
@@ -3953,66 +3944,31 @@ function groupPostsByTitle(posts) {
 
 async function performValidation() {
   try {
-    // 1. Reset Daily Limit First
-    await checkAndResetDailyLimit();
-
-    const storageData = await chrome.storage.local.get([
-      "licenseVerified",
+    // Licensing is disabled for now. Keep UI fully unlocked.
+    await chrome.storage.local.set({
+      licenseVerified: true,
+      freePostsRemaining: 999999,
+      lastValidated: Date.now(),
+    });
+    await chrome.storage.local.remove([
       "license_key",
-      "lastValidated",
       "licenseProvider",
-      "freePostsRemaining", // Get the fresh value
+      "licenseExpiration",
+      "licenseValidationProgress",
+      "hasSeenActivationSuccess",
     ]);
 
-    const {
-      licenseVerified,
-      license_key,
-      lastValidated,
-      licenseProvider,
-      freePostsRemaining,
-    } = storageData;
-    let isLicenseValid = false;
-
-    // 2. Validate License
-    if (licenseVerified && license_key) {
-      const ONE_DAY = 24 * 60 * 60 * 1000;
-      const now = Date.now();
-
-      if (!lastValidated || now - lastValidated >= ONE_DAY) {
-        chrome.runtime.sendMessage({
-          action: "validateLicense",
-          licenseKey: license_key,
-          licenseProvider,
-        });
-        const result = await pollValidationResult();
-        isLicenseValid = result && result.isValid;
-      } else {
-        isLicenseValid = true;
-      }
-    }
-
-    // 3. Update UI
-    // Note: We ignore the second param 'hasFreeTrial' because we use the daily limit logic now
-    onLicenseValidated({ isValid: isLicenseValid }, true);
-
-    // 4. Update Header Badge
-    updateTierHeaderUI(isLicenseValid, freePostsRemaining);
+    validated = true;
+    updateFeatureLocks(true);
+    updateTierHeaderUI(true, 0);
   } catch (error) {
     console.error("Validation error:", error);
-    // Fallback to free tier UI
-    onLicenseValidated({ isValid: false }, true);
-    const { freePostsRemaining } =
-      await chrome.storage.local.get("freePostsRemaining");
-    updateTierHeaderUI(false, freePostsRemaining || 3);
   }
 }
 
 async function validateLicense(licenseKey, licenseProvider) {
-  await chrome.runtime.sendMessage({
-    action: "validateLicense",
-    licenseKey,
-    licenseProvider,
-  });
+  // No-op while licensing is disabled
+  return;
 }
 
 // --- BLACK FRIDAY CAMPAIGN LOGIC ---
@@ -4096,333 +4052,28 @@ function initBlackFridayCampaign() {
 }
 // Create HTML for the free trial tracker
 function createFreeTrialTrackerHTML() {
-  return `
-    <div id="freePostsTracker" class="trial-tracker">
-      <div class="trial-header">
-        <div class="trial-status">
-          <div class="status-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-          </div>
-          <div class="status-text">
-            <h4>Free Trial</h4>
-            <p id="usageStatusText" class="usage-status normal">Just getting started</p>
-          </div>
-        </div>
-        <div class="posts-counter">
-          <span id="postsRemainingCounter">${freePostsRemaining}</span>
-          <span class="counter-label">posts<br>remaining</span>
-        </div>
-      </div>
-      
-      
-      <div class="trial-actions">
-        <button id="trialUpgradeButton" class="btn-trial-primary">
-          <span>Upgrade Now - from €9.9/mo</span>
-          
-        </button>
-        <button id="trialActivateButton" class="btn-trial-secondary">
-          Activate License
-        </button>
-      </div>
-    </div>
-  `;
+  return "";
 }
 
 function pollValidationResult() {
-  let attempts = 0;
-  const maxAttempts = 15;
-  const interval = 2000;
-
-  return new Promise((resolve, reject) => {
-    const poller = setInterval(async () => {
-      try {
-        const result = await chrome.storage.local.get(
-          "licenseValidationProgress",
-        );
-        if (result.licenseValidationProgress?.status === "completed") {
-          clearInterval(poller);
-          resolve(result.licenseValidationProgress.result);
-        } else if (++attempts >= maxAttempts) {
-          clearInterval(poller);
-          reject(new Error("Validation timeout"));
-        }
-      } catch (error) {
-        clearInterval(poller);
-        reject(error);
-      }
-    }, interval);
-  });
+  return Promise.resolve({ isValid: true });
 }
 function clearLicenseData() {
-  chrome.storage.local.remove(
-    ["licenseVerified", "license_key", "lastValidated", "licenseProvider"],
-    function () {
-      console.log("Invalid license data removed.");
-    },
-  );
+  // No-op while licensing is disabled
 }
 // in popup.js
 // ACTION: Replace the entire onLicenseValidated function with this new version.
 
 async function onLicenseValidated(validationResult) {
-  // 1. Get the last shown status message preference
-  const { hasSeenActivationSuccess } = await chrome.storage.local.get(
-    "hasSeenActivationSuccess",
-  );
-
-  if (validationResult && validationResult.isValid === true) {
-    console.log("UI: License Validated. Refreshing interface...");
-
-    validated = true;
-
-    // Force UI Update Immediately
-    await updateTierHeaderUI(true, 0);
-
-    // Unlock Pro Features in UI
-    updateFeatureLocks(true);
-    document.getElementById("autoJoinGroupsBTN")?.removeAttribute("disabled");
-
-    // Close Activation Modal (if open)
-    hideActivationPage();
-
-    // Reset button state in case they open it again later
-    const activateBtn = document.querySelector(
-      "#activationForm .activate-button",
-    );
-    if (activateBtn) {
-      activateBtn.disabled = false;
-      activateBtn.textContent = "Activate License";
-    }
-
-    // --- CRITICAL FIX: Only show the "Welcome" message ONCE per successful activation ---
-    if (!hasSeenActivationSuccess) {
-      showCustomModal(
-        I18n.t("welcomeProTitle"),
-        I18n.t("welcomeProMsg"),
-        "success",
-      );
-      await chrome.storage.local.set({ hasSeenActivationSuccess: true }); // Mark as seen
-    }
-    // ----------------------------------------------------------------------------------
-  } else {
-    validated = false; // License is not valid
-
-    // --- CRITICAL FIX: If license is NOT valid, clear the 'seen' flag ---
-    // This ensures that if a license later becomes valid, the welcome message is shown again.
-    if (hasSeenActivationSuccess) {
-      await chrome.storage.local.remove("hasSeenActivationSuccess");
-    }
-    // ---------------------------------------------------------------------
-
-    const activateBtn = document.querySelector(
-      "#activationForm .activate-button",
-    );
-    if (activateBtn) {
-      activateBtn.disabled = false;
-      activateBtn.textContent = "Activate License";
-    }
-  }
+  validated = true;
+  await chrome.storage.local.set({ licenseVerified: true });
+  updateFeatureLocks(true);
+  updateTierHeaderUI(true, 0);
+  hideActivationPage();
 }
 async function showActivationPage() {
-  const activationPage = document.getElementById("activationPage");
-  const main = document.getElementById("main");
-
-  if (!activationPage || !main) return;
-
-  activationPage.classList.remove("d-none");
-  activationPage.innerHTML = "";
-
-  const { freePostsRemaining: postsLeft } = await chrome.storage.local.get({
-    freePostsRemaining: 0,
-  });
-  const hasFreeTrial = postsLeft > 0;
-
-  const pageHTML = hasFreeTrial
-    ? `
-  <style>
-    .activation-wrapper { min-height: 130vh; background: linear-gradient(135deg, #EEF2FF 0%, #E0F2FE 100%); display: flex; align-items: center; justify-content: center; padding: 1rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-    .activation-container { width: 100%; max-width: 32rem; background: white; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); position: relative; overflow: hidden; transition: all 0.3s ease; }
-    .activation-container:hover { box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.08); }
-    .activation-container::before { content: ""; position: absolute; top: -6rem; right: -6rem; width: 12rem; height: 12rem; background: rgba(59, 130, 246, 0.1); border-radius: 50%; filter: blur(2rem); pointer-events: none; }
-    .activation-container::after { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), transparent); pointer-events: none; }
-    .close-button { position: absolute; top: 1rem; right: 1rem; background: #f3f4f6; border: none; cursor: pointer; color: rgb(75, 85, 99); transition: all 0.2s ease; padding: 0.5rem; z-index: 10; border-radius: 9999px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .close-button:hover { background-color: #e5e7eb; transform: scale(1.05); }
-    .activation-header { text-align: center; padding: 2rem 2rem 1rem 2rem; }
-    .icon-wrapper { width: 3rem; height: 3rem; background: rgb(239, 246, 255); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; }
-    .icon-wrapper svg { width: 1.5rem; height: 1.5rem; color: rgb(59, 130, 246); }
-    .activation-title { font-size: 1.5rem; font-weight: 600; color: rgb(17, 24, 39); margin: 0 0 0.5rem 0; }
-    .activation-subtitle { font-size: 0.875rem; color: rgb(107, 114, 128); margin: 0; }
-    .activation-content { padding: 1.5rem 2rem 2rem 2rem; }
-    .info-box { background: rgb(239, 246, 255); border-radius: 0.75rem; padding: 1rem; display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1.5rem; transition: all 0.2s ease; }
-    .info-box:hover { background: rgb(224, 242, 254); }
-    .info-box svg { flex-shrink: 0; width: 1.25rem; height: 1.25rem; margin-top: 0.125rem; color: rgb(59, 130, 246); }
-    .info-text { font-size: 0.875rem; color: rgb(29, 78, 216); margin: 0; line-height: 1.5; }
-    .input-wrapper { position: relative; margin-bottom: 1.5rem; }
-    .license-input { width: 100%; padding: 0.875rem 1rem; padding-right: 2.5rem; border: 1px solid rgb(229, 231, 235); border-radius: 0.75rem; font-size: 1rem; transition: all 0.2s ease; outline: none; color: rgb(55, 65, 81); }
-    .license-input::placeholder { color: rgb(156, 163, 175); }
-    .license-input:focus { border-color: rgb(59, 130, 246); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2); }
-    .input-icon { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: rgb(156, 163, 175); width: 1.25rem; height: 1.25rem; pointer-events: none; }
-    .activate-button { width: 100%; background: rgb(37, 99, 235); color: white; font-weight: 500; padding: 0.875rem 1rem; border-radius: 0.75rem; border: none; cursor: pointer; transition: all 0.2s ease; margin-bottom: 1.5rem; }
-    .activate-button:hover { background: rgb(29, 78, 216); }
-    .section-divider { border: none; height: 1px; background: rgb(243, 244, 246); margin: 1.5rem 0; }
-    .license-notice { background: rgb(255, 251, 235); border: 1px solid rgb(254, 243, 199); border-radius: 0.75rem; padding: 1rem; }
-    .notice-title { color: rgb(146, 64, 14); font-weight: 600; font-size: 0.875rem; margin: 0 0 0.25rem 0; }
-    .notice-text { color: rgb(146, 64, 14); font-size: 0.875rem; margin: 0; line-height: 1.5; }
-    .notice-link { color: rgb(37, 99, 235); text-decoration: underline; text-underline-offset: 2px; transition: color 0.2s ease; }
-    .notice-link:hover { color: rgb(29, 78, 216); }
-    .bottom-close-button { display: block; width: 100%; text-align: center; margin-top: 15px; background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 0; cursor: pointer; font-weight: 500; transition: all 0.2s ease; }
-    .bottom-close-button:hover { background-color: #e5e7eb; }
-  </style>
-
-  <div class="activation-wrapper">
-    <div class="activation-container">
-      <button id="closeActivationWindow" class="close-button">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-  
-      <div class="activation-header">
-        <div class="icon-wrapper">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
-        </div>
-        <h2 class="activation-title">${I18n.t("actTitle")}</h2>
-        <p class="activation-subtitle">${I18n.t("actSubtitle")}</p>
-      </div>
-  
-      <div class="activation-content">
-        <div class="info-box">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          <p class="info-text">${I18n.t("actInfo")}</p>
-        </div>
-  
-        <form id="activationForm">
-          <div class="input-wrapper">
-            <input type="text" class="license-input" id="validationKey" placeholder="${I18n.t(
-              "actPh",
-            )}">
-            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          </div>
-  
-          <button type="submit" class="activate-button">${I18n.t(
-            "actBtn",
-          )}</button>
-        </form>
-  
-        <hr class="section-divider">
-  
-        <div class="license-notice">
-          <p class="notice-title">${I18n.t("actNoKey")}</p>
-          <p class="notice-text">
-            ${I18n.t("actPrice")} 
-            <a href="https://groupposting.lemonsqueezy.com/buy/e3123eee-9901-4a5a-8282-b9c9194755ba?checkout" target="_blank" rel="noopener noreferrer" class="notice-link">
-              ${I18n.t("actUpgradeLink")}
-            </a>
-          </p>
-        </div>
-
-        <button id="bottomCloseActivationWindow" class="bottom-close-button">
-          ${I18n.t("actContinueFree")}
-        </button>
-      </div>
-    </div>
-  </div>
-`
-    : `
-    <style>
-      .close-button { position: absolute; top: 1rem; right: 1rem; background: #f3f4f6; border: none; cursor: pointer; color: rgb(75, 85, 99); transition: all 0.2s ease; padding: 0.25rem 0.5rem; z-index: 10; border-radius: 9999px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-      .close-button:hover { background-color: #e5e7eb; transform: scale(1.05); }
-      .uw-wrapper { min-height: 130vh; background-color: #0d1117; display: flex; align-items: center; justify-content: center; padding: 1rem; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-      .uw-container { width: 100%; max-width: 28rem; background-color: #161b22; border: 1px solid #30363d; border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); position: relative; padding: 2.5rem; text-align: center; }
-      .uw-icon { width: 3.5rem; height: 3.5rem; background: linear-gradient(145deg, #58a6ff, #316dca); color: white; border-radius: 50%; margin: 0 auto 1.5rem auto; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 0 20px rgba(88, 166, 255, 0.2); }
-      .uw-icon svg { width: 1.75rem; height: 1.75rem; }
-      .uw-title { font-size: 1.75rem; font-weight: 700; color: #c9d1d9; margin: 0 0 0.5rem 0; letter-spacing: -0.5px; }
-      .uw-subtitle { font-size: 1rem; color: #8b949e; margin: 0 0 1rem 0; line-height: 1.6; }
-      .uw-pricing-display { margin-bottom: 1rem; }
-      .uw-pricing-from { font-size: 0.875rem; color: #8b949e; margin-bottom: 0.25rem; }
-      .uw-price { font-size: 3rem; font-weight: 800; color: #c9d1d9; line-height: 1; }
-      .uw-price span { font-size: 1rem; font-weight: 500; color: #8b949e; margin-left: 0.25rem; }
-      .uw-cta-btn { width: 100%; background: linear-gradient(135deg, #34d399, #10b981); color: white; font-weight: 600; font-size: 1rem; padding: 0.875rem 1rem; border-radius: 0.5rem; border: none; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 15px -2px rgba(52, 211, 153, 0.3), inset 0 1px 1px rgba(255,255,255,0.2); margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-      .uw-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 20px -3px rgba(52, 211, 153, 0.4), inset 0 1px 1px rgba(255,255,255,0.2); }
-      .uw-features-list { list-style: none; padding: 0; margin: 0 0 2rem 0; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
-      .uw-feature-item { color: #8b949e; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; }
-      .uw-feature-item i { color: #34d399; }
-      .uw-activate-form { margin-top: 1rem; }
-      .uw-activate-form form { display: flex; gap: 0.5rem; }
-      .uw-activate-form .license-input { flex-grow: 1; background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 0.375rem; padding: 0.6rem 1rem; text-align: center; }
-      .uw-activate-form .activate-button { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; font-weight: 500; padding: 0.6rem 1rem; border-radius: 0.375rem; cursor: pointer; }
-      .uw-activate-form .activate-button:hover { background: #30363d; }
-    </style>
-    <div class="uw-wrapper">
-      <div class="uw-container">
-        <button id="closeActivationWindow" class="close-button">&times;</button>
-        <div class="uw-body">
-          <div class="uw-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
-          </div>
-          <h1 class="uw-title">${I18n.t("modalProTitle")}</h1>
-          <p class="uw-subtitle">${I18n.t("modalProDesc")}</p>
-          
-          <div class="uw-pricing-display">
-           <p class="uw-pricing-from">${I18n.t("lblPlansStart")}</p>
-            <div class="uw-price">€9.90<span>/mo</span></div>
-          </div>
-
-          <button id="upgradeWallPurchaseBtn" class="uw-cta-btn">
-            <span>${I18n.t("btnUpgrade")}</span>
-          </button>
-          
-          <ul class="uw-features-list">
-            <li class="uw-feature-item"><i class="fa fa-check-circle"></i> ${I18n.t(
-              "benUnlimited",
-            )}</li>
-            <li class="uw-feature-item"><i class="fa fa-check-circle"></i> ${I18n.t(
-              "benSupport",
-            )}</li>
-            <li class="uw-feature-item"><i class="fa fa-check-circle"></i> ${I18n.t(
-              "benCancel",
-            )}</li>
-          </ul>
-          
-          <div id="upgradeWallActivationForm" class="uw-activate-form">
-            <form id="activationForm">
-              <input type="text" class="license-input" id="validationKey" placeholder="${I18n.t(
-                "actPh",
-              )}">
-              <button type="submit" class="activate-button">${I18n.t(
-                "actBtn",
-              )}</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  activationPage.innerHTML = pageHTML;
-  main.classList.add("d-none");
-
-  // Re-attach listeners because innerHTML was reset
-  const closeBtn = document.getElementById("closeActivationWindow");
-  if (closeBtn) closeBtn.addEventListener("click", hideActivationPage);
-
-  const closeBtnBottom = document.getElementById("bottomCloseActivationWindow");
-  if (closeBtnBottom)
-    closeBtnBottom.addEventListener("click", hideActivationPage);
-
-  const activationForm = document.getElementById("activationForm");
-  if (activationForm)
-    activationForm.addEventListener("submit", handleActivationSubmit);
-
-  const purchaseBtn = document.getElementById("upgradeWallPurchaseBtn");
-  if (purchaseBtn) {
-    purchaseBtn.addEventListener("click", () => {
-      window.open(
-        "https://groupposting.lemonsqueezy.com/buy/e3123eee-9901-4a5a-8282-b9c9194755ba?checkout[discount_code]=C5MDE4MW",
-        "_blank",
-      );
-    });
-  }
+  // Licensing disabled; keep main UI visible
+  hideActivationPage();
 }
 
 function hideActivationPage() {
@@ -4435,54 +4086,8 @@ function hideActivationPage() {
 
 function handleActivationSubmit(event) {
   event.preventDefault();
-
-  const validationKeyInput = document.getElementById("validationKey");
-  const validationKey = validationKeyInput.value.trim();
-
-  if (!validationKey) {
-    // Visual shake or red border could go here
-    validationKeyInput.focus();
-    return;
-  }
-
-  // 1. UI Feedback: Show loading state
-  const activateBtn = document.querySelector(
-    "#activationForm .activate-button",
-  );
-  const originalText = activateBtn ? activateBtn.textContent : "Activate";
-
-  if (activateBtn) {
-    activateBtn.disabled = true;
-    activateBtn.textContent = "Verifying...";
-  }
-
-  console.log("Sending activation request for key:", validationKey);
-
-  // 2. Send Message
-  chrome.runtime.sendMessage(
-    {
-      action: "activateLicense",
-      licenseKey: validationKey,
-    },
-    (response) => {
-      // 3. Handle Immediate Errors (e.g., Network offline)
-      if (chrome.runtime.lastError) {
-        if (activateBtn) {
-          activateBtn.disabled = false;
-          activateBtn.textContent = originalText;
-        }
-        showCustomModal(I18n.t("errConnectTitle"), I18n.t("errConnectMsg"));
-      }
-
-      // If successful, the 'chrome.storage.onChanged' listener in popup.js
-      // will catch the 'licenseVerified' change and call 'onLicenseValidated'.
-      // We start polling just in case the storage event is delayed.
-      pollValidationResult();
-    },
-  );
-
-  // NOTE: We do NOT call hideActivationPage() here.
-  // We wait for success to close it automatically.
+  // Licensing disabled; no activation needed.
+  hideActivationPage();
 }
 
 // in popup.js, add this new function
@@ -17661,71 +17266,23 @@ function updateFeatureLocks(isPro) {
   const campaignCanvas = document.getElementById("campaignCanvas");
   const saveCampaignBtn = document.getElementById("saveCampaignBtn");
 
-  if (isPro) {
-    // --- UNLOCK ---
-    aiButtons.forEach((id) => {
-      const btn = document.getElementById(id);
-      if (btn) {
-        btn.classList.remove("feature-locked");
-        // Remove visual lock indicator if you added one via CSS
-        // Ensure enabled
-        btn.disabled = false;
-      }
-    });
-
-    if (campaignCanvasWrapper) {
-      const existingLock = campaignCanvasWrapper.querySelector(
-        ".campaign-lock-overlay",
-      );
-      if (existingLock) existingLock.remove();
-      if (campaignCanvas) campaignCanvas.style.pointerEvents = "auto";
+  // Licensing disabled: always unlock all UI
+  aiButtons.forEach((id) => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.classList.remove("feature-locked");
+      btn.disabled = false;
     }
-    if (saveCampaignBtn) saveCampaignBtn.disabled = false;
-  } else {
-    // --- FREE TIER (Look but don't touch) ---
+  });
 
-    // We explicitly DO NOT disable the buttons here.
-    // We want them clickable so the click handler can check the license and show the modal.
-    aiButtons.forEach((id) => {
-      const btn = document.getElementById(id);
-      if (btn) {
-        btn.classList.remove("feature-locked"); // Remove CSS lock styling if it prevents clicking
-        btn.disabled = false; // Ensure clickable
-      }
-    });
-
-    // Campaigns are complex, so we keep the visual overlay lock for the canvas
-    // but allow the "Create New" button to work (it just resets the view).
-    if (campaignCanvasWrapper) {
-      if (!campaignCanvasWrapper.querySelector(".campaign-lock-overlay")) {
-        const overlay = document.createElement("div");
-        overlay.className = "campaign-lock-overlay";
-        overlay.innerHTML = `
-             <div class="campaign-lock-content">
-               <div class="campaign-lock-icon"><i class="fa fa-lock"></i></div>
-               <h3 class="campaign-lock-title">Campaigns are Pro</h3>
-               <p class="campaign-lock-text">Automate your entire workflow with unlimited steps, triggers, and loops.</p>
-               <button class="btn-lock-upgrade" type="button">Unlock Now</button>
-             </div>
-           `;
-        campaignCanvasWrapper.style.position = "relative";
-        campaignCanvasWrapper.appendChild(overlay);
-
-        // Add listener to the internal button
-        overlay
-          .querySelector(".btn-lock-upgrade")
-          .addEventListener("click", (e) => {
-            e.stopPropagation();
-            openPricingModal();
-          });
-      }
-      if (campaignCanvas) campaignCanvas.style.pointerEvents = "none";
-    }
-
-    // The save button for campaigns should probably be disabled visually or trigger modal
-    // Let's allow click -> modal
-    if (saveCampaignBtn) saveCampaignBtn.disabled = false;
+  if (campaignCanvasWrapper) {
+    const existingLock = campaignCanvasWrapper.querySelector(
+      ".campaign-lock-overlay",
+    );
+    if (existingLock) existingLock.remove();
+    if (campaignCanvas) campaignCanvas.style.pointerEvents = "auto";
   }
+  if (saveCampaignBtn) saveCampaignBtn.disabled = false;
 }
 
 // in popup.js
@@ -18541,71 +18098,24 @@ async function checkAndResetDailyLimit() {
 function updateTierHeaderUI(isPro, postsRemaining) {
   const freeBadge = document.getElementById("freeTierBadge");
   const proBadge = document.getElementById("proTierBadge");
-  const countSpan = document.getElementById("dailyPostsLeft");
   const upgradeBtn = document.getElementById("headerUpgradeBtn");
   const activateBtn = document.getElementById("headerActivateBtn");
 
-  // Handle Feature Locks (AI, Campaigns, etc)
-  updateFeatureLocks(isPro);
+  // Licensing disabled: hide all tier UI and keep features unlocked
+  updateFeatureLocks(true);
 
-  if (isPro) {
-    if (freeBadge) freeBadge.style.display = "none";
-    if (proBadge) proBadge.style.display = "flex";
-    document.getElementById("onboardingChecklist")?.classList.add("d-none");
-  } else {
-    // FREE TIER
-    if (freeBadge) freeBadge.style.display = "flex";
-    if (proBadge) proBadge.style.display = "none";
+  if (freeBadge) freeBadge.style.display = "none";
+  if (proBadge) proBadge.style.display = "none";
+  if (upgradeBtn) upgradeBtn.style.display = "none";
+  if (activateBtn) activateBtn.style.display = "none";
 
-    // Update Counter Text
-    if (countSpan) countSpan.textContent = postsRemaining;
-
-    // Visual Alert if 0
-    if (postsRemaining <= 0) {
-      freeBadge.style.background = "#fee2e2"; // Light Red
-      freeBadge.style.borderColor = "#ef4444"; // Red Border
-      countSpan.style.color = "#b91c1c"; // Dark Red Text
-
-      // Update Tooltips or Titles
-      if (freeBadge) freeBadge.title = I18n.t("limitTooltip0");
-    } else {
-      // Reset styles
-      freeBadge.style.background = "#e0f2fe"; // Light Blue
-      freeBadge.style.borderColor = "#bae6fd";
-      countSpan.style.color = "#0369a1"; // Blue Text
-    }
-
-    // Ensure buttons work
-    if (upgradeBtn) {
-      upgradeBtn.onclick = (e) => {
-        e.preventDefault();
-        openPricingModal();
-      };
-    }
-    if (activateBtn) {
-      activateBtn.onclick = (e) => {
-        e.preventDefault();
-        showActivationPage();
-      };
-    }
-
-    // Re-check main button state
-    enableStartPostingIfReady();
-  }
+  enableStartPostingIfReady();
 }
 
 function openPricingModal() {
-  const modal = document.getElementById("proUpgradeModal");
-  if (modal) {
-    modal.classList.remove("d-none");
-    setTimeout(() => modal.classList.add("show"), 10);
-  }
+  return;
 }
 
 function closePricingModal() {
-  const modal = document.getElementById("proUpgradeModal");
-  if (modal) {
-    modal.classList.remove("show");
-    setTimeout(() => modal.classList.add("d-none"), 300);
-  }
+  return;
 }

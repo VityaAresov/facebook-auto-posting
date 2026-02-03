@@ -6866,6 +6866,19 @@ div[style*="border: 1px solid rgb(209, 213, 219)"]:focus-within {
 /* in popup.css */
 /* ACTION: Add this entire CSS block to the end of the file */
 
+/* Licensing disabled: hide upgrade/activation/trial UI */
+#proUpgradeModal,
+#activationPage,
+#headerUpgradeBtn,
+#headerActivateBtn,
+#freeTierBadge,
+#proTierBadge,
+#freePostsTracker,
+.trial-tracker,
+.btn-license,
+.pro-design-2 {
+  display: none !important;
+}
 .live-log-container {
   width: 100%;
   max-height: 250px; /* Or adjust as needed */

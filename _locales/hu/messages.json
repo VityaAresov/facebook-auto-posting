@@ -3,31 +3,31 @@
       "message": "Névjegy"
    },
    "actBtn": {
-      "message": "Licenc Aktiválása"
+      "message": ""
    },
    "actContinueFree": {
-      "message": "Folytatás az ingyenes próbaverzióval (Ablak bezárása)"
+      "message": ""
    },
    "actInfo": {
-      "message": "Írd be alább a licenckulcsot. Ezt a vásárlás utáni emailben találod."
+      "message": ""
    },
    "actNoKey": {
-      "message": "Nincs licenckulcsod?"
+      "message": ""
    },
    "actPh": {
       "message": "XXXX-XXXX-XXXX-XXXX"
    },
    "actPrice": {
-      "message": "Licenckulcsok €9.9 / hó-tól."
+      "message": ""
    },
    "actSubtitle": {
-      "message": "Add meg a licenckulcsot a kezdéshez"
+      "message": ""
    },
    "actTitle": {
-      "message": "Licenc Aktiválása"
+      "message": ""
    },
    "actUpgradeLink": {
-      "message": "Bővíts most"
+      "message": ""
    },
    "aiBtnGenerate": {
       "message": "Poszt Generálása"
@@ -134,10 +134,10 @@
       "message": "Sikeres Mentés"
    },
    "badgeBestValue": {
-      "message": "LEGJOBB ÉRTÉK"
+      "message": ""
    },
    "badgeFree": {
-      "message": "Ingyenes:"
+      "message": ""
    },
    "badgePaused": {
       "message": "Szünetel"
@@ -164,22 +164,22 @@
       "message": "Az időzített posztok szüneteltetve."
    },
    "benAI": {
-      "message": "AI tartalomgenerálás"
+      "message": ""
    },
    "benCampaigns": {
-      "message": "Kampány munkafolyamatok"
+      "message": ""
    },
    "benCancel": {
-      "message": "Bármikor lemondható"
+      "message": ""
    },
    "benSpintax": {
-      "message": "Okos Spintax"
+      "message": ""
    },
    "benSupport": {
-      "message": "Kiemelt támogatás"
+      "message": ""
    },
    "benUnlimited": {
-      "message": "Korlátlan posztolás"
+      "message": ""
    },
    "blockLoop": {
       "message": "Ciklus"
@@ -197,10 +197,10 @@
       "message": "Várakozás"
    },
    "btnActivate": {
-      "message": "Licenc aktiválása"
+      "message": ""
    },
    "btnActivateKey": {
-      "message": "Licenckulcs aktiválása"
+      "message": ""
    },
    "btnAdd": {
       "message": "Hozzáadás"
@@ -362,13 +362,13 @@
       "message": "Persze"
    },
    "btnUnlock": {
-      "message": "Feloldás Bővítéssel"
+      "message": ""
    },
    "btnUpgrade": {
-      "message": "Bővítés"
+      "message": ""
    },
    "btnUpgradeReq": {
-      "message": "Bővítés Szükséges"
+      "message": ""
    },
    "btnView": {
       "message": "Megtekintés"
@@ -448,7 +448,7 @@
       "message": "Folytatás"
    },
    "campActionUpgrade": {
-      "message": "Bővíts az aktiváláshoz"
+      "message": ""
    },
    "campAuto": {
       "message": "Auto-Kampány"
@@ -582,7 +582,7 @@
       "message": "Kisvállalkozás: Új menüpont bevezetése. Étvágygerjesztés és kedvezmény."
    },
    "canvasEmpty": {
-      "message": "Húzd ide az \u003Cstrong>Indító (Trigger)\u003C/strong> blokkot a kezdéshez"
+      "message": "Húzd ide az <strong>Indító (Trigger)</strong> blokkot a kezdéshez"
    },
    "cardGroupsTip": {
       "message": "Okos csoportkezelés"
@@ -709,13 +709,13 @@
       "message": "Menti a sablonokat és csoportgyűjteményeket (médiát nem)."
    },
    "descBilledMonthly": {
-      "message": "Havonta számlázva"
+      "message": ""
    },
    "descBilledQuarterly": {
-      "message": "3 havonta számlázva"
+      "message": ""
    },
    "descBilledYearly": {
-      "message": "Évente számlázva"
+      "message": ""
    },
    "descClassic": {
       "message": "Legbiztonságosabb, legstabilabb választás, bármilyen csoport esetén."
@@ -748,7 +748,7 @@
       "message": "Indíts Gyors vagy Időzített posztot."
    },
    "descPro": {
-      "message": "Oldd fel a korlátlan erőt."
+      "message": ""
    },
    "descSafeDelay": {
       "message": "Teljes idő kivárása sikertelen poszt esetén is."
@@ -831,7 +831,7 @@
       "message": "OK, Indítás"
    },
    "extractConfirmMsg": {
-      "message": "Egy új lapon megnyílik a Facebook csoportjaid oldala. A bővítmény automatikusan legörget, hogy megtalálja az összes csoportot. \u003Cbr>\u003Cbr>\u003Cb>Kérlek ne zárd be ezt az új lapot;\u003C/b> magától bezáródik, ha végzett."
+      "message": "Egy új lapon megnyílik a Facebook csoportjaid oldala. A bővítmény automatikusan legörget, hogy megtalálja az összes csoportot. <br><br><b>Kérlek ne zárd be ezt az új lapot;</b> magától bezáródik, ha végzett."
    },
    "extractConfirmTitle": {
       "message": "Csoport Kinyerés Indítása?"
@@ -840,13 +840,13 @@
       "message": "Visszajelzés küldése és posztok szerzése"
    },
    "fbReward": {
-      "message": "Köszönetképpen adunk még 3 ingyenes posztot!"
+      "message": ""
    },
    "fbSorry": {
       "message": "Sajnáljuk! Hogyan fejlődhetnénk?"
    },
    "fileLargeMsg": {
-      "message": "A következő fájlok túl nagyok a bővítmény számára:\u003Cbr>\u003Cbr>\u003Cstrong>$FILES$\u003C/strong>\u003Cbr>\u003Cbr>Kérlek tömörítsd őket $SIZE$MB alá.",
+      "message": "A következő fájlok túl nagyok a bővítmény számára:<br><br><strong>$FILES$</strong><br><br>Kérlek tömörítsd őket $SIZE$MB alá.",
       "placeholders": {
          "files": {
             "content": "$1"
@@ -860,7 +860,7 @@
       "message": "Túl Nagy Fájlok"
    },
    "fileTypeMsg": {
-      "message": "A következő fájlokat kihagytuk: \u003Cbr>\u003Cstrong>$FILES$\u003C/strong>",
+      "message": "A következő fájlokat kihagytuk: <br><strong>$FILES$</strong>",
       "placeholders": {
          "files": {
             "content": "$1"
@@ -874,7 +874,7 @@
       "message": "NAPI"
    },
    "freqMonthly": {
-      "message": "HAVI"
+      "message": ""
    },
    "freqOnce": {
       "message": "EGYSZER"
@@ -883,7 +883,7 @@
       "message": "HETI"
    },
    "freshCool": {
-      "message": "\u003Cstrong>Friss/Hűvös (>7 napja):\u003C/strong> $COUNT$ csoport",
+      "message": "<strong>Friss/Hűvös (>7 napja):</strong> $COUNT$ csoport",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -891,7 +891,7 @@
       }
    },
    "freshHot": {
-      "message": "\u003Cstrong>Forró (2 napon belül):\u003C/strong> $COUNT$ csoport",
+      "message": "<strong>Forró (2 napon belül):</strong> $COUNT$ csoport",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -902,7 +902,7 @@
       "message": "Frissesség Elemzés (utolsó posztolás)"
    },
    "freshWarm": {
-      "message": "\u003Cstrong>Meleg (3-7 napja):\u003C/strong> $COUNT$ csoport",
+      "message": "<strong>Meleg (3-7 napja):</strong> $COUNT$ csoport",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -913,7 +913,7 @@
       "message": "Szuper, köszi!"
    },
    "giftMsg": {
-      "message": "Hiányoltunk! Hogy segítsünk az újrakezdésben, jóváírtunk \u003Cstrong>$COUNT$ ingyenes posztot\u003C/strong> a fiókodban. Használd egészséggel!",
+      "message": "Hiányoltunk! Hogy segítsünk az újrakezdésben, jóváírtunk <strong>$COUNT$ ingyenes posztot</strong> a fiókodban. Használd egészséggel!",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -1038,7 +1038,7 @@
       "message": "Véletlenszerű időtartam"
    },
    "histFilterDate": {
-      "message": "Szűrés dátumra: \u003Cstrong>$DATE$\u003C/strong>",
+      "message": "Szűrés dátumra: <strong>$DATE$</strong>",
       "placeholders": {
          "date": {
             "content": "$1"
@@ -1076,7 +1076,7 @@
       "message": "Importálás Csoportgyűjteményből"
    },
    "initLoading": {
-      "message": "A Group Posting Pro indítása..."
+      "message": ""
    },
    "keyRemovedMsg": {
       "message": "Az érvényesítési kulcs sikeresen törölve."
@@ -1228,7 +1228,7 @@
       "message": "Hány csoporthoz csatlakozzunk?"
    },
    "lblLicenseKey": {
-      "message": "Licenckulcs:"
+      "message": ""
    },
    "lblLoadTemp": {
       "message": "Sablonok betöltése..."
@@ -1243,7 +1243,7 @@
       "message": "perc"
    },
    "lblMonthly": {
-      "message": "Havi"
+      "message": ""
    },
    "lblNightMode": {
       "message": "Éjszakai posztolás kerülése"
@@ -1264,7 +1264,7 @@
       "message": "Átvételi lehetőségek"
    },
    "lblPlansStart": {
-      "message": "Csomagok már ennyitől"
+      "message": ""
    },
    "lblPostContent": {
       "message": "Poszt tartalma"
@@ -1273,7 +1273,7 @@
       "message": "Poszt pontszám:"
    },
    "lblPrice": {
-      "message": "Ár"
+      "message": ""
    },
    "lblProdName": {
       "message": "Termék neve"
@@ -1282,7 +1282,7 @@
       "message": "Nyilvános találkozó"
    },
    "lblQuarterly": {
-      "message": "Negyedéves"
+      "message": ""
    },
    "lblQuickGroups": {
       "message": "Válassz célcsoport-gyűjteményeket"
@@ -1369,7 +1369,7 @@
       "message": "variáció"
    },
    "lblVer": {
-      "message": "GroupPosting PRO Verzió: $VER$",
+      "message": "",
       "placeholders": {
          "ver": {
             "content": "$1"
@@ -1383,13 +1383,13 @@
       "message": "Várakozási idő"
    },
    "lblYearly": {
-      "message": "Éves"
+      "message": ""
    },
    "licIssueMsg": {
-      "message": "A licenckulcsod érvénytelen vagy lejárt. Kérlek ellenőrizd a kulcsot vagy vásárolj újat."
+      "message": ""
    },
    "licIssueTitle": {
-      "message": "Licenc Probléma"
+      "message": ""
    },
    "loadingMsg": {
       "message": "Posztolás előkészítése..."
@@ -1398,25 +1398,25 @@
       "message": "A posztolás elindult! Nyugodtan böngészhetsz más lapokon - mi folytatjuk a háttérben."
    },
    "lockAiEnhance": {
-      "message": "Az AI Szövegjavítás \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>\u003Cbr>Azonnal írd át posztjaidat konverzióra, nyelvtanra vagy spintaxra.\u003Cbr>Bővíts a feloldáshoz."
+      "message": ""
    },
    "lockAiGen": {
-      "message": "Az AI Poszt Generálás \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>\u003Cbr>Generálj korlátlan, magas konverziójú posztokat másodpercek alatt.\u003Cbr>Bővíts a feloldáshoz."
+      "message": ""
    },
    "lockAutoJoin": {
-      "message": "Az Auto Csoportcsatlakozás \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>Ingyenes felhasználóknak kézzel kell csatlakozniuk.\u003Cbr>\u003Cbr>Bővíts a közönséged automatikus növeléséhez!"
+      "message": ""
    },
    "lockCampArch": {
-      "message": "Az AI Kampány Építész \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>\u003Cbr>Elemzi a célodat és automatikusan felépít teljes, többlépcsős kampányokat.\u003Cbr>Bővíts a feloldáshoz."
+      "message": ""
    },
    "lockCampResume": {
-      "message": "Nincs több ingyenes posztod. Kérlek bővíts vagy aktiválj egy licencet a kampányok futtatásához."
+      "message": ""
    },
    "lockSchedule": {
-      "message": "Az időzítés \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>Ingyenes felhasználók csak 'Posztolás Most' opciót használhatnak.\u003Cbr>\u003Cbr>Bővíts az Időzítő feloldásához."
+      "message": ""
    },
    "lockScheduleSave": {
-      "message": "A jövőbeli posztok időzítése \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>Ingyenes felhasználók csak 'Posztolás Most' opciót használhatnak.\u003Cbr>\u003Cbr>Bővíts az Időzítő, Auto-Kampányok és egyebek feloldásához!"
+      "message": ""
    },
    "menuAbout": {
       "message": "Névjegy"
@@ -1442,7 +1442,7 @@
       "message": "Művelet sorba állítva"
    },
    "modalAiLock": {
-      "message": "Az AI variációk Pro funkciók. Kérlek kapcsold ki vagy válts csomagot."
+      "message": ""
    },
    "modalCategoryTitle": {
       "message": "Kategóriák kezelése"
@@ -1457,7 +1457,7 @@
       "message": "Posztolás részleteinek megerősítése"
    },
    "modalDailyLimitBody": {
-      "message": "Felhasználtad a mai \u003Cb>$COUNT$ ingyenes posztodat\u003C/b>.",
+      "message": "",
       "placeholders": {
          "count": {
             "content": "$1",
@@ -1466,7 +1466,7 @@
       }
    },
    "modalDailyLimitTitle": {
-      "message": "Napi korlát elérve"
+      "message": ""
    },
    "modalDeleted": {
       "message": "Az időzített poszt törölve lett."
@@ -1484,13 +1484,13 @@
       "message": "Adatmegadás szükséges"
    },
    "modalLicReq": {
-      "message": "Licenc szükséges"
+      "message": ""
    },
    "modalLicReqBody": {
-      "message": "A licenced érvénytelen vagy lejárt. Nem futtathatsz időzített feladatokat.\u003Cbr>\u003Cbr>Kérlek aktiváld a folytatáshoz."
+      "message": ""
    },
    "modalLimitBody": {
-      "message": "Kiválasztottál \u003Cb>$TOTAL$ csoportot\u003C/b>, de az Ingyenes csomag limitje \u003Cb>$LIMIT$ / futtatás\u003C/b>.\u003Cbr>Csak az első $ACTUAL$ csoportba fogunk posztolni.",
+      "message": "Kiválasztottál <b>$TOTAL$ csoportot</b>, de az Ingyenes csomag limitje <b>$LIMIT$ / futtatás</b>.<br>Csak az első $ACTUAL$ csoportba fogunk posztolni.",
       "placeholders": {
          "actual": {
             "content": "$3"
@@ -1513,19 +1513,19 @@
       "message": "Kérlek válassz legalább egy csoportot."
    },
    "modalProDesc": {
-      "message": "Napi korlátok eltávolítása, AI feloldása és skálázás."
+      "message": ""
    },
    "modalProFeature": {
-      "message": "Pro Funkció"
+      "message": ""
    },
    "modalProTitle": {
-      "message": "Oldd fel a korlátlan erőt"
+      "message": ""
    },
    "modalQueuedImmediate": {
       "message": "A poszt azonnali futtatásra lett sorolva."
    },
    "modalRunNowBody": {
-      "message": "Ez a művelet a(z) \u003Cstrong>\"$TITLE$\"\u003C/strong> posztot azonnali indításra sorolja be.\u003Cbr>\u003Cbr>Az időzítés \u003Cstrong>nem\u003C/strong> törlődik, és a jövőbeli időpontokban is lefut.",
+      "message": "Ez a művelet a(z) <strong>\"$TITLE$\"</strong> posztot azonnali indításra sorolja be.<br><br>Az időzítés <strong>nem</strong> törlődik, és a jövőbeli időpontokban is lefut.",
       "placeholders": {
          "title": {
             "content": "$1"
@@ -1587,7 +1587,7 @@
       "message": "Értesítések"
    },
    "notifMissedRecur": {
-      "message": "A(z) \u003Cstrong>\"$TITLE$\"\u003C/strong> ismétlődő poszt kimaradt ekkor: $DATE$. Automatikusan átütemezve.",
+      "message": "A(z) <strong>\"$TITLE$\"</strong> ismétlődő poszt kimaradt ekkor: $DATE$. Automatikusan átütemezve.",
       "placeholders": {
          "date": {
             "content": "$2"
@@ -1644,7 +1644,7 @@
       "message": "Szöveg beillesztése"
    },
    "overlayJoined": {
-      "message": "($CURRENT$/$TOTAL$) Csatlakozva: \"$GROUP$\". \u003Cbr>\u003Cb>Emlékeztető:\u003C/b> A túl gyors csatlakozás fiókkorlátozáshoz vezethet.",
+      "message": "($CURRENT$/$TOTAL$) Csatlakozva: \"$GROUP$\". <br><b>Emlékeztető:</b> A túl gyors csatlakozás fiókkorlátozáshoz vezethet.",
       "placeholders": {
          "current": {
             "content": "$1"
@@ -1729,7 +1729,7 @@
       "message": "A begyűjtés kész, de nem találtunk csoport elemeket. Ellenőrizd, hogy az English(US) nyelv van-e beállítva."
    },
    "overlayScrapeSuccess": {
-      "message": "SIKER! $COUNT$ csoport mentve a(z) \"$NAME$\" nevű új gyűjteménybe.\u003Cbr>\u003Cbr>Ez a lap automatikusan bezárul.",
+      "message": "SIKER! $COUNT$ csoport mentve a(z) \"$NAME$\" nevű új gyűjteménybe.<br><br>Ez a lap automatikusan bezárul.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -1943,7 +1943,7 @@
       "message": "Köszönetképpen 3 ingyenes posztot adunk a próbaidőszakodhoz!"
    },
    "rateBadText": {
-      "message": "Sajnáljuk, hogy nem feleltünk meg az elvárásaidnak. Megosztanád velünk, miben fejlődhetnénk?"
+      "message": ""
    },
    "rateBadTitle": {
       "message": "Köszönjük az őszinteséget!"
@@ -1970,13 +1970,13 @@
       "message": "Köszönetképpen 3 ingyenes posztot adunk a próbaidőszakodhoz!"
    },
    "rateGoodText": {
-      "message": "Lenne kedved írni egy gyors értékelést a Chrome Webáruházban? Ez sokat segít nekünk!"
+      "message": ""
    },
    "rateGoodTitle": {
       "message": "Szuper! Örülünk, hogy tetszik!"
    },
    "rateText": {
-      "message": "Milyen tapasztalataid vannak a GroupPosting Pro-val? Gyors értékelésed segít a fejlesztésben!"
+      "message": ""
    },
    "rateTitle": {
       "message": "Hogy tetszik az app?"
@@ -2105,7 +2105,7 @@
       "message": "A fiókbiztonságot helyezi előtérbe hosszabb szünetekkel, fókuszált lappal és emberibb viselkedéssel. Lassú, de a legbiztonságosabb."
    },
    "securePayment": {
-      "message": "Biztonságos fizetés a LemonSqueezy-n keresztül."
+      "message": ""
    },
    "spinAdd": {
       "message": "Új Variáció Hozzáadása"
@@ -2138,7 +2138,7 @@
       "message": "Kérlek adj meg érvényes számot."
    },
    "splitFeedbackExact": {
-      "message": "Létrejön \u003Cstrong>$PIECES$\u003C/strong> gyűjtemény, egyenként \u003Cstrong>$LINKS$\u003C/strong> linkkel.",
+      "message": "Létrejön <strong>$PIECES$</strong> gyűjtemény, egyenként <strong>$LINKS$</strong> linkkel.",
       "placeholders": {
          "links": {
             "content": "$2"
@@ -2149,7 +2149,7 @@
       }
    },
    "splitFeedbackMixed": {
-      "message": "Létrejön \u003Cstrong>$PIECES$\u003C/strong> gyűjtemény. $BIG$ db $L1$ linket, $SMALL$ db $L2$ linket tartalmaz.",
+      "message": "Létrejön <strong>$PIECES$</strong> gyűjtemény. $BIG$ db $L1$ linket, $SMALL$ db $L2$ linket tartalmaz.",
       "placeholders": {
          "big": {
             "content": "$2"
@@ -2169,7 +2169,7 @@
       }
    },
    "splitInfo": {
-      "message": "A gyűjteményben \u003Cstrong>$COUNT$\u003C/strong> link van.",
+      "message": "A gyűjteményben <strong>$COUNT$</strong> link van.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2197,19 +2197,19 @@
       "message": "Kampány automatizálás"
    },
    "spotStepExtract": {
-      "message": "\u003Cstrong>Kivonás\u003C/strong>"
+      "message": "<strong>Kivonás</strong>"
    },
    "spotStepLoop": {
-      "message": "\u003Cstrong>Ciklus\u003C/strong> beállítása"
+      "message": "<strong>Ciklus</strong> beállítása"
    },
    "spotStepPost": {
-      "message": "\u003Cstrong>Poszt\u003C/strong> blokk hozzáadása"
+      "message": "<strong>Poszt</strong> blokk hozzáadása"
    },
    "spotStepSplit": {
-      "message": "Lista \u003Cstrong>Felosztása\u003C/strong>"
+      "message": "Lista <strong>Felosztása</strong>"
    },
    "spotStepWait": {
-      "message": "\u003Cstrong>Várakozás\u003C/strong> blokk hozzáadása"
+      "message": "<strong>Várakozás</strong> blokk hozzáadása"
    },
    "statFailedSkipped": {
       "message": "Sikertelen/Kihagyva"
@@ -2239,7 +2239,7 @@
       "message": "Poszt küldése"
    },
    "stepPro": {
-      "message": "Pro aktiválása"
+      "message": ""
    },
    "stepTemplate": {
       "message": "Sablon létrehozása"
@@ -2325,7 +2325,7 @@
       "message": "véletlen csoportba"
    },
    "targeterLblAll": {
-      "message": "Posztolás \u003Cstrong>mind a(z) $COUNT$\u003C/strong> csoportba.",
+      "message": "Posztolás <strong>mind a(z) $COUNT$</strong> csoportba.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2333,7 +2333,7 @@
       }
    },
    "targeterLblRandom": {
-      "message": "Posztolás \u003Cstrong>$COUNT$\u003C/strong> csoportba véletlenszerűen.",
+      "message": "Posztolás <strong>$COUNT$</strong> csoportba véletlenszerűen.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2365,7 +2365,7 @@
       "message": "Válassz gyűjteményeket a beállításokhoz."
    },
    "targeterSummaryMain": {
-      "message": "Kiválasztottál \u003Cstrong>$COUNT$\u003C/strong> egyedi célcsoportot.",
+      "message": "Kiválasztottál <strong>$COUNT$</strong> egyedi célcsoportot.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2403,7 +2403,7 @@
       }
    },
    "timeSoon": {
-      "message": "\u003C 1 perc múlva"
+      "message": "< 1 perc múlva"
    },
    "tipFmtBold": {
       "message": "Használj félkövér szöveget a kiemeléshez."
@@ -2460,22 +2460,22 @@
       "message": "Próbálj meg több pozitív kifejezést használni."
    },
    "tipStepAI": {
-      "message": "\u003Cstrong>AI\u003C/strong> Átírás"
+      "message": "<strong>AI</strong> Átírás"
    },
    "tipStepExtract": {
-      "message": "\u003Cstrong>Kinyerés\u003C/strong>"
+      "message": "<strong>Kinyerés</strong>"
    },
    "tipStepSeg": {
-      "message": "\u003Cstrong>Szegmentálás\u003C/strong> Téma Szerint"
+      "message": "<strong>Szegmentálás</strong> Téma Szerint"
    },
    "tipStepSpin": {
-      "message": "Használj \u003Cstrong>Spintaxot\u003C/strong>"
+      "message": "Használj <strong>Spintaxot</strong>"
    },
    "tipStepSplit": {
-      "message": "Listák \u003Cstrong>Felosztása\u003C/strong>"
+      "message": "Listák <strong>Felosztása</strong>"
    },
    "tipStepVar": {
-      "message": "Készíts \u003Cstrong>Variációkat\u003C/strong>"
+      "message": "Készíts <strong>Variációkat</strong>"
    },
    "tipTemplates": {
       "message": "Turbózd fel a sablonjaidat"
@@ -2487,7 +2487,7 @@
       "message": "A legbiztonságosabb és leghatékonyabb módja a Facebook csoportos posztolás automatizálásának."
    },
    "tour1Title": {
-      "message": "Üdvözöl a GroupPosting Pro!"
+      "message": ""
    },
    "tour2Text": {
       "message": "Kezdd itt. Hozz létre újrafelhasználható Poszt Sablonokat, és rendszerezd a célcsoportokat Gyűjteményekbe."
@@ -2556,10 +2556,10 @@
       "message": "A Gyors poszt a Klasszikus módot és alapbeállításokat használja."
    },
    "welcomeProMsg": {
-      "message": "Licenc sikeresen aktiválva! Minden funkció feloldva."
+      "message": ""
    },
    "welcomeProTitle": {
-      "message": "Üdv a Pro-ban!"
+      "message": ""
    },
    "wizAnalyzing": {
       "message": "Cél elemzése $COUNT$ csoport ellenében...",
@@ -2608,7 +2608,7 @@
       "message": "Kérlek válassz legalább egy sablont."
    },
    "wizSuccessMsg": {
-      "message": "Az AI sikeresen létrehozott \u003Cb>$COUNT$ lépést\u003C/b> a célod alapján.\u003Cbr>\u003Cbr>Ellenőrizd a beállítást és kattints a \u003Cb>Mentés\u003C/b> gombra az indításhoz!",
+      "message": "Az AI sikeresen létrehozott <b>$COUNT$ lépést</b> a célod alapján.<br><br>Ellenőrizd a beállítást és kattints a <b>Mentés</b> gombra az indításhoz!",
       "placeholders": {
          "count": {
             "content": "$1"

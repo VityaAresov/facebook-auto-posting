@@ -6,6 +6,52 @@ let popupResponseQueue = new Map();
 // ----- K E E P - A L I V E   M A N A G E R -----
 const KEEP_ALIVE_ALARM_NAME = "keep-alive-alarm";
 
+// ---------------------------------------------------------------------------
+// Licensing is disabled for now. Keep extension fully unlocked.
+// ---------------------------------------------------------------------------
+async function ensureLicenseBypass() {
+  try {
+    await chrome.storage.local.set({
+      licenseVerified: true,
+      freePostsRemaining: 999999,
+      lastValidated: Date.now(),
+    });
+    await chrome.storage.local.remove([
+      "license_key",
+      "licenseProvider",
+      "licenseExpiration",
+      "licenseValidationProgress",
+      "hasSeenActivationSuccess",
+    ]);
+  } catch (e) {
+    console.warn("[LicenseBypass] Failed to set default state:", e);
+  }
+}
+
+// Always-authorized license status for now
+async function checkLicenseStatus() {
+  return { isAuthorized: true, message: "OK" };
+}
+
+// Backward-compatible stubs (activation/validation no-ops)
+async function activateLicense() {
+  await ensureLicenseBypass();
+  return { success: true };
+}
+
+async function validateLicenseKey() {
+  await chrome.storage.local.set({
+    licenseVerified: true,
+    licenseValidationProgress: {
+      status: "completed",
+      result: { isValid: true },
+    },
+  });
+}
+
+// Initialize bypass on service worker start
+ensureLicenseBypass();
+
 // This function is the heartbeat. It does a minimal, harmless async operation.
 async function keepAlive() {
   try {
@@ -1065,28 +1111,8 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.storage.local.set({ tutorialShown: false }, () => {
       console.log("Set tutorialShown flag to false for new install.");
     });
-    chrome.tabs.create(
-      { url: "https://groupposting.com/welcome" },
-      async (tab) => {
-        chrome.cookies.get(
-          { url: "https://groupposting.com/", name: "trial" },
-          (cookie) => {
-            if (!cookie) {
-              chrome.storage.local.set({ freePostsRemaining: 6 }, () => {
-                console.log("User granted 6 free posts trial.");
-              });
-            } else {
-              chrome.storage.local.set(
-                { freePostsRemaining: 0, tutorialShown: true },
-                () => {
-                  console.log("User has already used the free trial.");
-                },
-              );
-            }
-          },
-        );
-      },
-    );
+    ensureLicenseBypass();
+    chrome.tabs.create({ url: "https://groupposting.com/welcome" });
     const samplePosts = [
       {
         title: "Welcome to GroupPosting!",

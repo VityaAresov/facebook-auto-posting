@@ -3,31 +3,31 @@
       "message": "À propos"
    },
    "actBtn": {
-      "message": "Activer"
+      "message": ""
    },
    "actContinueFree": {
-      "message": "Continuer avec la version d'essai (Fermer)"
+      "message": ""
    },
    "actInfo": {
-      "message": "Entrez la clé reçue par email après votre achat."
+      "message": ""
    },
    "actNoKey": {
-      "message": "Pas de clé ?"
+      "message": ""
    },
    "actPh": {
       "message": "XXXX-XXXX-XXXX-XXXX"
    },
    "actPrice": {
-      "message": "Licences dès 9,90€ / mois."
+      "message": ""
    },
    "actSubtitle": {
-      "message": "Entrez votre clé pour commencer"
+      "message": ""
    },
    "actTitle": {
-      "message": "Activer votre Licence"
+      "message": ""
    },
    "actUpgradeLink": {
-      "message": "Mettre à niveau"
+      "message": ""
    },
    "aiBtnGenerate": {
       "message": "Générer le Post"
@@ -134,10 +134,10 @@
       "message": "Sauvegarde Réussie"
    },
    "badgeBestValue": {
-      "message": "MEILLEURE OFFRE"
+      "message": ""
    },
    "badgeFree": {
-      "message": "Gratuit :"
+      "message": ""
    },
    "badgePaused": {
       "message": "En pause"
@@ -164,22 +164,22 @@
       "message": "Les posts planifiés sont en pause."
    },
    "benAI": {
-      "message": "Génération de contenu IA"
+      "message": ""
    },
    "benCampaigns": {
-      "message": "Workflows de campagne"
+      "message": ""
    },
    "benCancel": {
-      "message": "Annulable à tout moment"
+      "message": ""
    },
    "benSpintax": {
-      "message": "Spintax intelligent"
+      "message": ""
    },
    "benSupport": {
-      "message": "Support prioritaire"
+      "message": ""
    },
    "benUnlimited": {
-      "message": "Posts illimités"
+      "message": ""
    },
    "blockLoop": {
       "message": "Boucle"
@@ -197,10 +197,10 @@
       "message": "Attente"
    },
    "btnActivate": {
-      "message": "Activer la licence"
+      "message": ""
    },
    "btnActivateKey": {
-      "message": "Activer la clé de licence"
+      "message": ""
    },
    "btnAdd": {
       "message": "Ajouter"
@@ -362,13 +362,13 @@
       "message": "Bien sûr"
    },
    "btnUnlock": {
-      "message": "Mettre à niveau pour débloquer"
+      "message": ""
    },
    "btnUpgrade": {
-      "message": "Mettre à niveau"
+      "message": ""
    },
    "btnUpgradeReq": {
-      "message": "Mise à niveau requise"
+      "message": ""
    },
    "btnView": {
       "message": "Voir"
@@ -448,7 +448,7 @@
       "message": "Reprendre"
    },
    "campActionUpgrade": {
-      "message": "Mettre à niveau"
+      "message": ""
    },
    "campAuto": {
       "message": "Auto-Campagne"
@@ -582,7 +582,7 @@
       "message": "Commerce : Lancer un nouveau menu. Créer l'envie et offrir une réduction."
    },
    "canvasEmpty": {
-      "message": "Glissez le bloc \u003Cstrong>Déclencheur\u003C/strong> ici pour commencer"
+      "message": "Glissez le bloc <strong>Déclencheur</strong> ici pour commencer"
    },
    "cardGroupsTip": {
       "message": "Gestion Intelligente"
@@ -709,13 +709,13 @@
       "message": "Sauvegarde les modèles et les collections de groupes (pas les médias)."
    },
    "descBilledMonthly": {
-      "message": "Facturé mensuellement"
+      "message": ""
    },
    "descBilledQuarterly": {
-      "message": "Facturé tous les 3 mois"
+      "message": ""
    },
    "descBilledYearly": {
-      "message": "Facturé annuellement"
+      "message": ""
    },
    "descClassic": {
       "message": "Automatisation visuelle. Bon pour la vidéo."
@@ -748,7 +748,7 @@
       "message": "Lancez un post rapide ou planifié."
    },
    "descPro": {
-      "message": "Débloquez toutes les fonctionnalités."
+      "message": ""
    },
    "descSafeDelay": {
       "message": "Attendre le temps complet même si le post échoue."
@@ -831,7 +831,7 @@
       "message": "OK, Lancer l'extraction"
    },
    "extractConfirmMsg": {
-      "message": "Un nouvel onglet va s'ouvrir sur vos groupes Facebook. L'extension va scroller automatiquement.\u003Cbr>\u003Cbr>\u003Cb>Ne fermez pas cet onglet ;\u003C/b> il se fermera tout seul à la fin."
+      "message": "Un nouvel onglet va s'ouvrir sur vos groupes Facebook. L'extension va scroller automatiquement.<br><br><b>Ne fermez pas cet onglet ;</b> il se fermera tout seul à la fin."
    },
    "extractConfirmTitle": {
       "message": "Lancer l'Extraction ?"
@@ -840,13 +840,13 @@
       "message": "Donner un Avis & Recevoir des Posts"
    },
    "fbReward": {
-      "message": "En remerciement, nous ajoutons 3 posts gratuits !"
+      "message": ""
    },
    "fbSorry": {
       "message": "Désolé ! Comment pouvons-nous nous améliorer ?"
    },
    "fileLargeMsg": {
-      "message": "Ces fichiers sont trop gros pour l'extension :\u003Cbr>\u003Cbr>\u003Cstrong>$FILES$\u003C/strong>\u003Cbr>\u003Cbr>Veuillez les compresser sous $SIZE$MB.",
+      "message": "Ces fichiers sont trop gros pour l'extension :<br><br><strong>$FILES$</strong><br><br>Veuillez les compresser sous $SIZE$MB.",
       "placeholders": {
          "files": {
             "content": "$1"
@@ -860,7 +860,7 @@
       "message": "Fichiers Trop Volumineux"
    },
    "fileTypeMsg": {
-      "message": "Fichiers ignorés : \u003Cbr>\u003Cstrong>$FILES$\u003C/strong>",
+      "message": "Fichiers ignorés : <br><strong>$FILES$</strong>",
       "placeholders": {
          "files": {
             "content": "$1"
@@ -874,7 +874,7 @@
       "message": "QUOTIDIEN"
    },
    "freqMonthly": {
-      "message": "MENSUEL"
+      "message": ""
    },
    "freqOnce": {
       "message": "UNE FOIS"
@@ -883,7 +883,7 @@
       "message": "HEBDOMADAIRE"
    },
    "freshCool": {
-      "message": "\u003Cstrong>Frais (>7 jours) :\u003C/strong> $COUNT$ groupes",
+      "message": "<strong>Frais (>7 jours) :</strong> $COUNT$ groupes",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -891,7 +891,7 @@
       }
    },
    "freshHot": {
-      "message": "\u003Cstrong>Chaud (2 derniers jours) :\u003C/strong> $COUNT$ groupes",
+      "message": "<strong>Chaud (2 derniers jours) :</strong> $COUNT$ groupes",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -902,7 +902,7 @@
       "message": "Analyse de Fraîcheur"
    },
    "freshWarm": {
-      "message": "\u003Cstrong>Tiède (3-7 jours) :\u003C/strong> $COUNT$ groupes",
+      "message": "<strong>Tiède (3-7 jours) :</strong> $COUNT$ groupes",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -1024,7 +1024,7 @@
       "message": "Durée aléatoire"
    },
    "histFilterDate": {
-      "message": "Filtre : \u003Cstrong>$DATE$\u003C/strong>",
+      "message": "Filtre : <strong>$DATE$</strong>",
       "placeholders": {
          "date": {
             "content": "$1"
@@ -1062,7 +1062,7 @@
       "message": "Importer depuis une Collection"
    },
    "initLoading": {
-      "message": "Initialisation de Group Posting Pro..."
+      "message": ""
    },
    "keyRemovedMsg": {
       "message": "Votre clé de validation a été retirée avec succès."
@@ -1214,7 +1214,7 @@
       "message": "Combien de groupes rejoindre ?"
    },
    "lblLicenseKey": {
-      "message": "Clé de licence :"
+      "message": ""
    },
    "lblLoadTemp": {
       "message": "Chargement des modèles..."
@@ -1229,7 +1229,7 @@
       "message": "min"
    },
    "lblMonthly": {
-      "message": "Mensuel"
+      "message": ""
    },
    "lblNightMode": {
       "message": "Éviter la nuit"
@@ -1250,7 +1250,7 @@
       "message": "Options de livraison"
    },
    "lblPlansStart": {
-      "message": "Plans à partir de"
+      "message": ""
    },
    "lblPostContent": {
       "message": "Contenu du post"
@@ -1259,7 +1259,7 @@
       "message": "Score :"
    },
    "lblPrice": {
-      "message": "Prix"
+      "message": ""
    },
    "lblProdName": {
       "message": "Titre du produit"
@@ -1268,7 +1268,7 @@
       "message": "Rencontre publique"
    },
    "lblQuarterly": {
-      "message": "Trimestriel"
+      "message": ""
    },
    "lblQuickGroups": {
       "message": "Sélectionnez les groupes cibles"
@@ -1355,7 +1355,7 @@
       "message": "variations"
    },
    "lblVer": {
-      "message": "GroupPosting PRO Version : $VER$",
+      "message": "",
       "placeholders": {
          "ver": {
             "content": "$1"
@@ -1369,13 +1369,13 @@
       "message": "Temps d'attente"
    },
    "lblYearly": {
-      "message": "Annuel"
+      "message": ""
    },
    "licIssueMsg": {
-      "message": "Votre clé est invalide ou expirée. Vérifiez-la ou achetez-en une nouvelle."
+      "message": ""
    },
    "licIssueTitle": {
-      "message": "Problème de Licence"
+      "message": ""
    },
    "loadingMsg": {
       "message": "Préparation de la publication..."
@@ -1384,25 +1384,25 @@
       "message": "La publication a commencé ! Vous pouvez naviguer sur d'autres onglets - nous continuons en arrière-plan."
    },
    "lockAiEnhance": {
-      "message": "L'Amélioration IA est une \u003Cb>Fonction Pro\u003C/b>.\u003Cbr>\u003Cbr>Réécrivez vos posts instantanément.\u003Cbr>Mettez à niveau pour débloquer."
+      "message": ""
    },
    "lockAiGen": {
-      "message": "La Génération IA est une \u003Cb>Fonction Pro\u003C/b>.\u003Cbr>\u003Cbr>Créez des posts illimités.\u003Cbr>Mettez à niveau pour débloquer."
+      "message": ""
    },
    "lockAutoJoin": {
-      "message": "L'Auto-Join est une \u003Cb>Fonction Pro\u003C/b>.\u003Cbr>Gratuit : Rejoindre manuellement.\u003Cbr>\u003Cbr>Mettez à niveau pour automatiser !"
+      "message": ""
    },
    "lockCampArch": {
-      "message": "L'Architecte de Campagne IA est une \u003Cb>Fonction Pro\u003C/b>.\u003Cbr>\u003Cbr>Il analyse votre but et construit des campagnes multi-étapes.\u003Cbr>Mettez à niveau pour débloquer."
+      "message": ""
    },
    "lockCampResume": {
-      "message": "Plus de posts gratuits. Veuillez mettre à niveau pour continuer les campagnes."
+      "message": ""
    },
    "lockSchedule": {
-      "message": "La planification est une \u003Cb>Fonction Pro\u003C/b>.\u003Cbr>Gratuit : 'Poster Maintenant' uniquement.\u003Cbr>\u003Cbr>Mettez à niveau pour débloquer."
+      "message": ""
    },
    "lockScheduleSave": {
-      "message": "La planification future est une \u003Cb>Fonction Pro\u003C/b>.\u003Cbr>\u003Cbr>Mettez à niveau pour débloquer le Planificateur !"
+      "message": ""
    },
    "menuAbout": {
       "message": "À propos"
@@ -1428,7 +1428,7 @@
       "message": "Action en file d'attente"
    },
    "modalAiLock": {
-      "message": "Les variations IA sont une fonction Pro. Veuillez désactiver ou mettre à niveau."
+      "message": ""
    },
    "modalCategoryTitle": {
       "message": "Gérer les Catégories"
@@ -1443,7 +1443,7 @@
       "message": "Confirmer les détails"
    },
    "modalDailyLimitBody": {
-      "message": "Vous avez utilisé vos \u003Cb>$COUNT$ posts gratuits\u003C/b> pour aujourd'hui.",
+      "message": "",
       "placeholders": {
          "count": {
             "content": "$1",
@@ -1452,7 +1452,7 @@
       }
    },
    "modalDailyLimitTitle": {
-      "message": "Limite Quotidienne Atteinte"
+      "message": ""
    },
    "modalDeleted": {
       "message": "Le post planifié a été supprimé."
@@ -1470,13 +1470,13 @@
       "message": "Saisie Requise"
    },
    "modalLicReq": {
-      "message": "Licence Requise"
+      "message": ""
    },
    "modalLicReqBody": {
-      "message": "Votre licence est invalide ou expirée. Vous ne pouvez pas exécuter de tâches planifiées.\u003Cbr>\u003Cbr>Veuillez activer pour continuer."
+      "message": ""
    },
    "modalLimitBody": {
-      "message": "Vous avez sélectionné \u003Cb>$TOTAL$ groupes\u003C/b>, mais la version gratuite est limitée à \u003Cb>$LIMIT$ par envoi\u003C/b>.\u003Cbr>Nous ne posterons que dans les $ACTUAL$ premiers groupes.",
+      "message": "Vous avez sélectionné <b>$TOTAL$ groupes</b>, mais la version gratuite est limitée à <b>$LIMIT$ par envoi</b>.<br>Nous ne posterons que dans les $ACTUAL$ premiers groupes.",
       "placeholders": {
          "actual": {
             "content": "$3"
@@ -1499,19 +1499,19 @@
       "message": "Veuillez sélectionner au moins un groupe."
    },
    "modalProDesc": {
-      "message": "Supprimez les limites, débloquez l'IA et évoluez."
+      "message": ""
    },
    "modalProFeature": {
-      "message": "Fonctionnalité Pro"
+      "message": ""
    },
    "modalProTitle": {
-      "message": "Débloquez la puissance illimitée"
+      "message": ""
    },
    "modalQueuedImmediate": {
       "message": "Le post a été mis en file d'attente pour un démarrage immédiat."
    },
    "modalRunNowBody": {
-      "message": "Cela mettra \u003Cstrong>« $TITLE$ »\u003C/strong> en file d'attente pour un démarrage immédiat.\u003Cbr>\u003Cbr>Le programme \u003Cstrong>ne sera pas\u003C/strong> supprimé et continuera aux heures futures.",
+      "message": "Cela mettra <strong>« $TITLE$ »</strong> en file d'attente pour un démarrage immédiat.<br><br>Le programme <strong>ne sera pas</strong> supprimé et continuera aux heures futures.",
       "placeholders": {
          "title": {
             "content": "$1"
@@ -1573,7 +1573,7 @@
       "message": "Notifications"
    },
    "notifMissedRecur": {
-      "message": "Le post récurrent \u003Cstrong>« $TITLE$ »\u003C/strong> a été manqué le $DATE$. Il a été replanifié automatiquement.",
+      "message": "Le post récurrent <strong>« $TITLE$ »</strong> a été manqué le $DATE$. Il a été replanifié automatiquement.",
       "placeholders": {
          "date": {
             "content": "$2"
@@ -1630,7 +1630,7 @@
       "message": "Insertion du texte"
    },
    "overlayJoined": {
-      "message": "($CURRENT$/$TOTAL$) « $GROUP$ » rejoint. \u003Cbr>\u003Cb>Rappel :\u003C/b> Rejoindre trop vite peut signaler votre compte.",
+      "message": "($CURRENT$/$TOTAL$) « $GROUP$ » rejoint. <br><b>Rappel :</b> Rejoindre trop vite peut signaler votre compte.",
       "placeholders": {
          "current": {
             "content": "$1"
@@ -1715,7 +1715,7 @@
       "message": "Extraction terminée, mais aucun élément trouvé. Assurez-vous d'être en Anglais (US)."
    },
    "overlayScrapeSuccess": {
-      "message": "SUCCÈS ! $COUNT$ groupes sauvegardés dans la nouvelle collection « $NAME$ ».\u003Cbr>\u003Cbr>Cet onglet se fermera automatiquement.",
+      "message": "SUCCÈS ! $COUNT$ groupes sauvegardés dans la nouvelle collection « $NAME$ ».<br><br>Cet onglet se fermera automatiquement.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -1929,7 +1929,7 @@
       "message": "Votre retour nous aide directement."
    },
    "rateBadText": {
-      "message": "Désolé que GroupPosting Pro ne vous satisfasse pas encore. Pouvez-vous nous dire comment nous améliorer ?"
+      "message": ""
    },
    "rateBadTitle": {
       "message": "Merci de votre honnêteté !"
@@ -1956,13 +1956,13 @@
       "message": "Votre avis aide d'autres admins à nous trouver !!"
    },
    "rateGoodText": {
-      "message": "Pourriez-vous laisser un avis rapide sur le Chrome Store ? Cela nous aide beaucoup !"
+      "message": ""
    },
    "rateGoodTitle": {
       "message": "Génial ! Content que ça vous plaise !"
    },
    "rateText": {
-      "message": "Comment trouvez-vous GroupPosting Pro ? Votre avis nous aide !"
+      "message": ""
    },
    "rateTitle": {
       "message": "Comment ça se passe ?"
@@ -2091,7 +2091,7 @@
       "message": "Sécurité max. Longs délais, comportement humain."
    },
    "securePayment": {
-      "message": "Paiement sécurisé via LemonSqueezy."
+      "message": ""
    },
    "spinAdd": {
       "message": "Ajouter une variation"
@@ -2124,7 +2124,7 @@
       "message": "Veuillez entrer un nombre valide."
    },
    "splitFeedbackExact": {
-      "message": "Crée \u003Cstrong>$PIECES$\u003C/strong> collections de \u003Cstrong>$LINKS$\u003C/strong> liens chacune.",
+      "message": "Crée <strong>$PIECES$</strong> collections de <strong>$LINKS$</strong> liens chacune.",
       "placeholders": {
          "links": {
             "content": "$2"
@@ -2135,7 +2135,7 @@
       }
    },
    "splitFeedbackMixed": {
-      "message": "Crée \u003Cstrong>$PIECES$\u003C/strong> collections. $BIG$ auront $L1$ liens, $SMALL$ auront $L2$.",
+      "message": "Crée <strong>$PIECES$</strong> collections. $BIG$ auront $L1$ liens, $SMALL$ auront $L2$.",
       "placeholders": {
          "big": {
             "content": "$2"
@@ -2155,7 +2155,7 @@
       }
    },
    "splitInfo": {
-      "message": "Cette collection a \u003Cstrong>$COUNT$\u003C/strong> liens.",
+      "message": "Cette collection a <strong>$COUNT$</strong> liens.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2183,19 +2183,19 @@
       "message": "Automatisation de Campagne"
    },
    "spotStepExtract": {
-      "message": "\u003Cstrong>Extraire\u003C/strong>"
+      "message": "<strong>Extraire</strong>"
    },
    "spotStepLoop": {
-      "message": "Définir \u003Cstrong>Boucle\u003C/strong>"
+      "message": "Définir <strong>Boucle</strong>"
    },
    "spotStepPost": {
-      "message": "Ajouter bloc \u003Cstrong>Post\u003C/strong>"
+      "message": "Ajouter bloc <strong>Post</strong>"
    },
    "spotStepSplit": {
-      "message": "\u003Cstrong>Diviser\u003C/strong> Listes"
+      "message": "<strong>Diviser</strong> Listes"
    },
    "spotStepWait": {
-      "message": "Ajouter bloc \u003Cstrong>Attente\u003C/strong>"
+      "message": "Ajouter bloc <strong>Attente</strong>"
    },
    "statFailedSkipped": {
       "message": "Échecs/Passés"
@@ -2225,7 +2225,7 @@
       "message": "Envoyer un post"
    },
    "stepPro": {
-      "message": "Activer Pro"
+      "message": ""
    },
    "stepTemplate": {
       "message": "Créer un modèle"
@@ -2311,7 +2311,7 @@
       "message": "groupes aléatoires"
    },
    "targeterLblAll": {
-      "message": "Postera dans \u003Cstrong>tous les $COUNT$\u003C/strong> d'entre eux.",
+      "message": "Postera dans <strong>tous les $COUNT$</strong> d'entre eux.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2319,7 +2319,7 @@
       }
    },
    "targeterLblRandom": {
-      "message": "Postera dans \u003Cstrong>$COUNT$\u003C/strong> d'entre eux aléatoirement.",
+      "message": "Postera dans <strong>$COUNT$</strong> d'entre eux aléatoirement.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2351,7 +2351,7 @@
       "message": "Sélectionnez des collections ou groupes pour voir les options."
    },
    "targeterSummaryMain": {
-      "message": "Vous avez sélectionné \u003Cstrong>$COUNT$\u003C/strong> groupes cibles uniques.",
+      "message": "Vous avez sélectionné <strong>$COUNT$</strong> groupes cibles uniques.",
       "placeholders": {
          "count": {
             "content": "$1"
@@ -2389,7 +2389,7 @@
       }
    },
    "timeSoon": {
-      "message": "dans \u003C 1 min"
+      "message": "dans < 1 min"
    },
    "tipFmtBold": {
       "message": "Essayez le gras pour souligner les points clés."
@@ -2446,22 +2446,22 @@
       "message": "Pensez à utiliser un langage plus positif."
    },
    "tipStepAI": {
-      "message": "Réécriture \u003Cstrong>IA\u003C/strong>"
+      "message": "Réécriture <strong>IA</strong>"
    },
    "tipStepExtract": {
-      "message": "\u003Cstrong>Extraire\u003C/strong>"
+      "message": "<strong>Extraire</strong>"
    },
    "tipStepSeg": {
-      "message": "\u003Cstrong>Segmenter\u003C/strong> par Niche"
+      "message": "<strong>Segmenter</strong> par Niche"
    },
    "tipStepSpin": {
-      "message": "Utiliser \u003Cstrong>Spintax\u003C/strong>"
+      "message": "Utiliser <strong>Spintax</strong>"
    },
    "tipStepSplit": {
-      "message": "\u003Cstrong>Diviser\u003C/strong> Listes"
+      "message": "<strong>Diviser</strong> Listes"
    },
    "tipStepVar": {
-      "message": "Créer \u003Cstrong>Variations\u003C/strong>"
+      "message": "Créer <strong>Variations</strong>"
    },
    "tipTemplates": {
       "message": "Boostez vos Modèles"
@@ -2473,7 +2473,7 @@
       "message": "Le moyen le plus sûr d'automatiser vos posts Facebook."
    },
    "tour1Title": {
-      "message": "Bienvenue sur GroupPosting Pro !"
+      "message": ""
    },
    "tour2Text": {
       "message": "Créez des Modèles de Post réutilisables et organisez vos cibles en Collections."
@@ -2542,10 +2542,10 @@
       "message": "Le Post Simple utilise le mode Classique & les réglages par défaut."
    },
    "welcomeProMsg": {
-      "message": "Licence activée ! Toutes les fonctionnalités sont débloquées."
+      "message": ""
    },
    "welcomeProTitle": {
-      "message": "Bienvenue en Pro"
+      "message": ""
    },
    "wizAnalyzing": {
       "message": "Analyse de l'objectif contre $COUNT$ groupes...",
@@ -2594,7 +2594,7 @@
       "message": "Veuillez sélectionner au moins un modèle."
    },
    "wizSuccessMsg": {
-      "message": "L'IA a créé \u003Cb>$COUNT$ étapes\u003C/b> basées sur votre objectif.\u003Cbr>\u003Cbr>Vérifiez et cliquez sur \u003Cb>Enregistrer\u003C/b> pour lancer !",
+      "message": "L'IA a créé <b>$COUNT$ étapes</b> basées sur votre objectif.<br><br>Vérifiez et cliquez sur <b>Enregistrer</b> pour lancer !",
       "placeholders": {
          "count": {
             "content": "$1"
