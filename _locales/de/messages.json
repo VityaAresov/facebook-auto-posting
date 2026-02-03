@@ -1,0 +1,2607 @@
+{
+   "aboutTitle": {
+      "message": "Über"
+   },
+   "actBtn": {
+      "message": "Lizenz aktivieren"
+   },
+   "actContinueFree": {
+      "message": "Mit Testversion fortfahren (Fenster schließen)"
+   },
+   "actInfo": {
+      "message": "Geben Sie Ihren Schlüssel unten ein. Sie finden ihn in der Kaufbestätigungs-E-Mail."
+   },
+   "actNoKey": {
+      "message": "Keinen Lizenzschlüssel?"
+   },
+   "actPh": {
+      "message": "XXXX-XXXX-XXXX-XXXX"
+   },
+   "actPrice": {
+      "message": "Lizenzen ab 9,90€ / Monat."
+   },
+   "actSubtitle": {
+      "message": "Geben Sie Ihren Lizenzschlüssel ein"
+   },
+   "actTitle": {
+      "message": "Lizenz aktivieren"
+   },
+   "actUpgradeLink": {
+      "message": "Jetzt upgraden"
+   },
+   "aiBtnGenerate": {
+      "message": "Post generieren"
+   },
+   "aiLblAudience": {
+      "message": "Zielgruppe"
+   },
+   "aiLblCTA": {
+      "message": "Handlungsaufforderung (CTA)"
+   },
+   "aiLblGoal": {
+      "message": "Hauptziel / Thema"
+   },
+   "aiLblKeywords": {
+      "message": "Schlüsselwörter"
+   },
+   "aiLblOptions": {
+      "message": "Zusätzliche Optionen"
+   },
+   "aiLblTone": {
+      "message": "Gewünschter Tonfall"
+   },
+   "aiModalSubtitle": {
+      "message": "Geben Sie Details an, damit die KI den besten Post für Sie erstellt."
+   },
+   "aiModalTitle": {
+      "message": "GroupPostingAI Post-Generator"
+   },
+   "aiOptEmojis": {
+      "message": "Emojis hinzufügen"
+   },
+   "aiOptEmojisDesc": {
+      "message": "Fügt automatisch relevante Emojis ein."
+   },
+   "aiOptHashtags": {
+      "message": "Hashtags hinzufügen"
+   },
+   "aiOptHashtagsDesc": {
+      "message": "Fügt relevante #Hashtags am Ende ein."
+   },
+   "aiOptSpintax": {
+      "message": "Spintax nutzen"
+   },
+   "aiOptSpintaxDesc": {
+      "message": "Generiert Textvariationen wie {A|B}."
+   },
+   "aiPhAudience": {
+      "message": "z.B. 'Unternehmer'"
+   },
+   "aiPhCTA": {
+      "message": "z.B. 'Besuchen Sie unsere Website'"
+   },
+   "aiPhGoal": {
+      "message": "PFLICHTFELD: Erklären Sie den Kernzweck..."
+   },
+   "aiPhKeywords": {
+      "message": "Wichtige Punkte auflisten..."
+   },
+   "aiToneCasual": {
+      "message": "Locker & Gesprächig"
+   },
+   "aiToneExcited": {
+      "message": "Aufgeregt & Enthusiastisch"
+   },
+   "aiToneFriendly": {
+      "message": "Freundlich & Einladend"
+   },
+   "aiToneFunny": {
+      "message": "Lustig & Witzig"
+   },
+   "aiToneInfo": {
+      "message": "Informativ & Lehrreich"
+   },
+   "aiToneInspire": {
+      "message": "Inspirierend & Motivierend"
+   },
+   "aiToneProf": {
+      "message": "Professionell"
+   },
+   "aiToneSales": {
+      "message": "Überzeugend & Verkaufsorientiert"
+   },
+   "appDescription": {
+      "message": "The #1 Facebook Group Auto Poster. Bulk post to FB groups, schedule campaigns, and generate content with AI. Safe & Ban-Free."
+   },
+   "appName": {
+      "message": "Facebook™ Group Posting PRO: The #1 AI Auto Poster & Scheduler - FB™ Groups"
+   },
+   "backupErrMsg": {
+      "message": "Ein Fehler ist aufgetreten: $ERR$",
+      "placeholders": {
+         "err": {
+            "content": "$1"
+         }
+      }
+   },
+   "backupErrTitle": {
+      "message": "Backup-Fehler"
+   },
+   "backupMsg": {
+      "message": "Ihre Vorlagen und Gruppensammlungen wurden in eine Datei gespeichert."
+   },
+   "backupTitle": {
+      "message": "Backup erfolgreich"
+   },
+   "badgeBestValue": {
+      "message": "BESTES ANGEBOT"
+   },
+   "badgeFree": {
+      "message": "Gratis:"
+   },
+   "badgePaused": {
+      "message": "Pausiert"
+   },
+   "badgeProcessing": {
+      "message": "Verarbeitung"
+   },
+   "badgeRunning": {
+      "message": "Läuft"
+   },
+   "badgeScheduled": {
+      "message": "Geplant"
+   },
+   "badgeWaiting": {
+      "message": "Wartet"
+   },
+   "bannerFeedbackDesc": {
+      "message": "Teilen Sie Ihr Feedback – es dauert nur eine Minute."
+   },
+   "bannerFeedbackTitle": {
+      "message": "Helfen Sie uns, die Zukunft zu gestalten?"
+   },
+   "bannerPaused": {
+      "message": "Geplante Posts sind pausiert."
+   },
+   "benAI": {
+      "message": "KI-Content-Erstellung"
+   },
+   "benCampaigns": {
+      "message": "Kampagnen-Workflows"
+   },
+   "benCancel": {
+      "message": "Jederzeit kündbar"
+   },
+   "benSpintax": {
+      "message": "Smarte Spintax"
+   },
+   "benSupport": {
+      "message": "Bevorzugter Support"
+   },
+   "benUnlimited": {
+      "message": "Unbegrenzte Posts"
+   },
+   "blockLoop": {
+      "message": "Schleife"
+   },
+   "blockPost": {
+      "message": "Post"
+   },
+   "blockStop": {
+      "message": "Stopp"
+   },
+   "blockTrigger": {
+      "message": "Auslöser (Trigger)"
+   },
+   "blockWait": {
+      "message": "Warten"
+   },
+   "btnActivate": {
+      "message": "Lizenz aktivieren"
+   },
+   "btnActivateKey": {
+      "message": "Lizenzschlüssel aktivieren"
+   },
+   "btnAdd": {
+      "message": "Hinzufügen"
+   },
+   "btnAddLink": {
+      "message": "Neuen Link hinzufügen"
+   },
+   "btnAddProd": {
+      "message": "Neue Produktvorlage hinzufügen"
+   },
+   "btnAddSpintax": {
+      "message": "Spintax hinzufügen"
+   },
+   "btnAdvSelector": {
+      "message": "Erweiterte Auswahl"
+   },
+   "btnAiWizard": {
+      "message": "KI-Assistent"
+   },
+   "btnAutoJoin": {
+      "message": "Gruppen autom. beitreten"
+   },
+   "btnBack": {
+      "message": "Zurück"
+   },
+   "btnBackup": {
+      "message": "Alle Daten sichern"
+   },
+   "btnCancel": {
+      "message": "Abbrechen"
+   },
+   "btnCancelEdit": {
+      "message": "Bearbeiten abbrechen"
+   },
+   "btnChoose": {
+      "message": "Auswählen"
+   },
+   "btnConfig": {
+      "message": "Konfiguration & Einschränkungen"
+   },
+   "btnCreateColl": {
+      "message": "Neue Sammlung erstellen"
+   },
+   "btnCreateNew": {
+      "message": "Neu erstellen"
+   },
+   "btnCreateTemplate": {
+      "message": "Neue Post-Vorlage erstellen"
+   },
+   "btnDefault": {
+      "message": "Standard"
+   },
+   "btnDelete": {
+      "message": "Löschen"
+   },
+   "btnDone": {
+      "message": "Fertig"
+   },
+   "btnEnhance": {
+      "message": "Text verbessern"
+   },
+   "btnExtract": {
+      "message": "Von FB extrahieren"
+   },
+   "btnFeatureReq": {
+      "message": "Funktionswunsch"
+   },
+   "btnForceReset": {
+      "message": "Reset erzwingen"
+   },
+   "btnGenCamp": {
+      "message": "Kampagne generieren"
+   },
+   "btnGenerateAI": {
+      "message": "Neu mit KI generieren"
+   },
+   "btnGo": {
+      "message": "Los"
+   },
+   "btnGoBack": {
+      "message": "Zurück & Bearbeiten"
+   },
+   "btnHealth": {
+      "message": "Gesundheit"
+   },
+   "btnImportColl": {
+      "message": "Aus anderen Sammlungen importieren"
+   },
+   "btnLaunch": {
+      "message": "Starten"
+   },
+   "btnLetsGo": {
+      "message": "Los geht's!"
+   },
+   "btnLoadMore": {
+      "message": "Mehr laden"
+   },
+   "btnManageCat": {
+      "message": "Kategorien verwalten"
+   },
+   "btnNameAZ": {
+      "message": "Name (A-Z)"
+   },
+   "btnNameZA": {
+      "message": "Name (Z-A)"
+   },
+   "btnNoThanks": {
+      "message": "Nein danke"
+   },
+   "btnPostNow": {
+      "message": "Jetzt posten"
+   },
+   "btnPreFill": {
+      "message": "Vorausfüllen"
+   },
+   "btnPreparing": {
+      "message": "Bereite vor..."
+   },
+   "btnRemoveKey": {
+      "message": "Validierungsschlüssel entfernen"
+   },
+   "btnReschedule": {
+      "message": "Neu planen"
+   },
+   "btnRestore": {
+      "message": "Aus Backup wiederherstellen"
+   },
+   "btnResume": {
+      "message": "Fortsetzen"
+   },
+   "btnRetry": {
+      "message": "Fehlgeschlagene wiederholen"
+   },
+   "btnSave": {
+      "message": "Speichern"
+   },
+   "btnSchedule": {
+      "message": "Planen"
+   },
+   "btnScheduleLater": {
+      "message": "Für später planen"
+   },
+   "btnShowAll": {
+      "message": "Alle Posts anzeigen"
+   },
+   "btnSortFilter": {
+      "message": "Sortieren & Filtern"
+   },
+   "btnSplit": {
+      "message": "Aufteilen"
+   },
+   "btnStartTour": {
+      "message": "Tour starten"
+   },
+   "btnStop": {
+      "message": "Posten stoppen"
+   },
+   "btnSure": {
+      "message": "Gerne"
+   },
+   "btnUnlock": {
+      "message": "Zum Freischalten upgraden"
+   },
+   "btnUpgrade": {
+      "message": "Upgrade"
+   },
+   "btnUpgradeReq": {
+      "message": "Upgrade erforderlich"
+   },
+   "btnView": {
+      "message": "Ansehen"
+   },
+   "builderLoopCount": {
+      "message": "Schleife $COUNT$x zu Schritt $STEP$",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         },
+         "step": {
+            "content": "$2"
+         }
+      }
+   },
+   "builderLoopForever": {
+      "message": "Endlos-Schleife zu Schritt $STEP$",
+      "placeholders": {
+         "step": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderNoWait": {
+      "message": "Keine Wartezeit"
+   },
+   "builderPostInherit": {
+      "message": " (Erbt von Schritt $STEP$)",
+      "placeholders": {
+         "step": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderPostSummary": {
+      "message": "$POSTS$ Post(s), $GROUPS$ Gruppe(n)",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "posts": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderPostSummaryInherit": {
+      "message": "$POSTS$ Post(s), Geerbte Gruppen",
+      "placeholders": {
+         "posts": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderStepOption": {
+      "message": "Schritt $NUM$",
+      "placeholders": {
+         "num": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderWaitSummary": {
+      "message": "Warte $DURATION$",
+      "placeholders": {
+         "duration": {
+            "content": "$1"
+         }
+      }
+   },
+   "campActionPause": {
+      "message": "Pausieren"
+   },
+   "campActionRestart": {
+      "message": "Neustart"
+   },
+   "campActionResume": {
+      "message": "Fortsetzen"
+   },
+   "campActionUpgrade": {
+      "message": "Zum Aktivieren upgraden"
+   },
+   "campAuto": {
+      "message": "Auto-Kampagne"
+   },
+   "campBlockBatch": {
+      "message": "Post-Batch"
+   },
+   "campBlockDelay": {
+      "message": "Verzögerung"
+   },
+   "campBlockLoop": {
+      "message": "Schleife"
+   },
+   "campBlockStop": {
+      "message": "Stopp"
+   },
+   "campBlockTrigger": {
+      "message": "Auslöser"
+   },
+   "campDeleteMsg": {
+      "message": "Sind Sie sicher? Dies entfernt diese Kampagne und ihren Verlauf dauerhaft."
+   },
+   "campDeleteTitle": {
+      "message": "Strategie löschen"
+   },
+   "campDescLoopCount": {
+      "message": "$COUNT$ Mal wiederholen",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "campDescLoopForever": {
+      "message": "Endlos wiederholen"
+   },
+   "campDescPost": {
+      "message": "$POSTS$ Vorlage(n) &rarr; $GROUPS$ Gruppe(n)",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "posts": {
+            "content": "$1"
+         }
+      }
+   },
+   "campDescStop": {
+      "message": "Kampagne beenden"
+   },
+   "campDescWait": {
+      "message": "Pause für $DURATION$",
+      "placeholders": {
+         "duration": {
+            "content": "$1"
+         }
+      }
+   },
+   "campRestartMsg": {
+      "message": "Kampagne war beendet und wurde von Schritt 1 neu gestartet."
+   },
+   "campStatusActive": {
+      "message": "Aktiv"
+   },
+   "campStatusCompleted": {
+      "message": "Abgeschlossen"
+   },
+   "campStatusEnded": {
+      "message": "Beendet"
+   },
+   "campStatusPaused": {
+      "message": "Pausiert"
+   },
+   "campStatusProcessing": {
+      "message": "Verarbeitung..."
+   },
+   "campStatusRunning": {
+      "message": "Läuft..."
+   },
+   "campStatusWaiting": {
+      "message": "Wartet"
+   },
+   "campStep": {
+      "message": "Kampagnenschritt"
+   },
+   "campStepDone": {
+      "message": "Erledigt"
+   },
+   "campStepManual": {
+      "message": "Manueller Start"
+   },
+   "campStepPending": {
+      "message": "Ausstehend"
+   },
+   "campStepProcessing": {
+      "message": "Verarbeitung..."
+   },
+   "campStepScheduled": {
+      "message": "Geplant"
+   },
+   "campStepSent": {
+      "message": "Gesendet"
+   },
+   "campTimeStarting": {
+      "message": "Startet..."
+   },
+   "campTimeUntil": {
+      "message": "Bis $DATE$",
+      "placeholders": {
+         "date": {
+            "content": "$1"
+         }
+      }
+   },
+   "campWizChip1": {
+      "message": "💰 Affiliate Deal"
+   },
+   "campWizChip2": {
+      "message": "🏠 Immobilien"
+   },
+   "campWizChip3": {
+      "message": "🍔 Lokales Biz"
+   },
+   "campWizPrompt1": {
+      "message": "Affiliate Marketing: Software-Deal bewerben, endet in 48h. Aggressive Frequenz."
+   },
+   "campWizPrompt2": {
+      "message": "Immobilien: Neue Immobilie zeigen. Teaser -> Features -> Tag der offenen Tür."
+   },
+   "campWizPrompt3": {
+      "message": "Kleines Unternehmen: Neues Menü-Item. Hunger wecken und Rabatt anbieten."
+   },
+   "canvasEmpty": {
+      "message": "Ziehen Sie den \u003Cstrong>Auslöser (Trigger)\u003C/strong>-Block hierher, um zu beginnen"
+   },
+   "cardGroupsTip": {
+      "message": "Smartes Gruppenmanagement"
+   },
+   "catAdd": {
+      "message": "Neue Kategorie"
+   },
+   "catConfirmDel": {
+      "message": "Sind Sie sicher, dass Sie die Kategorie „$NAME$“ löschen wollen?",
+      "placeholders": {
+         "name": {
+            "content": "$1"
+         }
+      }
+   },
+   "catErrEmpty": {
+      "message": "Kategoriename darf nicht leer sein."
+   },
+   "catErrLimit": {
+      "message": "Sie haben das Limit für Kategorien erreicht."
+   },
+   "catLimit": {
+      "message": "Kategorielimit erreicht"
+   },
+   "catManage": {
+      "message": "Kategorien verwalten"
+   },
+   "catPhName": {
+      "message": "Kategoriename"
+   },
+   "colBlue": {
+      "message": "Blau"
+   },
+   "colDefault": {
+      "message": "Standard (Schwarz)"
+   },
+   "colGroup": {
+      "message": "Zielgruppe"
+   },
+   "colOrange": {
+      "message": "Orange"
+   },
+   "colPink": {
+      "message": "Pink"
+   },
+   "colPurple": {
+      "message": "Lila"
+   },
+   "colRed": {
+      "message": "Rot"
+   },
+   "colStatus": {
+      "message": "Status"
+   },
+   "colTeal": {
+      "message": "Petrol"
+   },
+   "colTemplate": {
+      "message": "Post-Vorlage"
+   },
+   "countChars": {
+      "message": "$COUNT$ Zeichen",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countCharsPlural": {
+      "message": "$COUNT$ Zeichen",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countItems": {
+      "message": "$COUNT$ Element",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countItemsPlural": {
+      "message": "$COUNT$ Elemente",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countLinkSingular": {
+      "message": "$COUNT$ Link",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countLinks": {
+      "message": "$COUNT$ Links",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countSelected": {
+      "message": "$COUNT$ ausgewählt",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "descAnonPost": {
+      "message": "Bricht ab, wenn Gruppe dies nicht erlaubt"
+   },
+   "descAnonShort": {
+      "message": "Wenn erlaubt"
+   },
+   "descBackup": {
+      "message": "Speichert Vorlagen und Gruppensammlungen (keine Medien)."
+   },
+   "descBilledMonthly": {
+      "message": "Monatliche Abrechnung"
+   },
+   "descBilledQuarterly": {
+      "message": "Abrechnung alle 3 Monate"
+   },
+   "descBilledYearly": {
+      "message": "Jährliche Abrechnung"
+   },
+   "descClassic": {
+      "message": "Visuelle Automatisierung. Gut für Videos."
+   },
+   "descCompress": {
+      "message": "Größe optimieren (empfohlen)"
+   },
+   "descDragDrop": {
+      "message": "Dateien hierher ziehen oder auf das Plus-Symbol klicken"
+   },
+   "descEmptyCamp": {
+      "message": "Erstellen Sie Ihre erste automatisierte Strategie, um zu beginnen."
+   },
+   "descEmptySched": {
+      "message": "Sie haben noch keine Posts geplant."
+   },
+   "descFormats": {
+      "message": "Unterstützte Formate: Bilder, MP4, WebM Videos"
+   },
+   "descGenAiVar": {
+      "message": "Erstellt automatisch Variationen mit unterschiedlichen Tonalitäten."
+   },
+   "descImport": {
+      "message": "Extrahieren Sie Ihre Facebook-Gruppen."
+   },
+   "descNightMode": {
+      "message": "Nicht posten zwischen 22:00 - 07:00 Uhr"
+   },
+   "descPost": {
+      "message": "Starten Sie einen Sofort- oder geplanten Post."
+   },
+   "descPro": {
+      "message": "Schalten Sie unbegrenzte Funktionen frei."
+   },
+   "descSafeDelay": {
+      "message": "Wartet die volle Zeit, auch wenn der Post fehlschlägt."
+   },
+   "descSecLevel": {
+      "message": "Balanciert Geschwindigkeit und Sicherheit."
+   },
+   "descSkipNet": {
+      "message": "Nur aktivieren, wenn Posts bei 'Verbindung instabil' hängen bleiben, obwohl Internet da ist."
+   },
+   "descSourceExist": {
+      "message": "Wählen Sie Ihre Vorlagen."
+   },
+   "descSourceGen": {
+      "message": "KI schreibt frische Posts."
+   },
+   "descSpeed": {
+      "message": "Facebook API. Schnell & Zuverlässig."
+   },
+   "descTelemetry": {
+      "message": "Dies hilft uns, die Erweiterung zu verbessern. Wir sammeln niemals persönliche Daten oder Inhalte."
+   },
+   "descTemplate": {
+      "message": "Schreiben Sie einen wiederverwendbaren Post."
+   },
+   "descVars": {
+      "message": "Nutzen Sie {Hi|Hallo} oder Tabs."
+   },
+   "descWaitFailShort": {
+      "message": "Warten bei Fehler"
+   },
+   "dueNow": {
+      "message": "Jetzt fällig"
+   },
+   "emptyCampaigns": {
+      "message": "Noch keine Kampagnen"
+   },
+   "emptySched": {
+      "message": "Keine geplanten Posts"
+   },
+   "enhBoostDesc": {
+      "message": "Maximiert Engagement mit starken Hooks und CTAs."
+   },
+   "enhBoostTitle": {
+      "message": "Conversion-Boost"
+   },
+   "enhPolishDesc": {
+      "message": "Korrigiert Fehler und verbessert Klarheit ohne Tonfalländerung."
+   },
+   "enhPolishTitle": {
+      "message": "Grammatik & Schliff"
+   },
+   "enhSpinDesc": {
+      "message": "Wandelt Text in komplexe, verschachtelte Variationen {A|B} um."
+   },
+   "enhSpinTitle": {
+      "message": "Spintax-Architekt"
+   },
+   "enhTitle": {
+      "message": "Optimierungsstil wählen"
+   },
+   "errConnectMsg": {
+      "message": "Konnte Validierungsserver nicht erreichen. Bitte Internet prüfen."
+   },
+   "errConnectTitle": {
+      "message": "Verbindungsfehler"
+   },
+   "errStopFail": {
+      "message": "Fehler beim Stoppen: $MSG$",
+      "placeholders": {
+         "msg": {
+            "content": "$1"
+         }
+      }
+   },
+   "errStopUnknown": {
+      "message": "Bestätigung des Stopp-Signals fehlgeschlagen."
+   },
+   "extractBtnStart": {
+      "message": "OK, Scraping starten"
+   },
+   "extractConfirmMsg": {
+      "message": "Ein neuer, sichtbarer Tab mit Ihrer Facebook-Gruppenseite wird geöffnet. Die Erweiterung scrollt automatisch nach unten, um alle Gruppen zu finden.\u003Cbr>\u003Cbr>\u003Cb>Bitte schließen Sie diesen neuen Tab nicht;\u003C/b> er schließt sich nach Abschluss selbst."
+   },
+   "extractConfirmTitle": {
+      "message": "Gruppen-Extraktion starten?"
+   },
+   "fbBtn": {
+      "message": "Feedback geben & Posts erhalten"
+   },
+   "fbReward": {
+      "message": "Als Dankeschön fügen wir 3 Gratis-Posts hinzu!"
+   },
+   "fbSorry": {
+      "message": "Das tut uns leid! Wie können wir uns verbessern?"
+   },
+   "fileLargeMsg": {
+      "message": "Folgende Dateien sind zu groß für die Erweiterung:\u003Cbr>\u003Cbr>\u003Cstrong>$FILES$\u003C/strong>\u003Cbr>\u003Cbr>Bitte komprimieren Sie sie auf unter $SIZE$MB.",
+      "placeholders": {
+         "files": {
+            "content": "$1"
+         },
+         "size": {
+            "content": "$2"
+         }
+      }
+   },
+   "fileLargeTitle": {
+      "message": "Dateien zu groß"
+   },
+   "fileTypeMsg": {
+      "message": "Folgende Dateien wurden übersprungen: \u003Cbr>\u003Cstrong>$FILES$\u003C/strong>",
+      "placeholders": {
+         "files": {
+            "content": "$1"
+         }
+      }
+   },
+   "fileTypeTitle": {
+      "message": "Nicht unterstützter Dateityp"
+   },
+   "freqDaily": {
+      "message": "TÄGLICH"
+   },
+   "freqMonthly": {
+      "message": "MONATLICH"
+   },
+   "freqOnce": {
+      "message": "EINMALIG"
+   },
+   "freqWeekly": {
+      "message": "WÖCHENTLICH"
+   },
+   "freshCool": {
+      "message": "\u003Cstrong>Kühl/Frisch (>7 Tage):\u003C/strong> $COUNT$ Gruppen",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "freshHot": {
+      "message": "\u003Cstrong>Heiß (Letzte 2 Tage):\u003C/strong> $COUNT$ Gruppen",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "freshTitle": {
+      "message": "Aktualitätsanalyse (Wann gepostet)"
+   },
+   "freshWarm": {
+      "message": "\u003Cstrong>Warm (3-7 Tage):\u003C/strong> $COUNT$ Gruppen",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "graphLess": {
+      "message": "Weniger"
+   },
+   "graphMore": {
+      "message": "Mehr"
+   },
+   "graphPostsCount": {
+      "message": "$COUNT$ Posts",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "grpPhLink": {
+      "message": "Link"
+   },
+   "grpPhTitle": {
+      "message": "Titel"
+   },
+   "guideTitle": {
+      "message": "Einrichtungs-Guide"
+   },
+   "headerAiVar": {
+      "message": "KI Post-Variationen"
+   },
+   "headerComments": {
+      "message": "Kommentar-Einstellungen"
+   },
+   "headerDragBlocks": {
+      "message": "ZIEHEN SIE DIE BAUSTEINE"
+   },
+   "headerHistory": {
+      "message": "Verlauf"
+   },
+   "headerOrder": {
+      "message": "Reihenfolge"
+   },
+   "headerPause": {
+      "message": "Pause & Schutz"
+   },
+   "headerScheduled": {
+      "message": "Geplante Posts"
+   },
+   "headerSelectGroups": {
+      "message": "Wählen Sie Ziel-Gruppensammlungen"
+   },
+   "headerSelectTemplates": {
+      "message": "Wählen Sie Post-Vorlagen zur Veröffentlichung"
+   },
+   "headerStrategy": {
+      "message": "Posting-Strategie"
+   },
+   "healthCleanupMsg": {
+      "message": "$COUNT$ tote Links aus Sammlungen entfernt.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "healthCleanupTitle": {
+      "message": "Bereinigung abgeschlossen"
+   },
+   "healthFoundMsg": {
+      "message": "Diese Gruppen sind noch in Sammlungen, schlagen aber konstant fehl."
+   },
+   "healthFoundTitle": {
+      "message": "$COUNT$ tote Gruppen gefunden",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "healthRemoveBtn": {
+      "message": "Ausgewählte entfernen"
+   },
+   "healthSuccessMsg": {
+      "message": "Keine aktiven Gruppen mit beständigen Fehlern in Ihren Sammlungen gefunden."
+   },
+   "healthSuccessTitle": {
+      "message": "Alles gut!"
+   },
+   "healthVerifyLink": {
+      "message": "Link prüfen"
+   },
+   "helpClose": {
+      "message": "Schließen"
+   },
+   "helpEmailIntro": {
+      "message": "Bei technischen Problemen schreiben Sie an:"
+   },
+   "helpModalTitle": {
+      "message": "Hilfe & Support"
+   },
+   "helpPageIntro": {
+      "message": "Oder besuchen Sie unsere Hilfeseite:"
+   },
+   "hintBgColor": {
+      "message": "Für Posts mit max. 130 Zeichen"
+   },
+   "hintInterval": {
+      "message": "Zwischen Pausen"
+   },
+   "hintOrder": {
+      "message": "Sequenziell: A,A,A... dann B,B,B... | Abwechselnd: A,B,C... dann A,B,C..."
+   },
+   "hintVariations": {
+      "message": "Speichert als {A|B|C...}"
+   },
+   "hintWait": {
+      "message": "Zufällige Dauer"
+   },
+   "histFilterDate": {
+      "message": "Gefiltert nach: \u003Cstrong>$DATE$\u003C/strong>",
+      "placeholders": {
+         "date": {
+            "content": "$1"
+         }
+      }
+   },
+   "histSearch": {
+      "message": "Verlauf durchsuchen..."
+   },
+   "impBtnImport": {
+      "message": "Ausgewählte importieren"
+   },
+   "impErrEmpty": {
+      "message": "Bitte wählen Sie eine Sammlung und mindestens einen Link."
+   },
+   "impLblAvail": {
+      "message": "Verfügbare Links"
+   },
+   "impNoLinks": {
+      "message": "Keine Links in dieser Sammlung"
+   },
+   "impPhSearch": {
+      "message": "Links suchen..."
+   },
+   "impSelAll": {
+      "message": "Alle auswählen"
+   },
+   "impSelAllFilt": {
+      "message": "Gefilterte auswählen"
+   },
+   "impSelFirst": {
+      "message": "Zuerst Gruppensammlung wählen"
+   },
+   "impTitle": {
+      "message": "Aus Gruppensammlung importieren"
+   },
+   "initLoading": {
+      "message": "Initialisiere Group Posting Pro..."
+   },
+   "keyRemovedMsg": {
+      "message": "Ihr Schlüssel wurde erfolgreich entfernt."
+   },
+   "keyRemovedTitle": {
+      "message": "Validierungsschlüssel entfernt"
+   },
+   "lblAIAssistant": {
+      "message": "KI-Assistent"
+   },
+   "lblActivity": {
+      "message": "AKTIVITÄT DER LETZTEN 30 TAGE"
+   },
+   "lblAddGroupColl": {
+      "message": "Neue Gruppensammlung hinzufügen"
+   },
+   "lblAddMedia": {
+      "message": "Bilder oder Videos hinzufügen"
+   },
+   "lblAfterEvery": {
+      "message": "Nach jedem"
+   },
+   "lblAlreadyPurchased": {
+      "message": "Bereits gekauft?"
+   },
+   "lblAlternate": {
+      "message": "Abwechselnd"
+   },
+   "lblAnalysingCopy": {
+      "message": "Analysiere Absicht & generiere Text..."
+   },
+   "lblAnonCaps": {
+      "message": "ANONYM POSTEN"
+   },
+   "lblAnonPost": {
+      "message": "Anonym posten"
+   },
+   "lblAutoLoop": {
+      "message": "Endlos-Schleife (Auto)"
+   },
+   "lblAutoMatch": {
+      "message": "Gruppen auto-zuweisen"
+   },
+   "lblBalanced": {
+      "message": "Ausgewogen"
+   },
+   "lblBgColor": {
+      "message": "Hintergrundfarbe"
+   },
+   "lblCampAssets": {
+      "message": "Kampagnen-Assets (Optional)"
+   },
+   "lblCampaigns": {
+      "message": "Kampagnen (Beta)"
+   },
+   "lblCategories": {
+      "message": "Kategorien"
+   },
+   "lblCompress": {
+      "message": "Bilder komprimieren"
+   },
+   "lblCondition": {
+      "message": "Zustand"
+   },
+   "lblConstructing": {
+      "message": "Konstruiere Strategie..."
+   },
+   "lblCount": {
+      "message": "Anzahl"
+   },
+   "lblDays": {
+      "message": "Tage"
+   },
+   "lblDesc": {
+      "message": "Beschreibung"
+   },
+   "lblDetails": {
+      "message": "Posting-Details"
+   },
+   "lblDisableComm": {
+      "message": "Kommentare deaktivieren"
+   },
+   "lblDoorDrop": {
+      "message": "Lieferung an die Tür"
+   },
+   "lblDoorPickup": {
+      "message": "Abholung an der Tür"
+   },
+   "lblDropFiles": {
+      "message": "Bilder/Video ablegen"
+   },
+   "lblEmojis": {
+      "message": "Emojis"
+   },
+   "lblEmptyTemp": {
+      "message": "(Leere Vorlage)"
+   },
+   "lblEnableComm": {
+      "message": "Kommentare aktivieren"
+   },
+   "lblEndCamp": {
+      "message": "Kampagne hier beenden"
+   },
+   "lblFast": {
+      "message": "Schnell"
+   },
+   "lblFilterCat": {
+      "message": "Nach Kategorie filtern"
+   },
+   "lblFiltered": {
+      "message": "Gefiltert: $CAT$",
+      "placeholders": {
+         "cat": {
+            "content": "$1"
+         }
+      }
+   },
+   "lblFirstComm": {
+      "message": "Ersten Kommentar hinzufügen"
+   },
+   "lblFixedTimes": {
+      "message": "Feste Anzahl"
+   },
+   "lblFlowCtrl": {
+      "message": "Flusskontrolle"
+   },
+   "lblForever": {
+      "message": "Endlos"
+   },
+   "lblGen": {
+      "message": "Generiere"
+   },
+   "lblGenAiVar": {
+      "message": "KI-Variationen generieren"
+   },
+   "lblGoToStep": {
+      "message": "Zu Schritt"
+   },
+   "lblHrs": {
+      "message": "Std"
+   },
+   "lblInterval": {
+      "message": "Intervall"
+   },
+   "lblIssues": {
+      "message": "Probleme"
+   },
+   "lblJoinCount": {
+      "message": "Wie vielen Gruppen beitreten?"
+   },
+   "lblLicenseKey": {
+      "message": "Lizenzschlüssel:"
+   },
+   "lblLoadTemp": {
+      "message": "Lade Vorlagen..."
+   },
+   "lblMedia": {
+      "message": "Medien (Bilder & Videos)"
+   },
+   "lblMinMembers": {
+      "message": "Mindestanzahl Mitglieder:"
+   },
+   "lblMins": {
+      "message": "Min"
+   },
+   "lblMonthly": {
+      "message": "Monatlich"
+   },
+   "lblNightMode": {
+      "message": "Nacht-Posten vermeiden"
+   },
+   "lblNightModeCaps": {
+      "message": "NACHT-POSTEN VERMEIDEN"
+   },
+   "lblNoSavedTemp": {
+      "message": "Keine gespeicherten Vorlagen gefunden."
+   },
+   "lblNotConfigured": {
+      "message": "Nicht konfiguriert"
+   },
+   "lblNumVar": {
+      "message": "Anzahl der Variationen:"
+   },
+   "lblPickupOpts": {
+      "message": "Abholoptionen"
+   },
+   "lblPlansStart": {
+      "message": "Pläne ab"
+   },
+   "lblPostContent": {
+      "message": "Beitragsinhalt"
+   },
+   "lblPostScore": {
+      "message": "Post-Score:"
+   },
+   "lblPrice": {
+      "message": "Preis"
+   },
+   "lblProdName": {
+      "message": "Produkttitel"
+   },
+   "lblPublicMeet": {
+      "message": "Öffentliches Treffen"
+   },
+   "lblQuarterly": {
+      "message": "Vierteljährlich"
+   },
+   "lblQuickGroups": {
+      "message": "Ziel-Gruppensammlungen wählen"
+   },
+   "lblRepeat": {
+      "message": "Wiederhole:"
+   },
+   "lblSafe": {
+      "message": "Sicher"
+   },
+   "lblSafeDelay": {
+      "message": "Sicherheitsverzögerung bei Fehler"
+   },
+   "lblSafeDelayCaps": {
+      "message": "SICHERHEITSVERZÖGERUNG"
+   },
+   "lblSaveJoined": {
+      "message": "Neu beigetretene Gruppen speichern"
+   },
+   "lblSavedProds": {
+      "message": "Gespeicherte Produkte"
+   },
+   "lblSearchParam": {
+      "message": "Suchparameter"
+   },
+   "lblSecLevel": {
+      "message": "Sicherheitsstufe"
+   },
+   "lblSecLevelCaps": {
+      "message": "SICHERHEITSSTUFE"
+   },
+   "lblSelectTemp": {
+      "message": "Wählen Sie eine Post-Vorlage:"
+   },
+   "lblSequential": {
+      "message": "Sequenziell"
+   },
+   "lblSkipNet": {
+      "message": "Verbindungsprüfung deaktivieren"
+   },
+   "lblSortBy": {
+      "message": "Sortieren nach"
+   },
+   "lblSourceExist": {
+      "message": "Meine Vorlagen nutzen"
+   },
+   "lblSourceGen": {
+      "message": "KI schreibt alles"
+   },
+   "lblSpintax": {
+      "message": "Spintax"
+   },
+   "lblStartImm": {
+      "message": "Sofort starten"
+   },
+   "lblStatus": {
+      "message": "Status:"
+   },
+   "lblSupportId": {
+      "message": "Support-ID:"
+   },
+   "lblTargetSame": {
+      "message": "Ziel gleich wie:"
+   },
+   "lblTelemetry": {
+      "message": "Anonyme Nutzungsdaten erlauben"
+   },
+   "lblTemplateName": {
+      "message": "Vorlagenname"
+   },
+   "lblTimeRange": {
+      "message": "22:00 - 07:00"
+   },
+   "lblToday": {
+      "message": "Heute"
+   },
+   "lblTodayDate": {
+      "message": "Heute"
+   },
+   "lblVariations": {
+      "message": "Variationen"
+   },
+   "lblVarsLower": {
+      "message": "Variationen"
+   },
+   "lblVer": {
+      "message": "GroupPosting PRO Version: $VER$",
+      "placeholders": {
+         "ver": {
+            "content": "$1"
+         }
+      }
+   },
+   "lblWaitLabel": {
+      "message": "Warte:"
+   },
+   "lblWaitTime": {
+      "message": "Wartezeit"
+   },
+   "lblYearly": {
+      "message": "Jährlich"
+   },
+   "licIssueMsg": {
+      "message": "Ihr Lizenzschlüssel ist ungültig oder abgelaufen. Bitte prüfen Sie Ihren Schlüssel oder kaufen Sie einen neuen."
+   },
+   "licIssueTitle": {
+      "message": "Lizenzproblem"
+   },
+   "loadingMsg": {
+      "message": "Posten wird vorbereitet..."
+   },
+   "loadingNotify": {
+      "message": "Das Posten hat begonnen! Sie können in anderen Tabs surfen – wir machen im Hintergrund weiter."
+   },
+   "lockAiEnhance": {
+      "message": "KI-Textverbesserung ist eine \u003Cb>Pro-Funktion\u003C/b>.\u003Cbr>\u003Cbr>Posts sofort umschreiben (Conversion, Grammatik, Spintax).\u003Cbr>Upgraden zum Freischalten."
+   },
+   "lockAiGen": {
+      "message": "KI-Post-Generierung ist eine \u003Cb>Pro-Funktion\u003C/b>.\u003Cbr>\u003Cbr>Generieren Sie unbegrenzt konvertierende Posts.\u003Cbr>Upgraden zum Freischalten."
+   },
+   "lockAutoJoin": {
+      "message": "Auto-Beitritt ist eine \u003Cb>Pro-Funktion\u003C/b>.\u003Cbr>Gratis-Nutzer müssen manuell beitreten.\u003Cbr>\u003Cbr>Upgraden Sie, um Ihr Publikumswachstum zu automatisieren!"
+   },
+   "lockCampArch": {
+      "message": "Der KI-Kampagnen-Architekt ist eine \u003Cb>Pro-Funktion\u003C/b>.\u003Cbr>\u003Cbr>Er analysiert Ihr Ziel und baut vollautomatische Multi-Step-Kampagnen.\u003Cbr>Upgraden Sie für diese Power."
+   },
+   "lockCampResume": {
+      "message": "Keine Gratis-Posts mehr übrig. Bitte upgraden oder Lizenz aktivieren, um Kampagnen fortzusetzen."
+   },
+   "lockSchedule": {
+      "message": "Planung ist eine \u003Cb>Pro-Funktion\u003C/b>.\u003Cbr>Gratis-Nutzer können nur 'Jetzt Posten'.\u003Cbr>\u003Cbr>Upgraden Sie, um den Planer freizuschalten."
+   },
+   "lockScheduleSave": {
+      "message": "Zukünftiges Posten ist eine \u003Cb>Pro-Funktion\u003C/b>.\u003Cbr>Gratis-Nutzer können nur 'Jetzt Posten'.\u003Cbr>\u003Cbr>Upgraden Sie für Planer, Auto-Kampagnen und mehr!"
+   },
+   "menuAbout": {
+      "message": "Über"
+   },
+   "menuHelp": {
+      "message": "Hilfe"
+   },
+   "missedActionDesc": {
+      "message": "Diese einmaligen Posts wurden nicht gesendet. Bitte wählen Sie eine Aktion."
+   },
+   "missedActionHeader": {
+      "message": "Handlung erforderlich: Verpasste Posts"
+   },
+   "missedWasDue": {
+      "message": "War fällig: $DATE$",
+      "placeholders": {
+         "date": {
+            "content": "$1"
+         }
+      }
+   },
+   "modalActionQueued": {
+      "message": "Aktion eingereiht"
+   },
+   "modalAiLock": {
+      "message": "KI-Variationen sind eine Pro-Funktion. Bitte deaktivieren oder upgraden."
+   },
+   "modalCategoryTitle": {
+      "message": "Kategorien verwalten"
+   },
+   "modalConfirmDel": {
+      "message": "Löschen bestätigen"
+   },
+   "modalConfirmDelBody": {
+      "message": "Sind Sie sicher, dass Sie diesen geplanten Post löschen möchten? Dies kann nicht rückgängig gemacht werden."
+   },
+   "modalConfirmPost": {
+      "message": "Posting-Details bestätigen"
+   },
+   "modalDailyLimitBody": {
+      "message": "Sie haben Ihre \u003Cb>$COUNT$ Gratis-Posts\u003C/b> für heute verbraucht.",
+      "placeholders": {
+         "count": {
+            "content": "$1",
+            "example": "3"
+         }
+      }
+   },
+   "modalDailyLimitTitle": {
+      "message": "Tageslimit erreicht"
+   },
+   "modalDeleted": {
+      "message": "Der geplante Post wurde gelöscht."
+   },
+   "modalHelp": {
+      "message": "Hilfe & Support"
+   },
+   "modalImportSelect": {
+      "message": "Ausgewählte importieren"
+   },
+   "modalImportTitle": {
+      "message": "Aus Gruppensammlung importieren"
+   },
+   "modalInputRequired": {
+      "message": "Eingabe erforderlich"
+   },
+   "modalLicReq": {
+      "message": "Lizenz erforderlich"
+   },
+   "modalLicReqBody": {
+      "message": "Ihre Lizenz ist ungültig oder abgelaufen. Sie können keine geplanten Aufgaben ausführen.\u003Cbr>\u003Cbr>Bitte aktivieren Sie sie, um fortzufahren."
+   },
+   "modalLimitBody": {
+      "message": "Sie haben \u003Cb>$TOTAL$ Gruppen\u003C/b> gewählt, aber die Gratis-Version ist auf \u003Cb>$LIMIT$ pro Durchlauf\u003C/b> begrenzt.\u003Cbr>Wir posten nur in die ersten $ACTUAL$ Gruppen.",
+      "placeholders": {
+         "actual": {
+            "content": "$3"
+         },
+         "limit": {
+            "content": "$2"
+         },
+         "total": {
+            "content": "$1"
+         }
+      }
+   },
+   "modalLimitTitle": {
+      "message": "Limit der Gratis-Version"
+   },
+   "modalNoContent": {
+      "message": "Bitte erstellen Sie Inhalt zum Planen."
+   },
+   "modalNoGroups": {
+      "message": "Bitte wählen Sie mindestens eine Gruppe."
+   },
+   "modalProDesc": {
+      "message": "Entfernen Sie Tageslimits, schalten Sie KI frei und skalieren Sie."
+   },
+   "modalProFeature": {
+      "message": "Pro-Funktion"
+   },
+   "modalProTitle": {
+      "message": "Unbegrenzte Power freischalten"
+   },
+   "modalQueuedImmediate": {
+      "message": "Der Post wurde für den sofortigen Start eingereiht."
+   },
+   "modalRunNowBody": {
+      "message": "Dies reiht \u003Cstrong>„$TITLE$“\u003C/strong> für den sofortigen Start ein.\u003Cbr>\u003Cbr>Der Zeitplan wird \u003Cstrong>nicht\u003C/strong> gelöscht und läuft zu den zukünftigen Zeiten weiter.",
+      "placeholders": {
+         "title": {
+            "content": "$1"
+         }
+      }
+   },
+   "modalRunNowTitle": {
+      "message": "Post jetzt starten?"
+   },
+   "modalSplitTitle": {
+      "message": "Gruppensammlung aufteilen"
+   },
+   "modalSuccessQueue": {
+      "message": "Der Post wurde eingereiht und startet in Kürze."
+   },
+   "modalTargetConfirm": {
+      "message": "Auswahl bestätigen"
+   },
+   "modalTargetTitle": {
+      "message": "Erweiterte Gruppenauswahl"
+   },
+   "modeClassic": {
+      "message": "Klassik-Modus"
+   },
+   "modeSpeed": {
+      "message": "Speed-Modus"
+   },
+   "msgSendingStop": {
+      "message": "Sende Stopp-Signal..."
+   },
+   "msgStopping": {
+      "message": "Stoppe..."
+   },
+   "navCampaigns": {
+      "message": "Kampagnen"
+   },
+   "navCompose": {
+      "message": "Verfassen"
+   },
+   "navHistory": {
+      "message": "Verlauf"
+   },
+   "navTemplates": {
+      "message": "Vorlagen"
+   },
+   "navUpcoming": {
+      "message": "Geplant"
+   },
+   "nextAction": {
+      "message": "Nächste Aktion"
+   },
+   "noHistory": {
+      "message": "Kein Verlauf gefunden."
+   },
+   "noMatch": {
+      "message": "Keine Logs entsprechen Ihren Filtern."
+   },
+   "notifHeader": {
+      "message": "Benachrichtigungen"
+   },
+   "notifMissedRecur": {
+      "message": "Der wiederkehrende Post \u003Cstrong>„$TITLE$“\u003C/strong> wurde am $DATE$ verpasst. Er wurde automatisch neu geplant.",
+      "placeholders": {
+         "date": {
+            "content": "$2"
+         },
+         "title": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayAutoClose": {
+      "message": "Der Tab wird automatisch geschlossen."
+   },
+   "overlayCloseBtn": {
+      "message": "Diese Benachrichtigung schließen"
+   },
+   "overlayDesc": {
+      "message": "Bitte lassen Sie dieses Browserfenster geöffnet. Die Automatisierung läuft im Hintergrund weiter und der Tab schließt sich automatisch."
+   },
+   "overlayDlVideo": {
+      "message": "Lade Video aus Speicher (große Datei)..."
+   },
+   "overlayDupRetry": {
+      "message": "Duplizierter Inhalt erkannt. Modifiziere und versuche es erneut..."
+   },
+   "overlayEnd": {
+      "message": "Ende der Liste erreicht oder keine beitretbaren Gruppen mehr."
+   },
+   "overlayFinalize": {
+      "message": "Finalisiere Post"
+   },
+   "overlayFinished": {
+      "message": "Fertig. $COUNT$ Gruppen beigetreten.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayHumanPause": {
+      "message": "Mache eine kurze 'menschliche' Pause... (Level: $LEVEL$)",
+      "placeholders": {
+         "level": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayInit": {
+      "message": "Initialisiere Prozess..."
+   },
+   "overlayInsertImg": {
+      "message": "Füge Bilder ein"
+   },
+   "overlayInsertText": {
+      "message": "Füge Text ein"
+   },
+   "overlayJoined": {
+      "message": "($CURRENT$/$TOTAL$) „$GROUP$“ beigetreten. \u003Cbr>\u003Cb>Hinweis:\u003C/b> Zu schnelles Beitreten kann Ihr Konto gefährden.",
+      "placeholders": {
+         "current": {
+            "content": "$1"
+         },
+         "group": {
+            "content": "$3"
+         },
+         "total": {
+            "content": "$2"
+         }
+      }
+   },
+   "overlayLongPause": {
+      "message": "Mache eine längere Sicherheitspause ($SEC$ Sek)...",
+      "placeholders": {
+         "sec": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayLonger": {
+      "message": "Dauert länger als gewöhnlich... Priorität wird erhöht."
+   },
+   "overlayNewContent": {
+      "message": "Neue Inhalte erkannt, scrolle weiter..."
+   },
+   "overlayNoNew": {
+      "message": "Keine neuen Gruppen gefunden. Versuch $ATTEMPT$/5...",
+      "placeholders": {
+         "attempt": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayOpenModal": {
+      "message": "Öffne Dialog"
+   },
+   "overlayPause": {
+      "message": "„$GROUP$“ gefunden. Pausiere für $SEC$ Sek...",
+      "placeholders": {
+         "group": {
+            "content": "$1"
+         },
+         "sec": {
+            "content": "$2"
+         }
+      }
+   },
+   "overlayPendingVerify": {
+      "message": "Facebook meldet 'Ausstehend', überprüfe Status..."
+   },
+   "overlayPostData": {
+      "message": "Post-Daten abgerufen"
+   },
+   "overlayPreText": {
+      "message": "Prüfe Seitenbereitschaft"
+   },
+   "overlayProcessing": {
+      "message": "Verarbeite Daten..."
+   },
+   "overlaySaved": {
+      "message": "$COUNT$ Gruppen in Sammlung „$NAME$“ gespeichert.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         },
+         "name": {
+            "content": "$2"
+         }
+      }
+   },
+   "overlaySaving": {
+      "message": "Speichere beigetretene Gruppen in neuer Sammlung..."
+   },
+   "overlayScan": {
+      "message": "Scanne Seite nach neuen Gruppen..."
+   },
+   "overlayScrapeEmpty": {
+      "message": "Scraping beendet, aber keine gültigen Gruppen gefunden."
+   },
+   "overlayScrapeNoItems": {
+      "message": "Scraping beendet, aber keine Gruppenelemente gefunden. Stellen Sie sicher, dass die Sprache auf Englisch (US) steht."
+   },
+   "overlayScrapeSuccess": {
+      "message": "ERFOLG! $COUNT$ Gruppen wurden in der neuen Sammlung „$NAME$“ gespeichert.\u003Cbr>\u003Cbr>Dieser Tab schließt sich automatisch.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         },
+         "name": {
+            "content": "$2"
+         }
+      }
+   },
+   "overlayScrolling": {
+      "message": "Scrolle zum Seitenende..."
+   },
+   "overlaySessionComplete": {
+      "message": "Sitzung abgeschlossen. $COUNT$ Gruppen beigetreten.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlaySetColor": {
+      "message": "Setze Hintergrundfarbe"
+   },
+   "overlaySlowLoad": {
+      "message": "Inhalt lädt langsam, erhöhe Verzögerung auf $MS$ ms.",
+      "placeholders": {
+         "ms": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayTitle": {
+      "message": "GroupPosting arbeitet"
+   },
+   "overlayUnresponsive": {
+      "message": "Button reagiert nicht. Versuche Wiederherstellung..."
+   },
+   "overlayUploading": {
+      "message": "Medien werden hochgeladen. Dies kann einige Minuten dauern..."
+   },
+   "overlayVerify": {
+      "message": "Verifiziere Post-Status..."
+   },
+   "overlayWaitLoad": {
+      "message": "Scrolle & warte auf neue Inhalte..."
+   },
+   "panelSpintaxGuide": {
+      "message": "Spintax-Anleitung:"
+   },
+   "phAssign": {
+      "message": "Zuweisen..."
+   },
+   "phCollName": {
+      "message": "Name der Gruppensammlung"
+   },
+   "phDescribeGoal": {
+      "message": "Beschreiben Sie Ihr Ziel..."
+   },
+   "phFirstComm": {
+      "message": "Geben Sie hier Ihren Kommentar ein..."
+   },
+   "phQuickGroups": {
+      "message": "Klicken zur Auswahl"
+   },
+   "phSaveGroupAs": {
+      "message": "Gruppenname zum Speichern eingeben"
+   },
+   "phSearchGroups": {
+      "message": "Gruppen suchen"
+   },
+   "phSearchHist": {
+      "message": "Verlauf durchsuchen..."
+   },
+   "phSearchParam": {
+      "message": "Suchbegriff eingeben (z.B. Marketing)"
+   },
+   "phSearchTemp": {
+      "message": "Vorlagen suchen..."
+   },
+   "phSelectGroups": {
+      "message": "Wählen Sie eine oder mehrere Sammlungen..."
+   },
+   "phSelectTemplates": {
+      "message": "Wählen Sie eine oder mehrere Vorlagen..."
+   },
+   "phTemplateName": {
+      "message": "Geben Sie einen Namen für diese Vorlage ein"
+   },
+   "postingCompleted": {
+      "message": "Posten abgeschlossen!"
+   },
+   "prevClose": {
+      "message": "Vorschau schließen"
+   },
+   "prevDisclaimer": {
+      "message": "Dies ist eine Vorschau. Das tatsächliche Aussehen kann abweichen."
+   },
+   "prevNextVar": {
+      "message": "Nächste Var"
+   },
+   "prevReSpin": {
+      "message": "Neu würfeln"
+   },
+   "prevTitle": {
+      "message": "Post-Vorschau"
+   },
+   "prevVar": {
+      "message": "Var"
+   },
+   "qualBonusEmoji": {
+      "message": "Emoji-Bonus angewendet"
+   },
+   "qualBonusLength": {
+      "message": "Perfekte Länge"
+   },
+   "qualBonusSpintax": {
+      "message": "Spintax-Bonus angewendet"
+   },
+   "qualCatEngage": {
+      "message": "Engagement"
+   },
+   "qualCatFormat": {
+      "message": "Formatierung"
+   },
+   "qualCatLength": {
+      "message": "Inhaltslänge"
+   },
+   "qualCatMedia": {
+      "message": "Medien"
+   },
+   "qualCatPolicy": {
+      "message": "Richtlinien-Compliance"
+   },
+   "qualFormatBasic": {
+      "message": "Basis"
+   },
+   "qualFormatEx": {
+      "message": "Exzellent"
+   },
+   "qualFormatGood": {
+      "message": "Gut"
+   },
+   "qualFormatMod": {
+      "message": "Moderat"
+   },
+   "qualLevelBad": {
+      "message": "Verbesserungswürdig"
+   },
+   "qualLevelGreat": {
+      "message": "Großartig"
+   },
+   "qualLevelOk": {
+      "message": "Gut"
+   },
+   "qualLevelPerfect": {
+      "message": "Perfekt"
+   },
+   "qualSentNeg": {
+      "message": "Negativ"
+   },
+   "qualSentNeutral": {
+      "message": "Neutral"
+   },
+   "qualSentPos": {
+      "message": "Positiv"
+   },
+   "qualSentSomewhat": {
+      "message": "Etwas Positiv"
+   },
+   "qualSentVeryPos": {
+      "message": "Sehr Positiv"
+   },
+   "qualStatFormat": {
+      "message": "Formatierung"
+   },
+   "qualStatSent": {
+      "message": "Stimmung"
+   },
+   "qualStatWords": {
+      "message": "Wortanzahl"
+   },
+   "qualTitle": {
+      "message": "Post-Qualitäts-Score"
+   },
+   "qualViewTips": {
+      "message": "Details und Vorschläge ansehen"
+   },
+   "qualWarnPhone": {
+      "message": "Telefonnummer erkannt ($COUNT$)",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "qualWarnProf": {
+      "message": "Kraftausdrücke erkannt ($COUNT$)",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "quillPhQuick": {
+      "message": "Schreiben Sie Ihren Post hier..."
+   },
+   "quillPhTemplate": {
+      "message": "Schreiben Sie hier Ihren Post...\n\nMulti-Level Spintax unterstützt.\nNutzen Sie {Option1|Option2} für Spintax."
+   },
+   "rateBadReward": {
+      "message": "Ihr Feedback hilft uns direkt bei neuen Features und Fixes."
+   },
+   "rateBadText": {
+      "message": "Es tut uns leid, dass GroupPosting Pro Ihre Erwartungen noch nicht erfüllt hat. Haben Sie einen Moment, um uns zu sagen, wie wir uns verbessern können?"
+   },
+   "rateBadTitle": {
+      "message": "Danke für Ihre Ehrlichkeit!"
+   },
+   "rateBtnFeedback": {
+      "message": "Feedback geben & Posts erhalten"
+   },
+   "rateBtnLater": {
+      "message": "Vielleicht später"
+   },
+   "rateBtnNo": {
+      "message": "Nein danke"
+   },
+   "rateBtnReview": {
+      "message": "Im Store bewerten & Posts erhalten"
+   },
+   "rateBtnSubmit": {
+      "message": "Bewertung senden"
+   },
+   "rateErr": {
+      "message": "Bitte wählen Sie eine Bewertung."
+   },
+   "rateGoodReward": {
+      "message": "Ihre Bewertung hilft anderen Gruppen-Admins, dieses Tool zu finden!!"
+   },
+   "rateGoodText": {
+      "message": "Würden Sie eine kurze Bewertung im Chrome Store hinterlassen? Das hilft uns sehr!"
+   },
+   "rateGoodTitle": {
+      "message": "Großartig! Freut uns!"
+   },
+   "rateText": {
+      "message": "Wie ist Ihre Erfahrung mit GroupPosting Pro? Ihre Bewertung hilft uns!"
+   },
+   "rateTitle": {
+      "message": "Wie läuft's?"
+   },
+   "readyMsg": {
+      "message": "Sende $TEMPLATES$ Vorlage(n) an $GROUPS$ Gruppe(n).",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "templates": {
+            "content": "$1"
+         }
+      }
+   },
+   "readyTitle": {
+      "message": "Bereit zum Start"
+   },
+   "restoreErrJson": {
+      "message": "Bitte wählen Sie eine gültige JSON-Backup-Datei."
+   },
+   "restoreErrMsg": {
+      "message": "Datei nicht lesbar. Evtl. beschädigt oder falsches Format. Fehler: $ERR$",
+      "placeholders": {
+         "err": {
+            "content": "$1"
+         }
+      }
+   },
+   "restoreErrTitle": {
+      "message": "Wiederherstellungsfehler"
+   },
+   "restoreMsg": {
+      "message": "Dies fügt $TAGS$ Vorlagen und $GROUPS$ Sammlungen zu Ihren Daten hinzu. Fortfahren?",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "tags": {
+            "content": "$1"
+         }
+      }
+   },
+   "restoreSuccessMsg": {
+      "message": "Erfolgreich $TAGS$ neue Vorlagen und $GROUPS$ neue Sammlungen hinzugefügt.",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "tags": {
+            "content": "$1"
+         }
+      }
+   },
+   "restoreSuccessTitle": {
+      "message": "Wiederherstellung erfolgreich"
+   },
+   "restoreTitle": {
+      "message": "Wiederherstellung bestätigen"
+   },
+   "retryMsg": {
+      "message": "Möchten Sie versuchen, die $COUNT$ fehlgeschlagenen/übersprungenen Posts erneut zu senden?",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "retryTitle": {
+      "message": "Einige Posts kamen nicht an."
+   },
+   "revAwesome": {
+      "message": "Großartig!"
+   },
+   "revBtn": {
+      "message": "Im Store bewerten & Posts erhalten"
+   },
+   "revText": {
+      "message": "Würden Sie eine kurze Bewertung hinterlassen?"
+   },
+   "saveCollection": {
+      "message": "Gruppensammlung speichern"
+   },
+   "savePercent": {
+      "message": "$PERCENT$% sparen",
+      "placeholders": {
+         "percent": {
+            "content": "$1"
+         }
+      }
+   },
+   "schedDate": {
+      "message": "Datum"
+   },
+   "schedDaysMonth": {
+      "message": "Monatstage wählen"
+   },
+   "schedDaysWeek": {
+      "message": "Wochentage wählen"
+   },
+   "schedErrPast": {
+      "message": "Geplante Zeit darf nicht in der Vergangenheit liegen."
+   },
+   "schedFreq": {
+      "message": "Häufigkeit"
+   },
+   "schedSave": {
+      "message": "Zeitplan speichern"
+   },
+   "schedTime": {
+      "message": "Uhrzeit"
+   },
+   "schedUpdate": {
+      "message": "Zeitplan aktualisieren"
+   },
+   "secBackup": {
+      "message": "Sichern & Wiederherstellen"
+   },
+   "secDescBalanced": {
+      "message": "Balanciert Speed & Sicherheit mit moderaten Zufallsverzögerungen. Empfohlen."
+   },
+   "secDescFast": {
+      "message": "Priorisiert Geschwindigkeit, minimale Verzögerung. Für etablierte Konten."
+   },
+   "secDescSafe": {
+      "message": "Priorisiert Sicherheit. Lange Verzögerungen, Fokus-Tab, menschliches Verhalten. Am sichersten."
+   },
+   "securePayment": {
+      "message": "Sichere Zahlung via LemonSqueezy."
+   },
+   "spinAdd": {
+      "message": "Weitere Variation hinzufügen"
+   },
+   "spinApply": {
+      "message": "Spintax einfügen"
+   },
+   "spinErr": {
+      "message": "Bitte fügen Sie mindestens eine Variation hinzu."
+   },
+   "spinInstr": {
+      "message": "Fügen Sie Variationen hinzu. (Format: {Option1|Option2})."
+   },
+   "spinPreview": {
+      "message": "Live-Vorschau der Variationen"
+   },
+   "spinShuffle": {
+      "message": "Mischen"
+   },
+   "spinTitle": {
+      "message": "Spintax-Variationen erstellen"
+   },
+   "splitBtn": {
+      "message": "Sammlung teilen"
+   },
+   "splitErrMin": {
+      "message": "Sie brauchen mindestens 2 Links zum Teilen."
+   },
+   "splitErrValid": {
+      "message": "Bitte geben Sie eine gültige Anzahl ein."
+   },
+   "splitFeedbackExact": {
+      "message": "Erstellt \u003Cstrong>$PIECES$\u003C/strong> Sammlungen mit je \u003Cstrong>$LINKS$\u003C/strong> Links.",
+      "placeholders": {
+         "links": {
+            "content": "$2"
+         },
+         "pieces": {
+            "content": "$1"
+         }
+      }
+   },
+   "splitFeedbackMixed": {
+      "message": "Erstellt \u003Cstrong>$PIECES$\u003C/strong> Sammlungen. $BIG$ haben $L1$ Links, $SMALL$ haben $L2$.",
+      "placeholders": {
+         "big": {
+            "content": "$2"
+         },
+         "l1": {
+            "content": "$3"
+         },
+         "l2": {
+            "content": "$5"
+         },
+         "pieces": {
+            "content": "$1"
+         },
+         "small": {
+            "content": "$4"
+         }
+      }
+   },
+   "splitInfo": {
+      "message": "Diese Sammlung hat \u003Cstrong>$COUNT$\u003C/strong> Links.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "splitLblPieces": {
+      "message": "Wie viele kleinere Sammlungen möchten Sie?"
+   },
+   "splitSuccess": {
+      "message": "Sammlung in $COUNT$ Teile gesplittet.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "splitTitle": {
+      "message": "Gruppensammlung aufteilen"
+   },
+   "spotCampDesc": {
+      "message": "Verketten Sie Posts, setzen Sie Verzögerungen und nutzen Sie Endlosschleifen."
+   },
+   "spotCampTitle": {
+      "message": "Kampagnen-Automatisierung"
+   },
+   "spotStepExtract": {
+      "message": "\u003Cstrong>Extrahieren\u003C/strong>"
+   },
+   "spotStepLoop": {
+      "message": "\u003Cstrong>Schleife\u003C/strong> setzen"
+   },
+   "spotStepPost": {
+      "message": "\u003Cstrong>Post\u003C/strong>-Block hinzufügen"
+   },
+   "spotStepSplit": {
+      "message": "Listen \u003Cstrong>Teilen\u003C/strong>"
+   },
+   "spotStepWait": {
+      "message": "\u003Cstrong>Warte\u003C/strong>-Block hinzufügen"
+   },
+   "statFailedSkipped": {
+      "message": "Fehlgeschlagen/Übersprungen"
+   },
+   "statSuccessful": {
+      "message": "Erfolgreich"
+   },
+   "statTotal": {
+      "message": "Gesamt"
+   },
+   "statusFailed": {
+      "message": "Fehlgeschlagen"
+   },
+   "statusPending": {
+      "message": "Ausstehend"
+   },
+   "statusSkipped": {
+      "message": "Übersprungen"
+   },
+   "statusSuccess": {
+      "message": "Erfolg"
+   },
+   "stepImport": {
+      "message": "Gruppen importieren"
+   },
+   "stepPost": {
+      "message": "Post senden"
+   },
+   "stepPro": {
+      "message": "Pro aktivieren"
+   },
+   "stepTemplate": {
+      "message": "Vorlage erstellen"
+   },
+   "stepVars": {
+      "message": "Variationen hinzufügen"
+   },
+   "stuckReset": {
+      "message": "Hängt das Posten? - Nur bei Problemen nutzen."
+   },
+   "sumContent": {
+      "message": "Inhalt"
+   },
+   "sumDuration": {
+      "message": "Geschätzte Dauer"
+   },
+   "sumGroups": {
+      "message": "$ACTUAL$ Gruppen",
+      "placeholders": {
+         "actual": {
+            "content": "$1"
+         }
+      }
+   },
+   "sumOverview": {
+      "message": "Übersicht"
+   },
+   "sumTruncated": {
+      "message": "(von $TOTAL$)",
+      "placeholders": {
+         "total": {
+            "content": "$1"
+         }
+      }
+   },
+   "sumVariations": {
+      "message": "$COUNT$ Variation(en)",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "sumVolume": {
+      "message": "Menge"
+   },
+   "tabAdv": {
+      "message": "Erweitertes Posten"
+   },
+   "tabGroupColls": {
+      "message": "Gruppensammlungen"
+   },
+   "tabPostTemps": {
+      "message": "Post-Vorlagen"
+   },
+   "tabQuick": {
+      "message": "Einfacher Post"
+   },
+   "tabUpcoming": {
+      "message": "Geplant"
+   },
+   "tagCompat": {
+      "message": "Max. Kompatibilität"
+   },
+   "tagRec": {
+      "message": "Empfohlen"
+   },
+   "targeterDedup": {
+      "message": " ($COUNT$ Duplikat(e) entfernt)",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "targeterDescFresh": {
+      "message": "Wählt bevorzugt Gruppen, in denen Sie kürzlich nicht gepostet haben."
+   },
+   "targeterInputPostTo": {
+      "message": "Posten in"
+   },
+   "targeterInputRandom": {
+      "message": "zufällige Gruppen"
+   },
+   "targeterLblAll": {
+      "message": "Postet in \u003Cstrong>alle $COUNT$\u003C/strong> davon.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "targeterLblRandom": {
+      "message": "Postet zufällig in \u003Cstrong>$COUNT$\u003C/strong> davon.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "targeterModeAll": {
+      "message": "In alle posten"
+   },
+   "targeterModeRandom": {
+      "message": "Zufällige Teilmenge"
+   },
+   "targeterNoColls": {
+      "message": "Keine Gruppensammlungen gefunden. Bitte erstellen Sie zuerst eine auf der \"Gruppen\"-Seite."
+   },
+   "targeterPhSearch": {
+      "message": "Alle Ihre Gruppen durchsuchen..."
+   },
+   "targeterStep1": {
+      "message": "1. Gruppensammlungen wählen"
+   },
+   "targeterStep2": {
+      "message": "2. (Optional) Spezifische Gruppen hinzufügen"
+   },
+   "targeterStep3": {
+      "message": "3. Posting-Strategie konfigurieren"
+   },
+   "targeterSummaryInit": {
+      "message": "Wählen Sie Sammlungen oder Gruppen, um Optionen zu sehen."
+   },
+   "targeterSummaryMain": {
+      "message": "Sie haben \u003Cstrong>$COUNT$\u003C/strong> einzigartige Zielgruppen ausgewählt.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "targeterToggleFresh": {
+      "message": "Frische Gruppen priorisieren"
+   },
+   "timeInDays": {
+      "message": "in $COUNT$ Tag(en)",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "timeInHours": {
+      "message": "in $HOURS$ Std $MINS$ Min",
+      "placeholders": {
+         "hours": {
+            "content": "$1"
+         },
+         "mins": {
+            "content": "$2"
+         }
+      }
+   },
+   "timeInMins": {
+      "message": "in $MINS$ Min",
+      "placeholders": {
+         "mins": {
+            "content": "$1"
+         }
+      }
+   },
+   "timeSoon": {
+      "message": "in \u003C 1 Min"
+   },
+   "tipFmtBold": {
+      "message": "Nutzen Sie Fettdruck, um Punkte hervorzuheben."
+   },
+   "tipFmtEx": {
+      "message": "Exzellente Formatierung! Leicht zu lesen."
+   },
+   "tipFmtHead": {
+      "message": "Erwägen Sie Überschriften zur Strukturierung."
+   },
+   "tipFmtList": {
+      "message": "Aufzählungen machen Informationen scannbar."
+   },
+   "tipGroupsDesc": {
+      "message": "Organisieren Sie Gruppen nach Nischen, um zielgenau zu posten."
+   },
+   "tipLenGood": {
+      "message": "Tolle Arbeit! Ihr Post hat eine gute Länge."
+   },
+   "tipLenPerfect": {
+      "message": "Perfekt! Ihr Post hat die ideale Länge für hohes Engagement."
+   },
+   "tipLenShort": {
+      "message": "Ihr Post ist etwas kurz. Mehr Details könnten helfen."
+   },
+   "tipLenStart": {
+      "message": "Beginnen Sie zu schreiben, um Empfehlungen zu sehen."
+   },
+   "tipMediaAdd": {
+      "message": "Bilder oder Videos können das Engagement signifikant steigern."
+   },
+   "tipMediaGood": {
+      "message": "Toll! Medien helfen beim Engagement."
+   },
+   "tipMediaPerfect": {
+      "message": "Perfekt! Mehrere Medien erhöhen das Engagement deutlich."
+   },
+   "tipPolPhone": {
+      "message": "Telefonnummern erkannt. Dies könnte Plattform-Einschränkungen auslösen."
+   },
+   "tipPolProf": {
+      "message": "Potenziell problematische Sprache erkannt. Bitte überarbeiten."
+   },
+   "tipSegment": {
+      "message": "Nach Nische segmentieren"
+   },
+   "tipSentEx": {
+      "message": "Exzellent! Sehr positive Stimmung, das fördert Engagement."
+   },
+   "tipSentGood": {
+      "message": "Toll! Positiver Ton erkannt."
+   },
+   "tipSentImprove": {
+      "message": "Erwägen Sie eine positivere Sprache."
+   },
+   "tipStepAI": {
+      "message": "\u003Cstrong>KI\u003C/strong> Umschreiben"
+   },
+   "tipStepExtract": {
+      "message": "\u003Cstrong>Extrahieren\u003C/strong>"
+   },
+   "tipStepSeg": {
+      "message": "Nischen-\u003Cstrong>Segmentierung\u003C/strong>"
+   },
+   "tipStepSpin": {
+      "message": "Nutze \u003Cstrong>Spintax\u003C/strong>"
+   },
+   "tipStepSplit": {
+      "message": "Listen \u003Cstrong>Teilen\u003C/strong>"
+   },
+   "tipStepVar": {
+      "message": "Erstelle \u003Cstrong>Variationen\u003C/strong>"
+   },
+   "tipTemplates": {
+      "message": "Verbessern Sie Ihre Vorlagen"
+   },
+   "tipTemplatesDesc": {
+      "message": "Vorlagen sparen Zeit und halten Ihre Nachrichten konsistent."
+   },
+   "tour1Text": {
+      "message": "Der sicherste und mächtigste Weg, Ihre Facebook-Gruppen-Reichweite zu automatisieren."
+   },
+   "tour1Title": {
+      "message": "Willkommen bei GroupPosting Pro!"
+   },
+   "tour2Text": {
+      "message": "Starten Sie hier. Erstellen Sie wiederverwendbare Post-Vorlagen und organisieren Sie Zielgruppen in Sammlungen."
+   },
+   "tour2Title": {
+      "message": "1. Vorlagen erstellen"
+   },
+   "tour3Text": {
+      "message": "Nutzen Sie 'Einfacher Post' für schnelle Nachrichten oder den 'Erweiterten Planer' für die Zukunft."
+   },
+   "tour3Title": {
+      "message": "2. Verfassen & Planen"
+   },
+   "tour4Text": {
+      "message": "Bauen Sie mächtige Workflows. Verketten Sie Posts, setzen Sie Verzögerungen und nutzen Sie Schleifen."
+   },
+   "tour4Title": {
+      "message": "3. Automatisierte Kampagnen"
+   },
+   "tour5Text": {
+      "message": "Sehen Sie Logs jedes Durchlaufs. Prüfen Sie Erfolg/Fehler und wiederholen Sie mit einem Klick."
+   },
+   "tour5Title": {
+      "message": "4. Verlauf verfolgen"
+   },
+   "tour6Text": {
+      "message": "Wir haben einige Beispielvorlagen für Sie erstellt. Klicken Sie unten, um zu starten!"
+   },
+   "tour6Title": {
+      "message": "Sie sind bereit!"
+   },
+   "typeManual": {
+      "message": "Manuell"
+   },
+   "typeRetry": {
+      "message": "Wiederholung"
+   },
+   "typeScheduled": {
+      "message": "Geplant"
+   },
+   "unitMin": {
+      "message": "Min"
+   },
+   "unitPosts": {
+      "message": "Posts"
+   },
+   "updateCollection": {
+      "message": "Gruppensammlung aktualisieren"
+   },
+   "valNeutral": {
+      "message": "Neutral"
+   },
+   "valNo": {
+      "message": "Nein"
+   },
+   "valYes": {
+      "message": "Ja"
+   },
+   "warnFbLimit": {
+      "message": "Facebook limitiert Beitritte! Max. 25 pro Tag empfohlen."
+   },
+   "warnOnline": {
+      "message": "Ihr Browser muss geöffnet sein, damit Posts gesendet werden."
+   },
+   "warnQuick": {
+      "message": "Quick Post nutzt den Klassik-Modus & Standardeinstellungen."
+   },
+   "welcomeProMsg": {
+      "message": "Lizenz erfolgreich aktiviert! Alle Funktionen sind nun freigeschaltet."
+   },
+   "welcomeProTitle": {
+      "message": "Willkommen bei Pro"
+   },
+   "wizAnalyzing": {
+      "message": "Analysiere Ziel gegen $COUNT$ Gruppen...",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "wizBtnAnalyzing": {
+      "message": "Analysiere..."
+   },
+   "wizBuildError": {
+      "message": "Builder-Fehler"
+   },
+   "wizBuildMsg": {
+      "message": "Die KI hat eine Strategie erstellt, aber wir konnten sie nicht platzieren. Fehler: $ERR$",
+      "placeholders": {
+         "err": {
+            "content": "$1"
+         }
+      }
+   },
+   "wizEmptyMsg": {
+      "message": "Die KI lieferte eine leere Strategie. Bitte fügen Sie mehr Details hinzu."
+   },
+   "wizEmptyTitle": {
+      "message": "Ungültiges Ergebnis"
+   },
+   "wizEnterGoal": {
+      "message": "Bitte beschreiben Sie Ihr Kampagnenziel (z.B. 'Webinar nächsten Freitag bewerben')."
+   },
+   "wizError": {
+      "message": "Verbindung fehlgeschlagen. Bitte laden Sie die Erweiterung neu."
+   },
+   "wizFailedMsg": {
+      "message": "Die KI konnte keine Strategie erstellen. Bitte versuchen Sie es erneut oder vereinfachen Sie den Prompt."
+   },
+   "wizFailedTitle": {
+      "message": "KI-Generierung fehlgeschlagen"
+   },
+   "wizInputReq": {
+      "message": "Eingabe erforderlich"
+   },
+   "wizNoTemplate": {
+      "message": "Bitte wählen Sie mindestens eine Vorlage."
+   },
+   "wizSuccessMsg": {
+      "message": "KI hat erfolgreich \u003Cb>$COUNT$ Schritte\u003C/b> basierend auf Ihrem Ziel erstellt.\u003Cbr>\u003Cbr>Überprüfen Sie das Setup und klicken Sie auf \u003Cb>Speichern\u003C/b>!",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "wizSuccessTitle": {
+      "message": "Strategie bereit"
+   }
+}

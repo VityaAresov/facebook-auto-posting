@@ -1,0 +1,2621 @@
+{
+   "aboutTitle": {
+      "message": "Névjegy"
+   },
+   "actBtn": {
+      "message": "Licenc Aktiválása"
+   },
+   "actContinueFree": {
+      "message": "Folytatás az ingyenes próbaverzióval (Ablak bezárása)"
+   },
+   "actInfo": {
+      "message": "Írd be alább a licenckulcsot. Ezt a vásárlás utáni emailben találod."
+   },
+   "actNoKey": {
+      "message": "Nincs licenckulcsod?"
+   },
+   "actPh": {
+      "message": "XXXX-XXXX-XXXX-XXXX"
+   },
+   "actPrice": {
+      "message": "Licenckulcsok €9.9 / hó-tól."
+   },
+   "actSubtitle": {
+      "message": "Add meg a licenckulcsot a kezdéshez"
+   },
+   "actTitle": {
+      "message": "Licenc Aktiválása"
+   },
+   "actUpgradeLink": {
+      "message": "Bővíts most"
+   },
+   "aiBtnGenerate": {
+      "message": "Poszt Generálása"
+   },
+   "aiLblAudience": {
+      "message": "Célközönség"
+   },
+   "aiLblCTA": {
+      "message": "Cselekvésre Ösztönzés (CTA)"
+   },
+   "aiLblGoal": {
+      "message": "Fő Cél / Téma"
+   },
+   "aiLblKeywords": {
+      "message": "Kulcsszavak / Pontok"
+   },
+   "aiLblOptions": {
+      "message": "További Beállítások"
+   },
+   "aiLblTone": {
+      "message": "Kívánt Hangnem"
+   },
+   "aiModalSubtitle": {
+      "message": "Adj meg részleteket, hogy az AI a legjobb posztot írhassa."
+   },
+   "aiModalTitle": {
+      "message": "GroupPostingAI Poszt Generátor"
+   },
+   "aiOptEmojis": {
+      "message": "Emojik hozzáadása"
+   },
+   "aiOptEmojisDesc": {
+      "message": "Automatikus emoji beszúrás."
+   },
+   "aiOptHashtags": {
+      "message": "Hashtagek hozzáadása"
+   },
+   "aiOptHashtagsDesc": {
+      "message": "Releváns hashtagek a poszt végére."
+   },
+   "aiOptSpintax": {
+      "message": "Spintax használata"
+   },
+   "aiOptSpintaxDesc": {
+      "message": "Szövegvariációk generálása {A|B}."
+   },
+   "aiPhAudience": {
+      "message": "pl. 'Vállalkozók'"
+   },
+   "aiPhCTA": {
+      "message": "pl. 'Látogasd meg weboldalunkat'"
+   },
+   "aiPhGoal": {
+      "message": "KÖTELEZŐ: Írd le a fő célt..."
+   },
+   "aiPhKeywords": {
+      "message": "Sorolj fel fontos pontokat..."
+   },
+   "aiToneCasual": {
+      "message": "Laza és Beszélgetős"
+   },
+   "aiToneExcited": {
+      "message": "Izgatott és Lelkes"
+   },
+   "aiToneFriendly": {
+      "message": "Barátságos és Közvetlen"
+   },
+   "aiToneFunny": {
+      "message": "Vicces és Szellemes"
+   },
+   "aiToneInfo": {
+      "message": "Informatív és Oktató"
+   },
+   "aiToneInspire": {
+      "message": "Inspiráló és Motiváló"
+   },
+   "aiToneProf": {
+      "message": "Szakmai"
+   },
+   "aiToneSales": {
+      "message": "Meggyőző és Értékesítő"
+   },
+   "appDescription": {
+      "message": "The #1 Facebook Group Auto Poster. Bulk post to FB groups, schedule campaigns, and generate content with AI. Safe & Ban-Free."
+   },
+   "appName": {
+      "message": "Facebook™ Group Posting PRO: The #1 AI Auto Poster & Scheduler - FB™ Groups"
+   },
+   "backupErrMsg": {
+      "message": "Hiba történt: $ERR$",
+      "placeholders": {
+         "err": {
+            "content": "$1"
+         }
+      }
+   },
+   "backupErrTitle": {
+      "message": "Mentési Hiba"
+   },
+   "backupMsg": {
+      "message": "A sablonok és csoportgyűjtemények mentése megtörtént."
+   },
+   "backupTitle": {
+      "message": "Sikeres Mentés"
+   },
+   "badgeBestValue": {
+      "message": "LEGJOBB ÉRTÉK"
+   },
+   "badgeFree": {
+      "message": "Ingyenes:"
+   },
+   "badgePaused": {
+      "message": "Szünetel"
+   },
+   "badgeProcessing": {
+      "message": "Feldolgozás"
+   },
+   "badgeRunning": {
+      "message": "Fut"
+   },
+   "badgeScheduled": {
+      "message": "Időzítve"
+   },
+   "badgeWaiting": {
+      "message": "Várakozás"
+   },
+   "bannerFeedbackDesc": {
+      "message": "Oszd meg a véleményed – csak egy perc."
+   },
+   "bannerFeedbackTitle": {
+      "message": "Segítesz a jövő formálásában?"
+   },
+   "bannerPaused": {
+      "message": "Az időzített posztok szüneteltetve."
+   },
+   "benAI": {
+      "message": "AI tartalomgenerálás"
+   },
+   "benCampaigns": {
+      "message": "Kampány munkafolyamatok"
+   },
+   "benCancel": {
+      "message": "Bármikor lemondható"
+   },
+   "benSpintax": {
+      "message": "Okos Spintax"
+   },
+   "benSupport": {
+      "message": "Kiemelt támogatás"
+   },
+   "benUnlimited": {
+      "message": "Korlátlan posztolás"
+   },
+   "blockLoop": {
+      "message": "Ciklus"
+   },
+   "blockPost": {
+      "message": "Poszt"
+   },
+   "blockStop": {
+      "message": "Leállítás"
+   },
+   "blockTrigger": {
+      "message": "Indító"
+   },
+   "blockWait": {
+      "message": "Várakozás"
+   },
+   "btnActivate": {
+      "message": "Licenc aktiválása"
+   },
+   "btnActivateKey": {
+      "message": "Licenckulcs aktiválása"
+   },
+   "btnAdd": {
+      "message": "Hozzáadás"
+   },
+   "btnAddLink": {
+      "message": "Új link hozzáadása"
+   },
+   "btnAddProd": {
+      "message": "Új terméksablon hozzáadása"
+   },
+   "btnAddSpintax": {
+      "message": "Spintax hozzáadása"
+   },
+   "btnAdvSelector": {
+      "message": "Haladó választó"
+   },
+   "btnAiWizard": {
+      "message": "AI Varázsló"
+   },
+   "btnAutoJoin": {
+      "message": "Auto csoportcsatlakozás"
+   },
+   "btnBack": {
+      "message": "Vissza"
+   },
+   "btnBackup": {
+      "message": "Minden adat mentése"
+   },
+   "btnCancel": {
+      "message": "Mégse"
+   },
+   "btnCancelEdit": {
+      "message": "Szerkesztés mégse"
+   },
+   "btnChoose": {
+      "message": "Kiválasztás"
+   },
+   "btnConfig": {
+      "message": "Konfiguráció és Korlátok"
+   },
+   "btnCreateColl": {
+      "message": "Új gyűjtemény létrehozása"
+   },
+   "btnCreateNew": {
+      "message": "Új létrehozása"
+   },
+   "btnCreateTemplate": {
+      "message": "Új poszt sablon létrehozása"
+   },
+   "btnDefault": {
+      "message": "Alapértelmezett"
+   },
+   "btnDelete": {
+      "message": "Törlés"
+   },
+   "btnDone": {
+      "message": "Kész"
+   },
+   "btnEnhance": {
+      "message": "Szöveg javítása"
+   },
+   "btnExtract": {
+      "message": "Kinyerés FB-ról"
+   },
+   "btnFeatureReq": {
+      "message": "Funkció kérése"
+   },
+   "btnForceReset": {
+      "message": "Kényszerített visszaállítás"
+   },
+   "btnGenCamp": {
+      "message": "Kampány generálása"
+   },
+   "btnGenerateAI": {
+      "message": "Új generálása AI-val"
+   },
+   "btnGo": {
+      "message": "Indítás"
+   },
+   "btnGoBack": {
+      "message": "Vissza és Szerkesztés"
+   },
+   "btnHealth": {
+      "message": "Egészség"
+   },
+   "btnImportColl": {
+      "message": "Importálás más gyűjteményekből"
+   },
+   "btnLaunch": {
+      "message": "Indítás"
+   },
+   "btnLetsGo": {
+      "message": "Gyerünk!"
+   },
+   "btnLoadMore": {
+      "message": "Több betöltése"
+   },
+   "btnManageCat": {
+      "message": "Kategóriák kezelése"
+   },
+   "btnNameAZ": {
+      "message": "Név (A-Z)"
+   },
+   "btnNameZA": {
+      "message": "Név (Z-A)"
+   },
+   "btnNoThanks": {
+      "message": "Köszönöm, nem"
+   },
+   "btnPostNow": {
+      "message": "Posztolás most"
+   },
+   "btnPreFill": {
+      "message": "Kitöltés"
+   },
+   "btnPreparing": {
+      "message": "Előkészítés..."
+   },
+   "btnRemoveKey": {
+      "message": "Érvényesítési kulcs törlése"
+   },
+   "btnReschedule": {
+      "message": "Átütemezés"
+   },
+   "btnRestore": {
+      "message": "Visszaállítás mentésből"
+   },
+   "btnResume": {
+      "message": "Folytatás"
+   },
+   "btnRetry": {
+      "message": "Hibásak újrapróbálása"
+   },
+   "btnSave": {
+      "message": "Mentés"
+   },
+   "btnSchedule": {
+      "message": "Időzítés"
+   },
+   "btnScheduleLater": {
+      "message": "Időzítés későbbre"
+   },
+   "btnShowAll": {
+      "message": "Összes poszt megjelenítése"
+   },
+   "btnSortFilter": {
+      "message": "Rendezés és Szűrés"
+   },
+   "btnSplit": {
+      "message": "Felosztás"
+   },
+   "btnStartTour": {
+      "message": "Bemutató indítása"
+   },
+   "btnStop": {
+      "message": "Posztolás leállítása"
+   },
+   "btnSure": {
+      "message": "Persze"
+   },
+   "btnUnlock": {
+      "message": "Feloldás Bővítéssel"
+   },
+   "btnUpgrade": {
+      "message": "Bővítés"
+   },
+   "btnUpgradeReq": {
+      "message": "Bővítés Szükséges"
+   },
+   "btnView": {
+      "message": "Megtekintés"
+   },
+   "builderLoopCount": {
+      "message": "$COUNT$x ismétlés ide: Lépés $STEP$",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         },
+         "step": {
+            "content": "$2"
+         }
+      }
+   },
+   "builderLoopForever": {
+      "message": "Végtelen ciklus ide: Lépés $STEP$",
+      "placeholders": {
+         "step": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderNoWait": {
+      "message": "Nincs várakozás"
+   },
+   "builderPostInherit": {
+      "message": " (Öröklés: Lépés $STEP$)",
+      "placeholders": {
+         "step": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderPostSummary": {
+      "message": "$POSTS$ Poszt, $GROUPS$ Csoport",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "posts": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderPostSummaryInherit": {
+      "message": "$POSTS$ Poszt, Örökölt Csoportok",
+      "placeholders": {
+         "posts": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderStepOption": {
+      "message": "$NUM$. Lépés",
+      "placeholders": {
+         "num": {
+            "content": "$1"
+         }
+      }
+   },
+   "builderWaitSummary": {
+      "message": "$DURATION$ várakozás",
+      "placeholders": {
+         "duration": {
+            "content": "$1"
+         }
+      }
+   },
+   "campActionPause": {
+      "message": "Szünet"
+   },
+   "campActionRestart": {
+      "message": "Újraindítás"
+   },
+   "campActionResume": {
+      "message": "Folytatás"
+   },
+   "campActionUpgrade": {
+      "message": "Bővíts az aktiváláshoz"
+   },
+   "campAuto": {
+      "message": "Auto-Kampány"
+   },
+   "campBlockBatch": {
+      "message": "Poszt Köteg"
+   },
+   "campBlockDelay": {
+      "message": "Késleltetés"
+   },
+   "campBlockLoop": {
+      "message": "Ciklus"
+   },
+   "campBlockStop": {
+      "message": "Leállítás"
+   },
+   "campBlockTrigger": {
+      "message": "Indító"
+   },
+   "campDeleteMsg": {
+      "message": "Biztos vagy benne? Ez véglegesen törli a kampányt és előzményeit."
+   },
+   "campDeleteTitle": {
+      "message": "Stratégia Törlése"
+   },
+   "campDescLoopCount": {
+      "message": "Ismétlés $COUNT$ alkalommal",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "campDescLoopForever": {
+      "message": "Ismétlés Végtelenszer"
+   },
+   "campDescPost": {
+      "message": "$POSTS$ Sablon &rarr; $GROUPS$ Csoport",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "posts": {
+            "content": "$1"
+         }
+      }
+   },
+   "campDescStop": {
+      "message": "Kampány vége"
+   },
+   "campDescWait": {
+      "message": "$DURATION$ szünet",
+      "placeholders": {
+         "duration": {
+            "content": "$1"
+         }
+      }
+   },
+   "campRestartMsg": {
+      "message": "A kampány befejeződött, ezért újraindult az 1. lépéstől."
+   },
+   "campStatusActive": {
+      "message": "Aktív"
+   },
+   "campStatusCompleted": {
+      "message": "Kész"
+   },
+   "campStatusEnded": {
+      "message": "Vége"
+   },
+   "campStatusPaused": {
+      "message": "Szünetel"
+   },
+   "campStatusProcessing": {
+      "message": "Feldolgozás..."
+   },
+   "campStatusRunning": {
+      "message": "Fut..."
+   },
+   "campStatusWaiting": {
+      "message": "Várakozás"
+   },
+   "campStep": {
+      "message": "Kampány Lépés"
+   },
+   "campStepDone": {
+      "message": "Kész"
+   },
+   "campStepManual": {
+      "message": "Kézi Indítás"
+   },
+   "campStepPending": {
+      "message": "Függőben"
+   },
+   "campStepProcessing": {
+      "message": "Feldolgozás..."
+   },
+   "campStepScheduled": {
+      "message": "Időzített"
+   },
+   "campStepSent": {
+      "message": "Elküldve"
+   },
+   "campTimeStarting": {
+      "message": "Indulás..."
+   },
+   "campTimeUntil": {
+      "message": "$DATE$-ig",
+      "placeholders": {
+         "date": {
+            "content": "$1"
+         }
+      }
+   },
+   "campWizChip1": {
+      "message": "💰 Affiliate Ajánlat"
+   },
+   "campWizChip2": {
+      "message": "🏠 Ingatlan"
+   },
+   "campWizChip3": {
+      "message": "🍔 Helyi Üzlet"
+   },
+   "campWizPrompt1": {
+      "message": "Affiliate Marketing: Szoftver akció promózása, ami 48 óra múlva lejár. Agresszív gyakoriság."
+   },
+   "campWizPrompt2": {
+      "message": "Ingatlan: Új ingatlan bemutatása. Előzetes -> Részletek -> Nyílt nap."
+   },
+   "campWizPrompt3": {
+      "message": "Kisvállalkozás: Új menüpont bevezetése. Étvágygerjesztés és kedvezmény."
+   },
+   "canvasEmpty": {
+      "message": "Húzd ide az \u003Cstrong>Indító (Trigger)\u003C/strong> blokkot a kezdéshez"
+   },
+   "cardGroupsTip": {
+      "message": "Okos csoportkezelés"
+   },
+   "catAdd": {
+      "message": "Új Kategória Hozzáadása"
+   },
+   "catConfirmDel": {
+      "message": "Biztosan törlöd a(z) \"$NAME$\" kategóriát?",
+      "placeholders": {
+         "name": {
+            "content": "$1"
+         }
+      }
+   },
+   "catErrEmpty": {
+      "message": "A kategória neve nem lehet üres."
+   },
+   "catErrLimit": {
+      "message": "Elérted a maximális kategóriaszámot."
+   },
+   "catLimit": {
+      "message": "Kategória limit elérve"
+   },
+   "catManage": {
+      "message": "Kategóriák Kezelése"
+   },
+   "catPhName": {
+      "message": "Kategória Neve"
+   },
+   "colBlue": {
+      "message": "Kék"
+   },
+   "colDefault": {
+      "message": "Alapértelmezett (Fekete)"
+   },
+   "colGroup": {
+      "message": "Célcsoport"
+   },
+   "colOrange": {
+      "message": "Narancs"
+   },
+   "colPink": {
+      "message": "Rózsaszín"
+   },
+   "colPurple": {
+      "message": "Lila"
+   },
+   "colRed": {
+      "message": "Piros"
+   },
+   "colStatus": {
+      "message": "Állapot"
+   },
+   "colTeal": {
+      "message": "Kékeszöld"
+   },
+   "colTemplate": {
+      "message": "Poszt Sablon"
+   },
+   "countChars": {
+      "message": "$COUNT$ karakter",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countCharsPlural": {
+      "message": "$COUNT$ karakter",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countItems": {
+      "message": "$COUNT$ elem",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countItemsPlural": {
+      "message": "$COUNT$ elem",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countLinkSingular": {
+      "message": "$COUNT$ link",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countLinks": {
+      "message": "$COUNT$ link",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "countSelected": {
+      "message": "$COUNT$ kiválasztva",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "descAnonPost": {
+      "message": "Ha a csoport engedi"
+   },
+   "descAnonShort": {
+      "message": "Ha a csoport engedi"
+   },
+   "descBackup": {
+      "message": "Menti a sablonokat és csoportgyűjteményeket (médiát nem)."
+   },
+   "descBilledMonthly": {
+      "message": "Havonta számlázva"
+   },
+   "descBilledQuarterly": {
+      "message": "3 havonta számlázva"
+   },
+   "descBilledYearly": {
+      "message": "Évente számlázva"
+   },
+   "descClassic": {
+      "message": "Legbiztonságosabb, legstabilabb választás, bármilyen csoport esetén."
+   },
+   "descCompress": {
+      "message": "Méret optimalizálása (ajánlott)"
+   },
+   "descDragDrop": {
+      "message": "Húzd ide a fájlokat vagy kattints a plusz gombra"
+   },
+   "descEmptyCamp": {
+      "message": "Hozd létre az első automatizált stratégiádat."
+   },
+   "descEmptySched": {
+      "message": "Még nem időzítettél posztokat."
+   },
+   "descFormats": {
+      "message": "Támogatott formátumok: Képek, MP4, WebM videók"
+   },
+   "descGenAiVar": {
+      "message": "Különböző hangnemű variációk automatikus létrehozása."
+   },
+   "descImport": {
+      "message": "Nyerd ki a Facebook csoportjaidat."
+   },
+   "descNightMode": {
+      "message": "Ne posztoljon 22:00 - 07:00 között"
+   },
+   "descPost": {
+      "message": "Indíts Gyors vagy Időzített posztot."
+   },
+   "descPro": {
+      "message": "Oldd fel a korlátlan erőt."
+   },
+   "descSafeDelay": {
+      "message": "Teljes idő kivárása sikertelen poszt esetén is."
+   },
+   "descSecLevel": {
+      "message": "Egyensúly a sebesség és a biztonság között."
+   },
+   "descSkipNet": {
+      "message": "Csak akkor engedélyezd, ha a posztolás 'Instabil kapcsolat' üzenettel megakad, pedig van interneted."
+   },
+   "descSourceExist": {
+      "message": "Válaszd ki a sablonjaidat."
+   },
+   "descSourceGen": {
+      "message": "Az MI friss posztokat ír."
+   },
+   "descSpeed": {
+      "message": "Facebook API. Gyors és megbízható."
+   },
+   "descTelemetry": {
+      "message": "Ez segít nekünk a bővítmény fejlesztésében. Soha nem gyűjtünk személyes adatokat vagy tartalmat."
+   },
+   "descTemplate": {
+      "message": "Írj egy újrahasználható posztot."
+   },
+   "descVars": {
+      "message": "Használj {Szia|Helló} formátumot vagy variációkat."
+   },
+   "descWaitFailShort": {
+      "message": "Várakozás hiba esetén is"
+   },
+   "dueNow": {
+      "message": "Most esedékes"
+   },
+   "emptyCampaigns": {
+      "message": "Még nincs kampány"
+   },
+   "emptySched": {
+      "message": "Nincs időzített poszt"
+   },
+   "enhBoostDesc": {
+      "message": "Maximalizáld az elérést erős felütésekkel és CTA-val."
+   },
+   "enhBoostTitle": {
+      "message": "Konverzió Növelés"
+   },
+   "enhPolishDesc": {
+      "message": "Hibák javítása és érthetőség növelése a hangnem megőrzésével."
+   },
+   "enhPolishTitle": {
+      "message": "Nyelvtan és Csiszolás"
+   },
+   "enhSpinDesc": {
+      "message": "A szöveget bonyolult {A|B} variációkká alakítja a biztonságért."
+   },
+   "enhSpinTitle": {
+      "message": "Spintax Építész"
+   },
+   "enhTitle": {
+      "message": "Válassz Javítási Stílust"
+   },
+   "errConnectMsg": {
+      "message": "Nem sikerült elérni az ellenőrző szervert. Kérlek ellenőrizd az internetkapcsolatot."
+   },
+   "errConnectTitle": {
+      "message": "Kapcsolódási Hiba"
+   },
+   "errStopFail": {
+      "message": "Hiba a leállításkor: $MSG$",
+      "placeholders": {
+         "msg": {
+            "content": "$1"
+         }
+      }
+   },
+   "errStopUnknown": {
+      "message": "Nem sikerült megerősíteni a leállítást."
+   },
+   "extractBtnStart": {
+      "message": "OK, Indítás"
+   },
+   "extractConfirmMsg": {
+      "message": "Egy új lapon megnyílik a Facebook csoportjaid oldala. A bővítmény automatikusan legörget, hogy megtalálja az összes csoportot. \u003Cbr>\u003Cbr>\u003Cb>Kérlek ne zárd be ezt az új lapot;\u003C/b> magától bezáródik, ha végzett."
+   },
+   "extractConfirmTitle": {
+      "message": "Csoport Kinyerés Indítása?"
+   },
+   "fbBtn": {
+      "message": "Visszajelzés küldése és posztok szerzése"
+   },
+   "fbReward": {
+      "message": "Köszönetképpen adunk még 3 ingyenes posztot!"
+   },
+   "fbSorry": {
+      "message": "Sajnáljuk! Hogyan fejlődhetnénk?"
+   },
+   "fileLargeMsg": {
+      "message": "A következő fájlok túl nagyok a bővítmény számára:\u003Cbr>\u003Cbr>\u003Cstrong>$FILES$\u003C/strong>\u003Cbr>\u003Cbr>Kérlek tömörítsd őket $SIZE$MB alá.",
+      "placeholders": {
+         "files": {
+            "content": "$1"
+         },
+         "size": {
+            "content": "$2"
+         }
+      }
+   },
+   "fileLargeTitle": {
+      "message": "Túl Nagy Fájlok"
+   },
+   "fileTypeMsg": {
+      "message": "A következő fájlokat kihagytuk: \u003Cbr>\u003Cstrong>$FILES$\u003C/strong>",
+      "placeholders": {
+         "files": {
+            "content": "$1"
+         }
+      }
+   },
+   "fileTypeTitle": {
+      "message": "Nem Támogatott Fájltípus"
+   },
+   "freqDaily": {
+      "message": "NAPI"
+   },
+   "freqMonthly": {
+      "message": "HAVI"
+   },
+   "freqOnce": {
+      "message": "EGYSZER"
+   },
+   "freqWeekly": {
+      "message": "HETI"
+   },
+   "freshCool": {
+      "message": "\u003Cstrong>Friss/Hűvös (>7 napja):\u003C/strong> $COUNT$ csoport",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "freshHot": {
+      "message": "\u003Cstrong>Forró (2 napon belül):\u003C/strong> $COUNT$ csoport",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "freshTitle": {
+      "message": "Frissesség Elemzés (utolsó posztolás)"
+   },
+   "freshWarm": {
+      "message": "\u003Cstrong>Meleg (3-7 napja):\u003C/strong> $COUNT$ csoport",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "giftBtn": {
+      "message": "Szuper, köszi!"
+   },
+   "giftMsg": {
+      "message": "Hiányoltunk! Hogy segítsünk az újrakezdésben, jóváírtunk \u003Cstrong>$COUNT$ ingyenes posztot\u003C/strong> a fiókodban. Használd egészséggel!",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "giftTitle": {
+      "message": "Üdv újra!"
+   },
+   "graphLess": {
+      "message": "Kevesebb"
+   },
+   "graphMore": {
+      "message": "Több"
+   },
+   "graphPostsCount": {
+      "message": "$COUNT$ poszt",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "grpPhLink": {
+      "message": "Link"
+   },
+   "grpPhTitle": {
+      "message": "Cím"
+   },
+   "guideTitle": {
+      "message": "Beállítási útmutató"
+   },
+   "headerAiVar": {
+      "message": "AI Poszt Variációk"
+   },
+   "headerComments": {
+      "message": "Komment beállítások"
+   },
+   "headerDragBlocks": {
+      "message": "HÚZD BE AZ ÉPÍTŐELEMEKET"
+   },
+   "headerHistory": {
+      "message": "Előzmények"
+   },
+   "headerOrder": {
+      "message": "Posztolási sorrend"
+   },
+   "headerPause": {
+      "message": "Szünet és Védelem"
+   },
+   "headerScheduled": {
+      "message": "Időzített posztok"
+   },
+   "headerSelectGroups": {
+      "message": "Válassz célcsoport-gyűjteményeket"
+   },
+   "headerSelectTemplates": {
+      "message": "Válassz poszt sablonokat a közzétételhez"
+   },
+   "headerStrategy": {
+      "message": "Posztolási stratégia"
+   },
+   "healthCleanupMsg": {
+      "message": "$COUNT$ halott link eltávolítva a gyűjteményekből.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "healthCleanupTitle": {
+      "message": "Tisztítás Kész"
+   },
+   "healthFoundMsg": {
+      "message": "Ezek a csoportok még a gyűjteményeidben vannak, de folyamatosan hibát jeleznek."
+   },
+   "healthFoundTitle": {
+      "message": "$COUNT$ Halott Csoport Találat",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "healthRemoveBtn": {
+      "message": "Kijelöltek Törlése"
+   },
+   "healthSuccessMsg": {
+      "message": "Nem találtunk állandóan hibás csoportokat a gyűjteményekben."
+   },
+   "healthSuccessTitle": {
+      "message": "Minden Rendben!"
+   },
+   "healthVerifyLink": {
+      "message": "Link Ellenőrzése"
+   },
+   "helpClose": {
+      "message": "Bezárás"
+   },
+   "helpEmailIntro": {
+      "message": "Technikai probléma esetén írj nekünk:"
+   },
+   "helpModalTitle": {
+      "message": "Súgó és Támogatás"
+   },
+   "helpPageIntro": {
+      "message": "Vagy látogasd meg súgó oldalunkat útmutatókért:"
+   },
+   "hintBgColor": {
+      "message": "Max 130 karakteres posztokhoz"
+   },
+   "hintInterval": {
+      "message": "szünetek között"
+   },
+   "hintOrder": {
+      "message": "Szekvenciális: A,A,A... majd B,B,B... | Váltakozó: A,B,C... majd A,B,C..."
+   },
+   "hintVariations": {
+      "message": "Mentés mint {A|B|C...}"
+   },
+   "hintWait": {
+      "message": "Véletlenszerű időtartam"
+   },
+   "histFilterDate": {
+      "message": "Szűrés dátumra: \u003Cstrong>$DATE$\u003C/strong>",
+      "placeholders": {
+         "date": {
+            "content": "$1"
+         }
+      }
+   },
+   "histSearch": {
+      "message": "Keresés az előzményekben..."
+   },
+   "impBtnImport": {
+      "message": "Kijelöltek Importálása"
+   },
+   "impErrEmpty": {
+      "message": "Kérlek válassz egy gyűjteményt és legalább egy linket."
+   },
+   "impLblAvail": {
+      "message": "Elérhető Linkek"
+   },
+   "impNoLinks": {
+      "message": "Nincsenek linkek ebben a gyűjteményben"
+   },
+   "impPhSearch": {
+      "message": "Linkek keresése..."
+   },
+   "impSelAll": {
+      "message": "Összes Kijelölése"
+   },
+   "impSelAllFilt": {
+      "message": "Szűrt Találatok Kijelölése"
+   },
+   "impSelFirst": {
+      "message": "Először válassz gyűjteményt"
+   },
+   "impTitle": {
+      "message": "Importálás Csoportgyűjteményből"
+   },
+   "initLoading": {
+      "message": "A Group Posting Pro indítása..."
+   },
+   "keyRemovedMsg": {
+      "message": "Az érvényesítési kulcs sikeresen törölve."
+   },
+   "keyRemovedTitle": {
+      "message": "Érvényesítési kulcs eltávolítva"
+   },
+   "lblAIAssistant": {
+      "message": "AI Asszisztens"
+   },
+   "lblActivity": {
+      "message": "UTOLSÓ 30 NAP AKTIVITÁSA"
+   },
+   "lblAddGroupColl": {
+      "message": "Új csoportgyűjtemény hozzáadása"
+   },
+   "lblAddMedia": {
+      "message": "Képek vagy videók hozzáadása"
+   },
+   "lblAfterEvery": {
+      "message": "Minden"
+   },
+   "lblAlreadyPurchased": {
+      "message": "Már megvásároltad?"
+   },
+   "lblAlternate": {
+      "message": "Váltakozó"
+   },
+   "lblAnalysingCopy": {
+      "message": "Szándék elemzése és szövegírás..."
+   },
+   "lblAnonCaps": {
+      "message": "NÉVTELEN KÖZZÉTÉTEL"
+   },
+   "lblAnonPost": {
+      "message": "Névtelen Posztolás"
+   },
+   "lblAutoLoop": {
+      "message": "Automatikus ismétlés (végtelen)"
+   },
+   "lblAutoMatch": {
+      "message": "Automatikus csoportpárosítás"
+   },
+   "lblBalanced": {
+      "message": "Kiegyensúlyozott"
+   },
+   "lblBgColor": {
+      "message": "Háttérszín"
+   },
+   "lblCampAssets": {
+      "message": "Kampány elemek (Opcionális)"
+   },
+   "lblCampaigns": {
+      "message": "Kampányok (beta)"
+   },
+   "lblCategories": {
+      "message": "Kategóriák"
+   },
+   "lblCompress": {
+      "message": "Képek tömörítése"
+   },
+   "lblCondition": {
+      "message": "Állapot"
+   },
+   "lblConstructing": {
+      "message": "Stratégia felépítése..."
+   },
+   "lblCount": {
+      "message": "Darab"
+   },
+   "lblDays": {
+      "message": "nap"
+   },
+   "lblDesc": {
+      "message": "Leírás"
+   },
+   "lblDetails": {
+      "message": "Posztolás részletei"
+   },
+   "lblDisableComm": {
+      "message": "Kommentek tiltása"
+   },
+   "lblDoorDrop": {
+      "message": "Házhoz szállítás"
+   },
+   "lblDoorPickup": {
+      "message": "Házhoz jön"
+   },
+   "lblDropFiles": {
+      "message": "Képek/videók behúzása"
+   },
+   "lblEmojis": {
+      "message": "Emojik"
+   },
+   "lblEmptyTemp": {
+      "message": "(Üres sablon)"
+   },
+   "lblEnableComm": {
+      "message": "Kommentek engedélyezése"
+   },
+   "lblEndCamp": {
+      "message": "Kampány befejezése itt."
+   },
+   "lblFast": {
+      "message": "Gyors"
+   },
+   "lblFilterCat": {
+      "message": "Szűrés kategória szerint"
+   },
+   "lblFiltered": {
+      "message": "Szűrve: $CAT$",
+      "placeholders": {
+         "cat": {
+            "content": "$1"
+         }
+      }
+   },
+   "lblFirstComm": {
+      "message": "Első komment hozzáadása"
+   },
+   "lblFixedTimes": {
+      "message": "Fix alkalommal"
+   },
+   "lblFlowCtrl": {
+      "message": "Folyamatvezérlés"
+   },
+   "lblForever": {
+      "message": "Végtelenül"
+   },
+   "lblGen": {
+      "message": "Generálás"
+   },
+   "lblGenAiVar": {
+      "message": "AI Variációk generálása"
+   },
+   "lblGoToStep": {
+      "message": "Ugrás a lépéshez"
+   },
+   "lblHrs": {
+      "message": "óra"
+   },
+   "lblInterval": {
+      "message": "Intervallum"
+   },
+   "lblIssues": {
+      "message": "Problémák"
+   },
+   "lblJoinCount": {
+      "message": "Hány csoporthoz csatlakozzunk?"
+   },
+   "lblLicenseKey": {
+      "message": "Licenckulcs:"
+   },
+   "lblLoadTemp": {
+      "message": "Sablonok betöltése..."
+   },
+   "lblMedia": {
+      "message": "Média (Képek és Videók)"
+   },
+   "lblMinMembers": {
+      "message": "Minimum taglétszám:"
+   },
+   "lblMins": {
+      "message": "perc"
+   },
+   "lblMonthly": {
+      "message": "Havi"
+   },
+   "lblNightMode": {
+      "message": "Éjszakai posztolás kerülése"
+   },
+   "lblNightModeCaps": {
+      "message": "ÉJSZAKAI POSZTOLÁS ELKERÜLÉSE"
+   },
+   "lblNoSavedTemp": {
+      "message": "Nincs mentett poszt sablon."
+   },
+   "lblNotConfigured": {
+      "message": "Nincs beállítva"
+   },
+   "lblNumVar": {
+      "message": "Variációk száma:"
+   },
+   "lblPickupOpts": {
+      "message": "Átvételi lehetőségek"
+   },
+   "lblPlansStart": {
+      "message": "Csomagok már ennyitől"
+   },
+   "lblPostContent": {
+      "message": "Poszt tartalma"
+   },
+   "lblPostScore": {
+      "message": "Poszt pontszám:"
+   },
+   "lblPrice": {
+      "message": "Ár"
+   },
+   "lblProdName": {
+      "message": "Termék neve"
+   },
+   "lblPublicMeet": {
+      "message": "Nyilvános találkozó"
+   },
+   "lblQuarterly": {
+      "message": "Negyedéves"
+   },
+   "lblQuickGroups": {
+      "message": "Válassz célcsoport-gyűjteményeket"
+   },
+   "lblRepeat": {
+      "message": "Ismétlés:"
+   },
+   "lblSafe": {
+      "message": "Biztonságos"
+   },
+   "lblSafeDelay": {
+      "message": "Biztonsági késleltetés hiba esetén"
+   },
+   "lblSafeDelayCaps": {
+      "message": "BIZTONSÁGI KÉSLELTETÉS"
+   },
+   "lblSaveJoined": {
+      "message": "Újonnan csatlakozott csoportok mentése"
+   },
+   "lblSavedProds": {
+      "message": "Mentett termékek"
+   },
+   "lblSearchParam": {
+      "message": "Keresési paraméter"
+   },
+   "lblSecLevel": {
+      "message": "Posztolási biztonsági szint"
+   },
+   "lblSecLevelCaps": {
+      "message": "BIZTONSÁGI SZINT"
+   },
+   "lblSelectTemp": {
+      "message": "Válassz egy Poszt Sablont:"
+   },
+   "lblSequential": {
+      "message": "Szekvenciális"
+   },
+   "lblSkipNet": {
+      "message": "Kapcsolatellenőrzés kikapcsolása"
+   },
+   "lblSortBy": {
+      "message": "Rendezés"
+   },
+   "lblSourceExist": {
+      "message": "Saját sablonok használata"
+   },
+   "lblSourceGen": {
+      "message": "Mindent az MI ír"
+   },
+   "lblSpintax": {
+      "message": "Spintax"
+   },
+   "lblStartImm": {
+      "message": "Azonnali indítás"
+   },
+   "lblStatus": {
+      "message": "Állapot:"
+   },
+   "lblSupportId": {
+      "message": "Támogatási azonosító:"
+   },
+   "lblTargetSame": {
+      "message": "Célzás ugyanaz, mint:"
+   },
+   "lblTelemetry": {
+      "message": "Névtelen használati adatok engedélyezése"
+   },
+   "lblTemplateName": {
+      "message": "Sablon neve"
+   },
+   "lblTimeRange": {
+      "message": "22:00 - 07:00"
+   },
+   "lblToday": {
+      "message": "Ma"
+   },
+   "lblTodayDate": {
+      "message": "Ma"
+   },
+   "lblVariations": {
+      "message": "Variációk"
+   },
+   "lblVarsLower": {
+      "message": "variáció"
+   },
+   "lblVer": {
+      "message": "GroupPosting PRO Verzió: $VER$",
+      "placeholders": {
+         "ver": {
+            "content": "$1"
+         }
+      }
+   },
+   "lblWaitLabel": {
+      "message": "Várakozás:"
+   },
+   "lblWaitTime": {
+      "message": "Várakozási idő"
+   },
+   "lblYearly": {
+      "message": "Éves"
+   },
+   "licIssueMsg": {
+      "message": "A licenckulcsod érvénytelen vagy lejárt. Kérlek ellenőrizd a kulcsot vagy vásárolj újat."
+   },
+   "licIssueTitle": {
+      "message": "Licenc Probléma"
+   },
+   "loadingMsg": {
+      "message": "Posztolás előkészítése..."
+   },
+   "loadingNotify": {
+      "message": "A posztolás elindult! Nyugodtan böngészhetsz más lapokon - mi folytatjuk a háttérben."
+   },
+   "lockAiEnhance": {
+      "message": "Az AI Szövegjavítás \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>\u003Cbr>Azonnal írd át posztjaidat konverzióra, nyelvtanra vagy spintaxra.\u003Cbr>Bővíts a feloldáshoz."
+   },
+   "lockAiGen": {
+      "message": "Az AI Poszt Generálás \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>\u003Cbr>Generálj korlátlan, magas konverziójú posztokat másodpercek alatt.\u003Cbr>Bővíts a feloldáshoz."
+   },
+   "lockAutoJoin": {
+      "message": "Az Auto Csoportcsatlakozás \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>Ingyenes felhasználóknak kézzel kell csatlakozniuk.\u003Cbr>\u003Cbr>Bővíts a közönséged automatikus növeléséhez!"
+   },
+   "lockCampArch": {
+      "message": "Az AI Kampány Építész \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>\u003Cbr>Elemzi a célodat és automatikusan felépít teljes, többlépcsős kampányokat.\u003Cbr>Bővíts a feloldáshoz."
+   },
+   "lockCampResume": {
+      "message": "Nincs több ingyenes posztod. Kérlek bővíts vagy aktiválj egy licencet a kampányok futtatásához."
+   },
+   "lockSchedule": {
+      "message": "Az időzítés \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>Ingyenes felhasználók csak 'Posztolás Most' opciót használhatnak.\u003Cbr>\u003Cbr>Bővíts az Időzítő feloldásához."
+   },
+   "lockScheduleSave": {
+      "message": "A jövőbeli posztok időzítése \u003Cb>Pro Funkció\u003C/b>.\u003Cbr>Ingyenes felhasználók csak 'Posztolás Most' opciót használhatnak.\u003Cbr>\u003Cbr>Bővíts az Időzítő, Auto-Kampányok és egyebek feloldásához!"
+   },
+   "menuAbout": {
+      "message": "Névjegy"
+   },
+   "menuHelp": {
+      "message": "Súgó"
+   },
+   "missedActionDesc": {
+      "message": "Ezek az egyszeri posztok nem lettek elküldve. Válassz műveletet."
+   },
+   "missedActionHeader": {
+      "message": "Beavatkozás szükséges: Kimaradt Posztok"
+   },
+   "missedWasDue": {
+      "message": "Esedékes volt: $DATE$",
+      "placeholders": {
+         "date": {
+            "content": "$1"
+         }
+      }
+   },
+   "modalActionQueued": {
+      "message": "Művelet sorba állítva"
+   },
+   "modalAiLock": {
+      "message": "Az AI variációk Pro funkciók. Kérlek kapcsold ki vagy válts csomagot."
+   },
+   "modalCategoryTitle": {
+      "message": "Kategóriák kezelése"
+   },
+   "modalConfirmDel": {
+      "message": "Törlés megerősítése"
+   },
+   "modalConfirmDelBody": {
+      "message": "Biztosan törölni szeretnéd ezt az időzített posztot? Ez a művelet nem visszavonható."
+   },
+   "modalConfirmPost": {
+      "message": "Posztolás részleteinek megerősítése"
+   },
+   "modalDailyLimitBody": {
+      "message": "Felhasználtad a mai \u003Cb>$COUNT$ ingyenes posztodat\u003C/b>.",
+      "placeholders": {
+         "count": {
+            "content": "$1",
+            "example": "3"
+         }
+      }
+   },
+   "modalDailyLimitTitle": {
+      "message": "Napi korlát elérve"
+   },
+   "modalDeleted": {
+      "message": "Az időzített poszt törölve lett."
+   },
+   "modalHelp": {
+      "message": "Súgó és Támogatás"
+   },
+   "modalImportSelect": {
+      "message": "Kijelöltek importálása"
+   },
+   "modalImportTitle": {
+      "message": "Importálás csoportgyűjteményből"
+   },
+   "modalInputRequired": {
+      "message": "Adatmegadás szükséges"
+   },
+   "modalLicReq": {
+      "message": "Licenc szükséges"
+   },
+   "modalLicReqBody": {
+      "message": "A licenced érvénytelen vagy lejárt. Nem futtathatsz időzített feladatokat.\u003Cbr>\u003Cbr>Kérlek aktiváld a folytatáshoz."
+   },
+   "modalLimitBody": {
+      "message": "Kiválasztottál \u003Cb>$TOTAL$ csoportot\u003C/b>, de az Ingyenes csomag limitje \u003Cb>$LIMIT$ / futtatás\u003C/b>.\u003Cbr>Csak az első $ACTUAL$ csoportba fogunk posztolni.",
+      "placeholders": {
+         "actual": {
+            "content": "$3"
+         },
+         "limit": {
+            "content": "$2"
+         },
+         "total": {
+            "content": "$1"
+         }
+      }
+   },
+   "modalLimitTitle": {
+      "message": "Ingyenes csomag korlát"
+   },
+   "modalNoContent": {
+      "message": "Kérlek hozz létre tartalmat az időzítéshez."
+   },
+   "modalNoGroups": {
+      "message": "Kérlek válassz legalább egy csoportot."
+   },
+   "modalProDesc": {
+      "message": "Napi korlátok eltávolítása, AI feloldása és skálázás."
+   },
+   "modalProFeature": {
+      "message": "Pro Funkció"
+   },
+   "modalProTitle": {
+      "message": "Oldd fel a korlátlan erőt"
+   },
+   "modalQueuedImmediate": {
+      "message": "A poszt azonnali futtatásra lett sorolva."
+   },
+   "modalRunNowBody": {
+      "message": "Ez a művelet a(z) \u003Cstrong>\"$TITLE$\"\u003C/strong> posztot azonnali indításra sorolja be.\u003Cbr>\u003Cbr>Az időzítés \u003Cstrong>nem\u003C/strong> törlődik, és a jövőbeli időpontokban is lefut.",
+      "placeholders": {
+         "title": {
+            "content": "$1"
+         }
+      }
+   },
+   "modalRunNowTitle": {
+      "message": "Poszt futtatása most?"
+   },
+   "modalSplitTitle": {
+      "message": "Csoportgyűjtemény felosztása"
+   },
+   "modalSuccessQueue": {
+      "message": "A poszt sorba állítva, hamarosan indul."
+   },
+   "modalTargetConfirm": {
+      "message": "Választás megerősítése"
+   },
+   "modalTargetTitle": {
+      "message": "Haladó csoportválasztás"
+   },
+   "modeClassic": {
+      "message": "Klasszikus mód"
+   },
+   "modeSpeed": {
+      "message": "Sebesség mód"
+   },
+   "msgSendingStop": {
+      "message": "Leállítási jel küldése..."
+   },
+   "msgStopping": {
+      "message": "Leállítás..."
+   },
+   "navCampaigns": {
+      "message": "Kampányok"
+   },
+   "navCompose": {
+      "message": "Szerkesztés"
+   },
+   "navHistory": {
+      "message": "Előzmények"
+   },
+   "navTemplates": {
+      "message": "Sablonok"
+   },
+   "navUpcoming": {
+      "message": "Következő"
+   },
+   "nextAction": {
+      "message": "Következő akció"
+   },
+   "noHistory": {
+      "message": "Nincs előzmény."
+   },
+   "noMatch": {
+      "message": "Nincs találat a szűrésre."
+   },
+   "notifHeader": {
+      "message": "Értesítések"
+   },
+   "notifMissedRecur": {
+      "message": "A(z) \u003Cstrong>\"$TITLE$\"\u003C/strong> ismétlődő poszt kimaradt ekkor: $DATE$. Automatikusan átütemezve.",
+      "placeholders": {
+         "date": {
+            "content": "$2"
+         },
+         "title": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayAutoClose": {
+      "message": "A lap automatikusan bezárul."
+   },
+   "overlayCloseBtn": {
+      "message": "Értesítés bezárása"
+   },
+   "overlayDesc": {
+      "message": "Kérlek, tartsd nyitva ezt a böngészőablakot. Az automatizálás a háttérben folytatódik, és a lap automatikusan bezárul."
+   },
+   "overlayDlVideo": {
+      "message": "Videó letöltése a tárolóból (nagy fájl)..."
+   },
+   "overlayDupRetry": {
+      "message": "Duplikált tartalom észlelve. Automatikus módosítás és újrapróbálkozás..."
+   },
+   "overlayEnd": {
+      "message": "Lista vége vagy nincs több csatlakozható csoport. Befejezés."
+   },
+   "overlayFinalize": {
+      "message": "Poszt véglegesítése"
+   },
+   "overlayFinished": {
+      "message": "Befejezve. Csatlakozva $COUNT$ csoporthoz.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayHumanPause": {
+      "message": "Rövid szünet az emberi viselkedés utánzásához... (Szint: $LEVEL$)",
+      "placeholders": {
+         "level": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayInit": {
+      "message": "Folyamat indítása..."
+   },
+   "overlayInsertImg": {
+      "message": "Képek beillesztése"
+   },
+   "overlayInsertText": {
+      "message": "Szöveg beillesztése"
+   },
+   "overlayJoined": {
+      "message": "($CURRENT$/$TOTAL$) Csatlakozva: \"$GROUP$\". \u003Cbr>\u003Cb>Emlékeztető:\u003C/b> A túl gyors csatlakozás fiókkorlátozáshoz vezethet.",
+      "placeholders": {
+         "current": {
+            "content": "$1"
+         },
+         "group": {
+            "content": "$3"
+         },
+         "total": {
+            "content": "$2"
+         }
+      }
+   },
+   "overlayLongPause": {
+      "message": "Hosszabb biztonsági szünet ($SEC$ mp)...",
+      "placeholders": {
+         "sec": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayLonger": {
+      "message": "A szokásosnál tovább tart... böngésző prioritás biztosítása."
+   },
+   "overlayNewContent": {
+      "message": "Új tartalom észlelve, görgetés újra..."
+   },
+   "overlayNoNew": {
+      "message": "Nincs új csatlakozható csoport. Próbálkozás: $ATTEMPT$/5...",
+      "placeholders": {
+         "attempt": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayOpenModal": {
+      "message": "Ablak megnyitása"
+   },
+   "overlayPause": {
+      "message": "\"$GROUP$\" találat. Szünet: $SEC$ mp...",
+      "placeholders": {
+         "group": {
+            "content": "$1"
+         },
+         "sec": {
+            "content": "$2"
+         }
+      }
+   },
+   "overlayPendingVerify": {
+      "message": "A Facebook szerint 'Függőben', ellenőrzés..."
+   },
+   "overlayPostData": {
+      "message": "Poszt adatok lekérve"
+   },
+   "overlayPreText": {
+      "message": "Oldal készenlétének ellenőrzése"
+   },
+   "overlayProcessing": {
+      "message": "Adatok feldolgozása..."
+   },
+   "overlaySaved": {
+      "message": "$COUNT$ csoport mentve a(z) \"$NAME$\" gyűjteménybe.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         },
+         "name": {
+            "content": "$2"
+         }
+      }
+   },
+   "overlaySaving": {
+      "message": "Csatlakozott csoportok mentése új gyűjteménybe..."
+   },
+   "overlayScan": {
+      "message": "Oldal vizsgálata új csoportokért..."
+   },
+   "overlayScrapeEmpty": {
+      "message": "A begyűjtés kész, de nem találtunk érvényes csoportokat."
+   },
+   "overlayScrapeNoItems": {
+      "message": "A begyűjtés kész, de nem találtunk csoport elemeket. Ellenőrizd, hogy az English(US) nyelv van-e beállítva."
+   },
+   "overlayScrapeSuccess": {
+      "message": "SIKER! $COUNT$ csoport mentve a(z) \"$NAME$\" nevű új gyűjteménybe.\u003Cbr>\u003Cbr>Ez a lap automatikusan bezárul.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         },
+         "name": {
+            "content": "$2"
+         }
+      }
+   },
+   "overlayScrolling": {
+      "message": "Görgetés az oldal aljára..."
+   },
+   "overlaySessionComplete": {
+      "message": "Menet kész. Csatlakozva $COUNT$ csoporthoz.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlaySetColor": {
+      "message": "Háttérszín beállítása"
+   },
+   "overlaySlowLoad": {
+      "message": "A tartalom lassan töltődik, késleltetés növelése $MS$ ms-ra.",
+      "placeholders": {
+         "ms": {
+            "content": "$1"
+         }
+      }
+   },
+   "overlayTitle": {
+      "message": "A GroupPosting dolgozik"
+   },
+   "overlayUnresponsive": {
+      "message": "A gomb nem reagál. Végső helyreállítási kísérlet..."
+   },
+   "overlayUploading": {
+      "message": "Média feltöltése folyamatban. Ez több percig is tarthat..."
+   },
+   "overlayVerify": {
+      "message": "Poszt állapotának ellenőrzése..."
+   },
+   "overlayWaitLoad": {
+      "message": "Görgetés és várakozás az új tartalomra..."
+   },
+   "panelSpintaxGuide": {
+      "message": "Spintax útmutató:"
+   },
+   "phAssign": {
+      "message": "Hozzárendelés..."
+   },
+   "phCollName": {
+      "message": "A csoportgyűjtemény neve"
+   },
+   "phDescribeGoal": {
+      "message": "Írd le a célodat..."
+   },
+   "phFirstComm": {
+      "message": "Írd ide a kommented szövegét..."
+   },
+   "phQuickGroups": {
+      "message": "Kattints a csoportok kiválasztásához"
+   },
+   "phSaveGroupAs": {
+      "message": "Add meg a csoport mentési nevét"
+   },
+   "phSearchGroups": {
+      "message": "Csoportok keresése"
+   },
+   "phSearchHist": {
+      "message": "Keresés az előzményekben..."
+   },
+   "phSearchParam": {
+      "message": "Írj be keresőszót (pl. marketing)"
+   },
+   "phSearchTemp": {
+      "message": "Sablonok keresése..."
+   },
+   "phSelectGroups": {
+      "message": "Válassz egy vagy több csoportgyűjteményt..."
+   },
+   "phSelectTemplates": {
+      "message": "Válassz egy vagy több poszt sablont..."
+   },
+   "phTemplateName": {
+      "message": "Adj nevet a sablonnak"
+   },
+   "postingCompleted": {
+      "message": "Posztolás kész!"
+   },
+   "prevClose": {
+      "message": "Előnézet Bezárása"
+   },
+   "prevDisclaimer": {
+      "message": "Ez csak előnézet. A tényleges megjelenés eltérhet."
+   },
+   "prevNextVar": {
+      "message": "Következő"
+   },
+   "prevReSpin": {
+      "message": "Újrapörgetés"
+   },
+   "prevTitle": {
+      "message": "Poszt Előnézet"
+   },
+   "prevVar": {
+      "message": "Var"
+   },
+   "qualBonusEmoji": {
+      "message": "Emoji bónusz"
+   },
+   "qualBonusLength": {
+      "message": "Tökéletes hossz"
+   },
+   "qualBonusSpintax": {
+      "message": "Spintax bónusz"
+   },
+   "qualCatEngage": {
+      "message": "Aktivitás"
+   },
+   "qualCatFormat": {
+      "message": "Formázás"
+   },
+   "qualCatLength": {
+      "message": "Hosszúság"
+   },
+   "qualCatMedia": {
+      "message": "Média"
+   },
+   "qualCatPolicy": {
+      "message": "Irányelvek"
+   },
+   "qualFormatBasic": {
+      "message": "Alap"
+   },
+   "qualFormatEx": {
+      "message": "Kiváló"
+   },
+   "qualFormatGood": {
+      "message": "Jó"
+   },
+   "qualFormatMod": {
+      "message": "Közepes"
+   },
+   "qualLevelBad": {
+      "message": "Javítandó"
+   },
+   "qualLevelGreat": {
+      "message": "Nagyszerű"
+   },
+   "qualLevelOk": {
+      "message": "Jó"
+   },
+   "qualLevelPerfect": {
+      "message": "Tökéletes"
+   },
+   "qualSentNeg": {
+      "message": "Negatív"
+   },
+   "qualSentNeutral": {
+      "message": "Semleges"
+   },
+   "qualSentPos": {
+      "message": "Pozitív"
+   },
+   "qualSentSomewhat": {
+      "message": "Enyhén Pozitív"
+   },
+   "qualSentVeryPos": {
+      "message": "Nagyon Pozitív"
+   },
+   "qualStatFormat": {
+      "message": "Formázás"
+   },
+   "qualStatSent": {
+      "message": "Hangulat"
+   },
+   "qualStatWords": {
+      "message": "Szószám"
+   },
+   "qualTitle": {
+      "message": "Poszt Minőség Pontszám"
+   },
+   "qualViewTips": {
+      "message": "Részletes elemzés és javaslatok"
+   },
+   "qualWarnPhone": {
+      "message": "Telefonszám észlelve ($COUNT$)",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "qualWarnProf": {
+      "message": "Káromkodás észlelve ($COUNT$)",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "quillPhQuick": {
+      "message": "Írd ide a posztot..."
+   },
+   "quillPhTemplate": {
+      "message": "Kezdd el írni a posztot...\n\nTöbbszintű spintax támogatott.\nHasználd a {opció1|opció2} formátumot."
+   },
+   "rateBadReward": {
+      "message": "Köszönetképpen 3 ingyenes posztot adunk a próbaidőszakodhoz!"
+   },
+   "rateBadText": {
+      "message": "Sajnáljuk, hogy nem feleltünk meg az elvárásaidnak. Megosztanád velünk, miben fejlődhetnénk?"
+   },
+   "rateBadTitle": {
+      "message": "Köszönjük az őszinteséget!"
+   },
+   "rateBtnFeedback": {
+      "message": "Visszajelzés és Ajándék Posztok"
+   },
+   "rateBtnLater": {
+      "message": "Talán később"
+   },
+   "rateBtnNo": {
+      "message": "Köszönöm, nem"
+   },
+   "rateBtnReview": {
+      "message": "Értékelés és Ajándék Posztok"
+   },
+   "rateBtnSubmit": {
+      "message": "Értékelés Küldése"
+   },
+   "rateErr": {
+      "message": "Kérlek válassz értékelést."
+   },
+   "rateGoodReward": {
+      "message": "Köszönetképpen 3 ingyenes posztot adunk a próbaidőszakodhoz!"
+   },
+   "rateGoodText": {
+      "message": "Lenne kedved írni egy gyors értékelést a Chrome Webáruházban? Ez sokat segít nekünk!"
+   },
+   "rateGoodTitle": {
+      "message": "Szuper! Örülünk, hogy tetszik!"
+   },
+   "rateText": {
+      "message": "Milyen tapasztalataid vannak a GroupPosting Pro-val? Gyors értékelésed segít a fejlesztésben!"
+   },
+   "rateTitle": {
+      "message": "Hogy tetszik az app?"
+   },
+   "readyMsg": {
+      "message": "$TEMPLATES$ sablon küldése $GROUPS$ csoportba.",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "templates": {
+            "content": "$1"
+         }
+      }
+   },
+   "readyTitle": {
+      "message": "Indításra kész"
+   },
+   "restoreErrJson": {
+      "message": "Kérlek válassz érvényes JSON biztonsági mentés fájlt."
+   },
+   "restoreErrMsg": {
+      "message": "A fájl nem olvasható. Sérült lehet vagy rossz formátumú. Hiba: $ERR$",
+      "placeholders": {
+         "err": {
+            "content": "$1"
+         }
+      }
+   },
+   "restoreErrTitle": {
+      "message": "Visszaállítási Hiba"
+   },
+   "restoreMsg": {
+      "message": "Ez hozzáad $TAGS$ sablont és $GROUPS$ gyűjteményt a meglévő adataidhoz. Biztosan folytatod?",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "tags": {
+            "content": "$1"
+         }
+      }
+   },
+   "restoreSuccessMsg": {
+      "message": "Sikeresen hozzáadva $TAGS$ új sablon és $GROUPS$ új gyűjtemény.",
+      "placeholders": {
+         "groups": {
+            "content": "$2"
+         },
+         "tags": {
+            "content": "$1"
+         }
+      }
+   },
+   "restoreSuccessTitle": {
+      "message": "Sikeres Visszaállítás"
+   },
+   "restoreTitle": {
+      "message": "Visszaállítás Megerősítése"
+   },
+   "retryMsg": {
+      "message": "Szeretnéd újra megpróbálni elküldeni a(z) $COUNT$ sikertelen vagy kihagyott posztot?",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "retryTitle": {
+      "message": "Néhány poszt nem sikerült."
+   },
+   "revAwesome": {
+      "message": "Fantasztikus!"
+   },
+   "revBtn": {
+      "message": "Értékelés a Store-ban és posztok szerzése"
+   },
+   "revText": {
+      "message": "Lenne kedved hagyni egy gyors értékelést?"
+   },
+   "saveCollection": {
+      "message": "Gyűjtemény mentése"
+   },
+   "savePercent": {
+      "message": "$PERCENT$% megtakarítás",
+      "placeholders": {
+         "percent": {
+            "content": "$1"
+         }
+      }
+   },
+   "schedDate": {
+      "message": "Dátum"
+   },
+   "schedDaysMonth": {
+      "message": "Napok kiválasztása (Hónap)"
+   },
+   "schedDaysWeek": {
+      "message": "Napok kiválasztása (Hét)"
+   },
+   "schedErrPast": {
+      "message": "A megadott időpont nem lehet a múltban."
+   },
+   "schedFreq": {
+      "message": "Gyakoriság"
+   },
+   "schedSave": {
+      "message": "Időzítés Mentése"
+   },
+   "schedTime": {
+      "message": "Idő"
+   },
+   "schedUpdate": {
+      "message": "Időzítés Frissítése"
+   },
+   "secBackup": {
+      "message": "Biztonsági mentés és visszaállítás"
+   },
+   "secDescBalanced": {
+      "message": "Egyensúly a sebesség és biztonság között, közepes véletlenszerű késleltetésekkel. A legtöbb felhasználónak ajánlott."
+   },
+   "secDescFast": {
+      "message": "A sebességet helyezi előtérbe minimális késleltetéssel. Régi fiókokhoz ajánlott."
+   },
+   "secDescSafe": {
+      "message": "A fiókbiztonságot helyezi előtérbe hosszabb szünetekkel, fókuszált lappal és emberibb viselkedéssel. Lassú, de a legbiztonságosabb."
+   },
+   "securePayment": {
+      "message": "Biztonságos fizetés a LemonSqueezy-n keresztül."
+   },
+   "spinAdd": {
+      "message": "Új Variáció Hozzáadása"
+   },
+   "spinApply": {
+      "message": "Spintax Beillesztése"
+   },
+   "spinErr": {
+      "message": "Kérlek adj meg legalább egy variációt."
+   },
+   "spinInstr": {
+      "message": "Adj hozzá és nézz meg variációkat. (Használd a {opció1|opció2} formátumot)."
+   },
+   "spinPreview": {
+      "message": "Élő Előnézet"
+   },
+   "spinShuffle": {
+      "message": "Keverés"
+   },
+   "spinTitle": {
+      "message": "Spintax Variációk Létrehozása"
+   },
+   "splitBtn": {
+      "message": "Felosztás"
+   },
+   "splitErrMin": {
+      "message": "Legalább 2 link szükséges a felosztáshoz."
+   },
+   "splitErrValid": {
+      "message": "Kérlek adj meg érvényes számot."
+   },
+   "splitFeedbackExact": {
+      "message": "Létrejön \u003Cstrong>$PIECES$\u003C/strong> gyűjtemény, egyenként \u003Cstrong>$LINKS$\u003C/strong> linkkel.",
+      "placeholders": {
+         "links": {
+            "content": "$2"
+         },
+         "pieces": {
+            "content": "$1"
+         }
+      }
+   },
+   "splitFeedbackMixed": {
+      "message": "Létrejön \u003Cstrong>$PIECES$\u003C/strong> gyűjtemény. $BIG$ db $L1$ linket, $SMALL$ db $L2$ linket tartalmaz.",
+      "placeholders": {
+         "big": {
+            "content": "$2"
+         },
+         "l1": {
+            "content": "$3"
+         },
+         "l2": {
+            "content": "$5"
+         },
+         "pieces": {
+            "content": "$1"
+         },
+         "small": {
+            "content": "$4"
+         }
+      }
+   },
+   "splitInfo": {
+      "message": "A gyűjteményben \u003Cstrong>$COUNT$\u003C/strong> link van.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "splitLblPieces": {
+      "message": "Hány kisebb részre szeretnéd osztani?"
+   },
+   "splitSuccess": {
+      "message": "A gyűjtemény $COUNT$ részre lett osztva.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "splitTitle": {
+      "message": "Gyűjtemény Felosztása"
+   },
+   "spotCampDesc": {
+      "message": "Láncolj posztokat, állíts be késleltetést és ismételd végtelenül."
+   },
+   "spotCampTitle": {
+      "message": "Kampány automatizálás"
+   },
+   "spotStepExtract": {
+      "message": "\u003Cstrong>Kivonás\u003C/strong>"
+   },
+   "spotStepLoop": {
+      "message": "\u003Cstrong>Ciklus\u003C/strong> beállítása"
+   },
+   "spotStepPost": {
+      "message": "\u003Cstrong>Poszt\u003C/strong> blokk hozzáadása"
+   },
+   "spotStepSplit": {
+      "message": "Lista \u003Cstrong>Felosztása\u003C/strong>"
+   },
+   "spotStepWait": {
+      "message": "\u003Cstrong>Várakozás\u003C/strong> blokk hozzáadása"
+   },
+   "statFailedSkipped": {
+      "message": "Sikertelen/Kihagyva"
+   },
+   "statSuccessful": {
+      "message": "Sikeres"
+   },
+   "statTotal": {
+      "message": "Összes"
+   },
+   "statusFailed": {
+      "message": "Sikertelen"
+   },
+   "statusPending": {
+      "message": "Függőben"
+   },
+   "statusSkipped": {
+      "message": "Kihagyva"
+   },
+   "statusSuccess": {
+      "message": "Siker"
+   },
+   "stepImport": {
+      "message": "Csoportok importálása"
+   },
+   "stepPost": {
+      "message": "Poszt küldése"
+   },
+   "stepPro": {
+      "message": "Pro aktiválása"
+   },
+   "stepTemplate": {
+      "message": "Sablon létrehozása"
+   },
+   "stepVars": {
+      "message": "Variációk hozzáadása"
+   },
+   "stuckReset": {
+      "message": "Elakadt a posztolás? - csak probléma esetén."
+   },
+   "sumContent": {
+      "message": "Tartalom"
+   },
+   "sumDuration": {
+      "message": "Becsült idő"
+   },
+   "sumGroups": {
+      "message": "$ACTUAL$ Csoport",
+      "placeholders": {
+         "actual": {
+            "content": "$1"
+         }
+      }
+   },
+   "sumOverview": {
+      "message": "Futtatás áttekintése"
+   },
+   "sumTruncated": {
+      "message": "($TOTAL$-ből)",
+      "placeholders": {
+         "total": {
+            "content": "$1"
+         }
+      }
+   },
+   "sumVariations": {
+      "message": "$COUNT$ Variáció",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "sumVolume": {
+      "message": "Mennyiség"
+   },
+   "tabAdv": {
+      "message": "Haladó posztolás"
+   },
+   "tabGroupColls": {
+      "message": "Csoportgyűjtemények"
+   },
+   "tabPostTemps": {
+      "message": "Poszt sablonok"
+   },
+   "tabQuick": {
+      "message": "Egyszerű poszt"
+   },
+   "tabUpcoming": {
+      "message": "Következő"
+   },
+   "tagCompat": {
+      "message": "Max kompatibilitás"
+   },
+   "tagRec": {
+      "message": "Ajánlott"
+   },
+   "targeterDedup": {
+      "message": " ($COUNT$ duplikáció eltávolítva)",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "targeterDescFresh": {
+      "message": "A régen használt csoportok előre vétele (Friss > Meleg > Forró)."
+   },
+   "targeterInputPostTo": {
+      "message": "Küldés"
+   },
+   "targeterInputRandom": {
+      "message": "véletlen csoportba"
+   },
+   "targeterLblAll": {
+      "message": "Posztolás \u003Cstrong>mind a(z) $COUNT$\u003C/strong> csoportba.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "targeterLblRandom": {
+      "message": "Posztolás \u003Cstrong>$COUNT$\u003C/strong> csoportba véletlenszerűen.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "targeterModeAll": {
+      "message": "Posztolás az Összesre"
+   },
+   "targeterModeRandom": {
+      "message": "Véletlenszerű Részhalmaz"
+   },
+   "targeterNoColls": {
+      "message": "Nincsenek csoportgyűjtemények. Kérlek hozz létre egyet a \"Csoportok\" oldalon."
+   },
+   "targeterPhSearch": {
+      "message": "Keresés az összes csoportodban..."
+   },
+   "targeterStep1": {
+      "message": "1. Válassz Csoportgyűjteményeket"
+   },
+   "targeterStep2": {
+      "message": "2. (Opcionális) Egyedi Csoportok Hozzáadása"
+   },
+   "targeterStep3": {
+      "message": "3. Posztolási Stratégia Beállítása"
+   },
+   "targeterSummaryInit": {
+      "message": "Válassz gyűjteményeket a beállításokhoz."
+   },
+   "targeterSummaryMain": {
+      "message": "Kiválasztottál \u003Cstrong>$COUNT$\u003C/strong> egyedi célcsoportot.",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "targeterToggleFresh": {
+      "message": "Friss csoportok előnyben"
+   },
+   "timeInDays": {
+      "message": "$COUNT$ nap múlva",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "timeInHours": {
+      "message": "$HOURS$ óra $MINS$ perc múlva",
+      "placeholders": {
+         "hours": {
+            "content": "$1"
+         },
+         "mins": {
+            "content": "$2"
+         }
+      }
+   },
+   "timeInMins": {
+      "message": "$MINS$ perc múlva",
+      "placeholders": {
+         "mins": {
+            "content": "$1"
+         }
+      }
+   },
+   "timeSoon": {
+      "message": "\u003C 1 perc múlva"
+   },
+   "tipFmtBold": {
+      "message": "Használj félkövér szöveget a kiemeléshez."
+   },
+   "tipFmtEx": {
+      "message": "Kiváló formázás! Jól tagolt és olvasható."
+   },
+   "tipFmtHead": {
+      "message": "Használj címsorokat a jobb tagolásért."
+   },
+   "tipFmtList": {
+      "message": "A felsorolások segítik az átláthatóságot."
+   },
+   "tipGroupsDesc": {
+      "message": "Rendezd a csoportokat téma szerint, hogy mindig a megfelelő közönséget érd el."
+   },
+   "tipLenGood": {
+      "message": "Szép munka! A poszt hossza megfelelő."
+   },
+   "tipLenPerfect": {
+      "message": "Tökéletes! A poszt hossza ideális a magas eléréshez."
+   },
+   "tipLenShort": {
+      "message": "A poszt kicsit rövid. További részletek segíthetnek."
+   },
+   "tipLenStart": {
+      "message": "Kezdj el írni az ajánlások megtekintéséhez."
+   },
+   "tipMediaAdd": {
+      "message": "Képek vagy videók hozzáadása növelheti az elérést."
+   },
+   "tipMediaGood": {
+      "message": "Szép munka! A média használata segít."
+   },
+   "tipMediaPerfect": {
+      "message": "Tökéletes! A több médiaelem jelentősen növeli az elérést."
+   },
+   "tipPolPhone": {
+      "message": "Telefonszám észlelve. Ez korlátozást válthat ki a platformon."
+   },
+   "tipPolProf": {
+      "message": "Problémás nyelvezet észlelve. Fontold meg az átírást."
+   },
+   "tipSegment": {
+      "message": "Szegmentálás téma szerint"
+   },
+   "tipSentEx": {
+      "message": "Kiváló! A nagyon pozitív hangnem növeli az aktivitást."
+   },
+   "tipSentGood": {
+      "message": "Szép munka! Pozitív hangnem észlelve."
+   },
+   "tipSentImprove": {
+      "message": "Próbálj meg több pozitív kifejezést használni."
+   },
+   "tipStepAI": {
+      "message": "\u003Cstrong>AI\u003C/strong> Átírás"
+   },
+   "tipStepExtract": {
+      "message": "\u003Cstrong>Kinyerés\u003C/strong>"
+   },
+   "tipStepSeg": {
+      "message": "\u003Cstrong>Szegmentálás\u003C/strong> Téma Szerint"
+   },
+   "tipStepSpin": {
+      "message": "Használj \u003Cstrong>Spintaxot\u003C/strong>"
+   },
+   "tipStepSplit": {
+      "message": "Listák \u003Cstrong>Felosztása\u003C/strong>"
+   },
+   "tipStepVar": {
+      "message": "Készíts \u003Cstrong>Variációkat\u003C/strong>"
+   },
+   "tipTemplates": {
+      "message": "Turbózd fel a sablonjaidat"
+   },
+   "tipTemplatesDesc": {
+      "message": "A sablonok időt takarítanak meg és egységessé teszik az üzeneteidet."
+   },
+   "tour1Text": {
+      "message": "A legbiztonságosabb és leghatékonyabb módja a Facebook csoportos posztolás automatizálásának."
+   },
+   "tour1Title": {
+      "message": "Üdvözöl a GroupPosting Pro!"
+   },
+   "tour2Text": {
+      "message": "Kezdd itt. Hozz létre újrafelhasználható Poszt Sablonokat, és rendszerezd a célcsoportokat Gyűjteményekbe."
+   },
+   "tour2Title": {
+      "message": "1. Sablonok létrehozása"
+   },
+   "tour3Text": {
+      "message": "Használd az Egyszerű Posztolást gyors küldéshez, vagy a Haladó Időzítőt a posztok előre tervezéséhez."
+   },
+   "tour3Title": {
+      "message": "2. Szerkesztés és Időzítés"
+   },
+   "tour4Text": {
+      "message": "Építs erős munkafolyamatokat. Fűzz össze több posztot, állíts be késleltetéseket és ismételd a stratégiát."
+   },
+   "tour4Title": {
+      "message": "3. Automatizált Kampányok"
+   },
+   "tour5Text": {
+      "message": "Tekintsd meg minden futtatás naplóját. Lásd, mi sikerült vagy nem, és próbáld újra egy kattintással."
+   },
+   "tour5Title": {
+      "message": "4. Előzmények követése"
+   },
+   "tour6Text": {
+      "message": "Beállítottunk néhány minta sablont számodra. Kattints az alábbi gombra a kezdéshez!"
+   },
+   "tour6Title": {
+      "message": "Készen állsz!"
+   },
+   "typeManual": {
+      "message": "Kézi"
+   },
+   "typeRetry": {
+      "message": "Újrapróbálás"
+   },
+   "typeScheduled": {
+      "message": "Időzített"
+   },
+   "unitMin": {
+      "message": "perc"
+   },
+   "unitPosts": {
+      "message": "poszt"
+   },
+   "updateCollection": {
+      "message": "Gyűjtemény frissítése"
+   },
+   "valNeutral": {
+      "message": "Semleges"
+   },
+   "valNo": {
+      "message": "Nem"
+   },
+   "valYes": {
+      "message": "Igen"
+   },
+   "warnFbLimit": {
+      "message": "A Facebook korlátozza a csatlakozást! Napi max 25 ajánlott."
+   },
+   "warnOnline": {
+      "message": "Az eszköznek online-nak kell lennie és a böngészőnek nyitva."
+   },
+   "warnQuick": {
+      "message": "A Gyors poszt a Klasszikus módot és alapbeállításokat használja."
+   },
+   "welcomeProMsg": {
+      "message": "Licenc sikeresen aktiválva! Minden funkció feloldva."
+   },
+   "welcomeProTitle": {
+      "message": "Üdv a Pro-ban!"
+   },
+   "wizAnalyzing": {
+      "message": "Cél elemzése $COUNT$ csoport ellenében...",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "wizBtnAnalyzing": {
+      "message": "Elemzés..."
+   },
+   "wizBuildError": {
+      "message": "Építési Hiba"
+   },
+   "wizBuildMsg": {
+      "message": "Az AI generált egy stratégiát, de nem sikerült elhelyezni a vásznon. Hiba: $ERR$",
+      "placeholders": {
+         "err": {
+            "content": "$1"
+         }
+      }
+   },
+   "wizEmptyMsg": {
+      "message": "Az AI üres stratégiát adott vissza. Kérlek adj meg több részletet."
+   },
+   "wizEmptyTitle": {
+      "message": "Érvénytelen Eredmény"
+   },
+   "wizEnterGoal": {
+      "message": "Kérlek írd le a kampány célját (pl. 'Webinár promóció jövő pénteken')."
+   },
+   "wizError": {
+      "message": "Kapcsolódási hiba. Kérlek töltsd újra a bővítményt."
+   },
+   "wizFailedMsg": {
+      "message": "Az AI nem tudott stratégiát generálni. Próbáld újra vagy használj egyszerűbb parancsot."
+   },
+   "wizFailedTitle": {
+      "message": "AI Generálás Sikertelen"
+   },
+   "wizInputReq": {
+      "message": "Adatmegadás Szükséges"
+   },
+   "wizNoTemplate": {
+      "message": "Kérlek válassz legalább egy sablont."
+   },
+   "wizSuccessMsg": {
+      "message": "Az AI sikeresen létrehozott \u003Cb>$COUNT$ lépést\u003C/b> a célod alapján.\u003Cbr>\u003Cbr>Ellenőrizd a beállítást és kattints a \u003Cb>Mentés\u003C/b> gombra az indításhoz!",
+      "placeholders": {
+         "count": {
+            "content": "$1"
+         }
+      }
+   },
+   "wizSuccessTitle": {
+      "message": "Stratégia Kész"
+   }
+}
