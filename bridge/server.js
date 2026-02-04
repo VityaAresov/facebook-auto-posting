@@ -7,6 +7,7 @@ app.use(express.json({ limit: "2mb" }));
 
 const CONFIG_PATH = path.join(__dirname, "bridge.config.json");
 const DATA_PATH = path.join(__dirname, "bridge.data.json");
+const DEFAULT_API_KEY = "9abc2df4f9e895350af7257c58a839003a29a5ef31ee3c4b";
 
 function readJsonSafe(filePath, fallback) {
   try {
@@ -28,7 +29,21 @@ function writeJsonSafe(filePath, data) {
   }
 }
 
-const config = readJsonSafe(CONFIG_PATH, { port: 3721, apiKey: "" });
+const config = readJsonSafe(CONFIG_PATH, {
+  port: 3721,
+  apiKey: DEFAULT_API_KEY,
+});
+// Allow env override (useful for servers/containers)
+config.apiKey =
+  process.env.BRIDGE_API_KEY ||
+  process.env.API_KEY ||
+  config.apiKey ||
+  DEFAULT_API_KEY;
+// If config was missing/empty, persist the default so UI/docs stay in sync
+if (!config.apiKey) {
+  config.apiKey = DEFAULT_API_KEY;
+  writeJsonSafe(CONFIG_PATH, config);
+}
 const store = readJsonSafe(DATA_PATH, { commands: [], status: {} });
 
 function persist() {
