@@ -906,6 +906,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   const backButton = document.getElementById("closePopup");
   if (backButton) {
     backButton.addEventListener("click", () => {
+      if (!chrome?.runtime?.id) {
+        return;
+      }
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const tab = tabs[0];
         const key = `injected-${tab.id}`;
@@ -1734,6 +1737,11 @@ document.addEventListener("DOMContentLoaded", async function () {
   const bridgeGenerateKeyBtn = document.getElementById("bridgeGenerateKeyBtn");
   const bridgeToggleKeyBtn = document.getElementById("bridgeToggleKeyBtn");
   const bridgeCopyKeyBtn = document.getElementById("bridgeCopyKeyBtn");
+  const aiApiKeyInput = document.getElementById("aiApiKeyInput");
+  const aiToggleKeyBtn = document.getElementById("aiToggleKeyBtn");
+  const aiCopyKeyBtn = document.getElementById("aiCopyKeyBtn");
+  const aiSaveKeyBtn = document.getElementById("aiSaveKeyBtn");
+  const aiKeyStatusText = document.getElementById("aiKeyStatusText");
 
   if (backupBtn) {
     backupBtn.addEventListener("click", handleBackupData);
@@ -1806,6 +1814,55 @@ document.addEventListener("DOMContentLoaded", async function () {
           `Copy failed: ${err.message || "Unknown error"}. Please click Show and copy manually.`,
         );
       }
+    });
+  }
+
+  if (aiToggleKeyBtn && aiApiKeyInput) {
+    aiToggleKeyBtn.addEventListener("click", () => {
+      const isHidden = aiApiKeyInput.type === "password";
+      aiApiKeyInput.type = isHidden ? "text" : "password";
+      aiToggleKeyBtn.textContent = isHidden ? "Hide" : "Show";
+    });
+  }
+
+  if (aiCopyKeyBtn && aiApiKeyInput) {
+    aiCopyKeyBtn.addEventListener("click", async () => {
+      const key = (aiApiKeyInput.value || "").trim();
+      if (!key) {
+        showCustomModal("AI Key", "No API key to copy.");
+        return;
+      }
+      try {
+        const response = await new Promise((resolve) => {
+          chrome.runtime.sendMessage(
+            { action: "copyToClipboard", text: key },
+            (resp) => resolve(resp || {}),
+          );
+        });
+        if (!response.success) {
+          throw new Error(response.error || "Clipboard unavailable");
+        }
+        if (aiKeyStatusText) aiKeyStatusText.textContent = "Status: Key copied";
+        showCustomModal("AI Key", "API key copied to clipboard.");
+      } catch (err) {
+        showCustomModal(
+          "AI Key",
+          `Copy failed: ${err.message || "Unknown error"}. Please click Show and copy manually.`,
+        );
+      }
+    });
+  }
+
+  if (aiSaveKeyBtn && aiApiKeyInput) {
+    aiSaveKeyBtn.addEventListener("click", async () => {
+      const key = (aiApiKeyInput.value || "").trim();
+      if (!key) {
+        showCustomModal("AI Key", "Please paste your AI API key.");
+        return;
+      }
+      await chrome.storage.local.set({ aiApiKey: key });
+      if (aiKeyStatusText) aiKeyStatusText.textContent = "Status: Saved";
+      showCustomModal("AI Key", "AI API key saved.");
     });
   }
 
@@ -2640,6 +2697,7 @@ async function showHiddenPage() {
   }
 
   await loadBridgeConfigIntoUI();
+  await loadAiKeyIntoUI();
 
   const manifest = chrome.runtime.getManifest();
   document.getElementById("versionInfo").textContent = I18n.t("lblVer", [
@@ -2697,6 +2755,18 @@ async function loadBridgeConfigIntoUI() {
 
   if (bridgeStatusText) {
     bridgeStatusText.textContent = "Status: Not tested";
+  }
+}
+
+async function loadAiKeyIntoUI() {
+  const aiApiKeyInput = document.getElementById("aiApiKeyInput");
+  const aiKeyStatusText = document.getElementById("aiKeyStatusText");
+  if (!aiApiKeyInput) return;
+
+  const { aiApiKey } = await chrome.storage.local.get("aiApiKey");
+  aiApiKeyInput.value = aiApiKey || "";
+  if (aiKeyStatusText) {
+    aiKeyStatusText.textContent = aiApiKey ? "Status: Saved" : "Status: Not set";
   }
 }
 const aboutButton = document.getElementById("aboutButton");

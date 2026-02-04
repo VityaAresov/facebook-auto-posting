@@ -5218,6 +5218,21 @@ ${TECHNICAL_SPECS}
 }
 // --- END OF NEW HELPER FUNCTIONS ---
 
+async function getSecureApiKey(forceRefresh = false) {
+  const data = await chrome.storage.local.get(["aiApiKey", "aiApiKeyData"]);
+  if (data.aiApiKey && typeof data.aiApiKey === "string") {
+    return data.aiApiKey;
+  }
+  if (data.aiApiKeyData && data.aiApiKeyData.key) {
+    return data.aiApiKeyData.key;
+  }
+  if (forceRefresh) {
+    // Clear any stale data
+    await chrome.storage.local.remove("aiApiKeyData");
+  }
+  throw new Error("AI API key missing. Set it in Settings > AI.");
+}
+
 // in background.js
 // ACTION: Replace the executeSinglePopupOrAndroidPost function.
 
@@ -5308,6 +5323,18 @@ async function executeSinglePopupOrAndroidPost(
           // Handshake
           await pingTabUntilReady(resource.id);
 
+          // Validate we are on a group page (avoid redirects to profile/home)
+          const tabInfo = await chrome.tabs.get(resource.id);
+          const currentUrl = tabInfo?.url || "";
+          if (
+            !currentUrl.includes("facebook.com") ||
+            !currentUrl.includes("/groups/")
+          ) {
+            throw new Error(
+              `Not a group page (redirected): ${currentUrl || "unknown"}`,
+            );
+          }
+
           if ((await getPostingState()).stopRequested)
             throw new Error("Stop requested");
 
@@ -5383,6 +5410,9 @@ async function executeSinglePopupOrAndroidPost(
       console.warn(`[Watchdog] Posting window closed: ${errMsg}`);
       logEntry.response = "skipped";
       logEntry.reason = "Window closed";
+    } else if (lowerMsg.includes("not a group page")) {
+      logEntry.response = "skipped";
+      logEntry.reason = errMsg;
     } else {
       console.error(`[Watchdog] Error in single post execution: ${errMsg}`);
 

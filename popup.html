@@ -347,6 +347,55 @@
                   >
                 </div>
 
+                <div class="form-section mt-3">
+                  <h6 class="section-subtitle mb-3" style="color: #4b5563">
+                    AI API Key
+                  </h6>
+                  <div class="form-group row gap0">
+                    <label for="aiApiKeyInput" class="col-sm-4 col-form-label"
+                      >API Key:</label
+                    >
+                    <div class="col-sm-8 d-flex" style="gap: 8px">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="aiApiKeyInput"
+                        placeholder="Paste DeepSeek key"
+                        style="flex: 1"
+                      />
+                      <button
+                        type="button"
+                        id="aiToggleKeyBtn"
+                        class="btn-visual-secondary"
+                        style="white-space: nowrap"
+                      >
+                        Show
+                      </button>
+                      <button
+                        type="button"
+                        id="aiCopyKeyBtn"
+                        class="btn-visual-secondary"
+                        style="white-space: nowrap"
+                      >
+                        Copy
+                      </button>
+                    </div>
+                  </div>
+                  <div class="d-flex" style="gap: 10px">
+                    <button
+                      type="button"
+                      id="aiSaveKeyBtn"
+                      class="btn-visual-secondary"
+                      style="flex: 1"
+                    >
+                      Save AI Key
+                    </button>
+                  </div>
+                  <small class="form-hint text-center mt-2" id="aiKeyStatusText"
+                    >Status: Not set</small
+                  >
+                </div>
+
               </form>
             </div>
             <div class="card-footer text-center">

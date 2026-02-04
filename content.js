@@ -493,6 +493,78 @@ if (window.autoPosterInjected) {
               'div[role="dialog"][aria-label="Create post"]',
             );
 
+            // 1. Success messages / approval dialogs
+            if (postComposerDialog) {
+              const dialogText = (postComposerDialog.innerText || "")
+                .toLowerCase()
+                .trim();
+              const pendingPatterns = [
+                "pending approval",
+                "pending review",
+                "will be reviewed",
+                "sent for approval",
+                "awaiting approval",
+                "ожидает проверки",
+                "на проверке",
+                "отправлен на проверку",
+                "будет проверен",
+              ];
+              const successPatterns = [
+                "your post is now",
+                "post is now",
+                "successfully posted",
+                "опубликован",
+                "успешно опубликован",
+                "размещен",
+              ];
+
+              const isPending = pendingPatterns.some((p) =>
+                dialogText.includes(p),
+              );
+              const isSuccess = successPatterns.some((p) =>
+                dialogText.includes(p),
+              );
+
+              if (isPending || isSuccess) {
+                const doneTexts = [
+                  "done",
+                  "ok",
+                  "got it",
+                  "close",
+                  "готово",
+                  "ок",
+                  "понятно",
+                  "закрыть",
+                ];
+                const buttons = Array.from(
+                  postComposerDialog.querySelectorAll(
+                    'button, [role="button"]',
+                  ),
+                );
+                const doneBtn = buttons.find((b) => {
+                  const label = (
+                    b.getAttribute("aria-label") ||
+                    b.innerText ||
+                    ""
+                  )
+                    .toLowerCase()
+                    .trim();
+                  return doneTexts.includes(label);
+                });
+                if (doneBtn) {
+                  doneBtn.click();
+                }
+                chrome.runtime.sendMessage({
+                  action: "popupPostComplete",
+                  requestId: requestId,
+                  success: true,
+                  status: isPending ? "pending_approval" : "successful",
+                  telemetry,
+                });
+                return;
+              }
+            }
+
             // 2. Upload Check (only if the composer dialog is still open and media was attached)
             const hasMedia =
               Array.isArray(post.images) && post.images.length > 0;
