@@ -1,8 +1,3 @@
-/**
- * @license Copyright (c) 2025 Group Posting Pro / Global Charity Solutions Ltd. All Rights Reserved.
- * You may not copy, modify, or distribute this software without express permission.
- */
-
 // global variables
 const eventListeners = [];
 let edit = null;
@@ -16,6 +11,8 @@ let groups = [];
 let products = [];
 let selectedPosts = []; // store selected posts
 let selectedGroups = []; // Stores selected groups
+let quickSelectedGroups = [];
+let quickMedia = [];
 let avoidNightTimePosting = false;
 let disabledPosting = false;
 let validated;
@@ -1241,9 +1238,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     langSelect.addEventListener("change", async (e) => {
       const lang = e.target.value;
       const btn = document.getElementById("backButton"); // Use back button as loading indicator area
-      const originalText = btn.textContent;
-      btn.textContent = "Loading Language...";
-      btn.disabled = true;
+      let originalText = null;
+      if (btn) {
+        originalText = btn.textContent;
+        btn.textContent = "Loading Language...";
+        btn.disabled = true;
+      } else {
+        langSelect.disabled = true;
+      }
 
       try {
         if (lang === "default") {
@@ -1273,14 +1275,18 @@ document.addEventListener("DOMContentLoaded", async function () {
           "Please reload the tab to apply the new language.",
           "alert",
           () => {
-            window.reload();
+            window.location.reload();
           },
         );
       } catch (error) {
         console.error("Language switch failed:", error);
         alert("Failed to load language file. Please reinstall the extension.");
-        btn.textContent = originalText;
-        btn.disabled = false;
+        if (btn) {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        } else {
+          langSelect.disabled = false;
+        }
       }
     });
   }
@@ -4477,8 +4483,6 @@ function sleep(ms) {
 
 // Quick Post related variables
 let quickPostGroups = [];
-let quickSelectedGroups = [];
-let quickMedia = [];
 
 // Quick Post UI Elements
 const quickPostBTN = document.getElementById("quickPostBTN");
@@ -10483,16 +10487,13 @@ function showAndSetupRatingModal() {
 
   goToFeedbackFormBtn.addEventListener("click", async (e) => {
     e.preventDefault();
-    const { licenseVerified, freePostsRemaining: current } =
-      await chrome.storage.local.get(["licenseVerified", "freePostsRemaining"]);
-    if (!licenseVerified) {
-      await chrome.storage.local.set({
-        freePostsRemaining: (current || 0) + 3,
-      }); // 3 = GIFT_POSTS_AMOUNT
-      updateTierUI();
-    }
-    window.open("https://forms.gle/azdfBwvJoxxY5z5F7", "_blank");
+    // Standalone mode: no external feedback links
     closeElegantRatingModal();
+    showCustomModal(
+      "Feedback disabled",
+      "Feedback is disabled in this standalone build.",
+      "alert",
+    );
   });
 
   goToStoreAndGetPostsBtn.addEventListener("click", async (e) => {
@@ -17985,15 +17986,11 @@ async function updateChecklistProgress() {
   // 4. Check Send Post
   const hasPosted = postingHistory && postingHistory.length > 0;
 
-  // 5. Check Pro Status (NEW)
-  const isPro = !!licenseVerified;
-
   const steps = [
     { id: "step-extract", done: hasScrapedGroups },
     { id: "step-template", done: hasUserTemplate },
     { id: "step-variations", done: hasVariations },
     { id: "step-post", done: hasPosted },
-    { id: "step-pro", done: isPro }, // NEW STEP
   ];
 
   let completedCount = 0;
@@ -18014,8 +18011,10 @@ async function updateChecklistProgress() {
     }
   });
 
-  // Update Progress Ring (Divide by 5 now)
-  const percent = Math.round((completedCount / 5) * 100);
+  // Update Progress Ring
+  const percent = steps.length
+    ? Math.round((completedCount / steps.length) * 100)
+    : 0;
   const ring = document.getElementById("checklistRing");
   const text = document.getElementById("checklistPercent");
 

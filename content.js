@@ -1,8 +1,3 @@
-/*
- * @license Copyright (c) 2025 Group Posting Pro / Global Charity Solutions Ltd. All Rights Reserved.
- * You may not copy, modify, or distribute this software without express permission.
- */
-
 if (window.autoPosterInjected) {
   // The first script already ran and set this flag to true.
   // This second script execution STOPS right here. It never tries to

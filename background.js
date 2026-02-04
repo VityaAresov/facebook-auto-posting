@@ -1,7 +1,3 @@
-/**
- * @license Copyright (c) 2025 Group Posting Pro / Global Charity Solutions Ltd. All Rights Reserved.
- * You may not copy, modify, or distribute this software without express permission.
- */
 let popupResponseQueue = new Map();
 // ----- K E E P - A L I V E   M A N A G E R -----
 const KEEP_ALIVE_ALARM_NAME = "keep-alive-alarm";
