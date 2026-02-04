@@ -1,13 +1,211 @@
 {
-  "commands": [],
+  "commands": [
+    {
+      "id": "cmd_1770228029733_82ti7b",
+      "action": "upsert_group_collection",
+      "payload": {
+        "title": "Dubai Biz Test",
+        "links": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ]
+      },
+      "status": "success",
+      "createdAt": "2026-02-04T18:00:29.733Z",
+      "claimedAt": "2026-02-04T18:00:31.142Z",
+      "completedAt": "2026-02-04T18:00:31.150Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": null
+    },
+    {
+      "id": "cmd_1770228039369_uy8rqx",
+      "action": "start_posting",
+      "payload": {
+        "posts": [
+          {
+            "title": "Intro Dubai",
+            "text": "<p>Привет! Я Виктор, видеограф и основатель VIKS Production. Недавно переехал в Дубай, до этого работал в США и снимал для компаний вроде Microsoft, Amazon, FIFA, а также для международных бизнес-ивентов (CES, America Business Forum) и публичных спикеров.</p><p>Сейчас ищу партнёрства в Дубае: бизнес-ивенты, конференции, форумы; компании, которым нужен понятный видеоконтент под продажи и бренд; агентства / продакшены, которым нужен надёжный продакшн-партнёр.</p><p>Формат работы: съёмка и продакшн под ключ; event-видео (анонсы, хайлайты, кейсы); контент под LinkedIn / Instagram / рекламу.</p><p>Если вы занимаетесь ивентами, маркетингом или развиваете компанию в Дубае — буду рад познакомиться и обсудить, чем могу быть полезен.</p><p>Сайт с работами: viksproduction.com<br/>Можно написать прямо мне в личные сообщения.</p>"
+          }
+        ],
+        "groupLinks": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ],
+        "postingMethod": "directApi"
+      },
+      "status": "success",
+      "createdAt": "2026-02-04T18:00:39.369Z",
+      "claimedAt": "2026-02-04T18:00:41.153Z",
+      "completedAt": "2026-02-04T18:01:59.217Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "completed": 3,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "cmd_1770228226940_gr4ewy",
+      "action": "start_posting",
+      "payload": {
+        "posts": [
+          {
+            "title": "Intro Dubai",
+            "text": "<p>Привет! Я Виктор, видеограф и основатель VIKS Production. Недавно переехал в Дубай, до этого работал в США и снимал для компаний вроде Microsoft, Amazon, FIFA, а также для международных бизнес-ивентов (CES, America Business Forum) и публичных спикеров.</p><p>Сейчас ищу партнёрства в Дубае: бизнес-ивенты, конференции, форумы; компании, которым нужен понятный видеоконтент под продажи и бренд; агентства / продакшены, которым нужен надёжный продакшн-партнёр.</p><p>Формат работы: съёмка и продакшн под ключ; event-видео (анонсы, хайлайты, кейсы); контент под LinkedIn / Instagram / рекламу.</p><p>Если вы занимаетесь ивентами, маркетингом или развиваете компанию в Дубае — буду рад познакомиться и обсудить, чем могу быть полезен.</p><p>Сайт с работами: viksproduction.com<br/>Можно написать прямо мне в личные сообщения.</p>"
+          }
+        ],
+        "groupLinks": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ],
+        "postingMethod": "directApi"
+      },
+      "status": "success",
+      "createdAt": "2026-02-04T18:03:46.940Z",
+      "claimedAt": "2026-02-04T18:03:51.147Z",
+      "completedAt": "2026-02-04T18:04:54.947Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "completed": 3,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "cmd_1770228355764_6jjp0d",
+      "action": "start_posting",
+      "payload": {
+        "posts": [
+          {
+            "title": "Intro Dubai",
+            "text": "<p>Привет! Я Виктор, видеограф и основатель VIKS Production. Недавно переехал в Дубай, до этого работал в США и снимал для компаний вроде Microsoft, Amazon, FIFA, а также для международных бизнес-ивентов (CES, America Business Forum) и публичных спикеров.</p><p>Сейчас ищу партнёрства в Дубае: бизнес-ивенты, конференции, форумы; компании, которым нужен понятный видеоконтент под продажи и бренд; агентства / продакшены, которым нужен надёжный продакшн-партнёр.</p><p>Формат работы: съёмка и продакшн под ключ; event-видео (анонсы, хайлайты, кейсы); контент под LinkedIn / Instagram / рекламу.</p><p>Если вы занимаетесь ивентами, маркетингом или развиваете компанию в Дубае — буду рад познакомиться и обсудить, чем могу быть полезен.</p><p>Сайт с работами: viksproduction.com<br/>Можно написать прямо мне в личные сообщения.</p>"
+          }
+        ],
+        "groupLinks": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ],
+        "postingMethod": "directApi"
+      },
+      "status": "success",
+      "createdAt": "2026-02-04T18:05:55.764Z",
+      "claimedAt": "2026-02-04T18:05:56.147Z",
+      "completedAt": "2026-02-04T18:06:59.751Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "completed": 3,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "cmd_1770228481325_ig18lw",
+      "action": "start_posting",
+      "payload": {
+        "posts": [
+          {
+            "title": "Intro Dubai",
+            "text": "<p>Привет! Я Виктор, видеограф и основатель VIKS Production. Недавно переехал в Дубай, до этого работал в США и снимал для компаний вроде Microsoft, Amazon, FIFA, а также для международных бизнес-ивентов (CES, America Business Forum) и публичных спикеров.</p><p>Сейчас ищу партнёрства в Дубае: бизнес-ивенты, конференции, форумы; компании, которым нужен понятный видеоконтент под продажи и бренд; агентства / продакшены, которым нужен надёжный продакшн-партнёр.</p><p>Формат работы: съёмка и продакшн под ключ; event-видео (анонсы, хайлайты, кейсы); контент под LinkedIn / Instagram / рекламу.</p><p>Если вы занимаетесь ивентами, маркетингом или развиваете компанию в Дубае — буду рад познакомиться и обсудить, чем могу быть полезен.</p><p>Сайт с работами: viksproduction.com<br/>Можно написать прямо мне в личные сообщения.</p>"
+          }
+        ],
+        "groupLinks": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ],
+        "postingMethod": "directApi"
+      },
+      "status": "success",
+      "createdAt": "2026-02-04T18:08:01.325Z",
+      "claimedAt": "2026-02-04T18:08:06.162Z",
+      "completedAt": "2026-02-04T18:09:03.161Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "completed": 3,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "cmd_1770228554430_wzr0to",
+      "action": "stop_posting",
+      "payload": {},
+      "status": "success",
+      "createdAt": "2026-02-04T18:09:14.430Z",
+      "claimedAt": "2026-02-04T18:09:16.152Z",
+      "completedAt": "2026-02-04T18:09:16.156Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "stopped": true
+      }
+    }
+  ],
   "status": {
     "ext_1770222172627_9l0lje": {
       "clientId": "ext_1770222172627_9l0lje",
       "isPosting": false,
-      "currentStatus": "",
+      "currentStatus": "Stop signal received. Finishing current step...",
       "lastRun": null,
-      "latestPostLog": null,
-      "updatedAt": "2026-02-04T18:00:01.165Z"
+      "latestPostLog": {
+        "linkTitle": "Group 3",
+        "linkURL": "https://www.facebook.com/groups/1328722378011803",
+        "method": "direct_api",
+        "postTitle": "Intro Dubai",
+        "postUrl": "https://www.facebook.com/groups/1328722378011803/permalink/1895489644668404/",
+        "reason": null,
+        "response": "successful",
+        "timestamp": "2026-02-04T18:08:46.128Z"
+      },
+      "updatedAt": "2026-02-04T18:34:31.152Z"
     }
   }
 }

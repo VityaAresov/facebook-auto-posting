@@ -537,11 +537,45 @@ async function bridgeStartPosting(payload) {
     return { success: false, error: "No posts or groups resolved" };
   }
 
+  const baseSettings = {
+    timeDelay: 300,
+    groupNumberForDelay: 1,
+    postOrder: "sequential",
+    securityLevel: "2",
+    postingMethod: "popup",
+    generateAiVariations: false,
+    aiVariationCount: 2,
+    commentOption: "enable",
+    firstCommentText: "",
+    avoidNightTimePosting: false,
+    avoidNightPosting: false,
+    compressImages: true,
+    delayAfterFailure: false,
+    postAnonymously: false,
+  };
+
   const settings = {
+    ...baseSettings,
     ...(storage.defaultRemoteSettings || {}),
     ...(settingsOverrides || {}),
   };
+
+  if (settings.groupNumberForDelay == null && settings.linkCount != null) {
+    settings.groupNumberForDelay = settings.linkCount;
+  }
+
   if (postingMethod) settings.postingMethod = postingMethod;
+
+  if (typeof settings.timeDelay !== "number" || Number.isNaN(settings.timeDelay)) {
+    settings.timeDelay = baseSettings.timeDelay;
+  }
+  if (
+    typeof settings.groupNumberForDelay !== "number" ||
+    Number.isNaN(settings.groupNumberForDelay) ||
+    settings.groupNumberForDelay < 1
+  ) {
+    settings.groupNumberForDelay = baseSettings.groupNumberForDelay;
+  }
 
   const request = {
     action:
@@ -554,13 +588,70 @@ async function bridgeStartPosting(payload) {
     source: "bridge",
   };
 
-  const { logs } = await handlePostingRequest(request);
+  await setPostingState({ isLocked: true, stopRequested: false });
+  await chrome.storage.local.set({
+    isPostingInProgress: "started",
+    lastActivityTimestamp: Date.now(),
+  });
+  await updatePostingProgress("started");
+
+  let logs = [];
+  let telemetry = {};
+  let completionStatus = "completed";
+  try {
+    const result = await handlePostingRequest(request);
+    logs = Array.isArray(result?.logs) ? result.logs : [];
+    telemetry = result?.telemetry || {};
+
+    const finalState = await getPostingState();
+    const actuallyStopped = finalState.stopRequested;
+    completionStatus = actuallyStopped ? "stopped" : "completed";
+
+    if (
+      completionStatus === "completed" &&
+      logs.length > 0 &&
+      logs.every(
+        (l) =>
+          l.response !== "successful" && l.response !== "pending_approval",
+      )
+    ) {
+      completionStatus = "error";
+    }
+
+    const postsInfo = {
+      type: "bridge",
+      postTitle: selectedPosts?.[0]?.title || "Bridge Post",
+      timeCompleted: new Date().toISOString(),
+      settings,
+      telemetry,
+      originalSelectedPosts: selectedPosts,
+    };
+
+    await finalizePosting(logs, postsInfo, completionStatus);
+  } catch (error) {
+    completionStatus = "error";
+    const postsInfo = {
+      type: "bridge",
+      postTitle: selectedPosts?.[0]?.title || "Bridge Post",
+      timeCompleted: new Date().toISOString(),
+      settings,
+      telemetry,
+      originalSelectedPosts: selectedPosts,
+      error: error?.message || String(error),
+    };
+    await finalizePosting(logs, postsInfo, completionStatus);
+    return { success: false, error: error?.message || String(error) };
+  } finally {
+    await clearPostingProcessState();
+  }
+
   return {
-    success: true,
+    success: completionStatus === "completed",
     result: {
       completed: logs.filter((l) => l.response === "successful").length,
       failed: logs.filter((l) => l.response === "failed").length,
       skipped: logs.filter((l) => l.response === "skipped").length,
+      completionStatus,
     },
   };
 }
@@ -1303,6 +1394,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         case "postPostsDirectApi":
         case "retryFailedPosts": {
           const isRetry = request.action === "retryFailedPosts";
+          if (!isRetry && request?.settings && request?.source !== "bridge") {
+            try {
+              await chrome.storage.local.set({
+                defaultRemoteSettings: request.settings,
+              });
+            } catch (e) {
+              console.warn(
+                "[Bridge] Failed to sync defaultRemoteSettings:",
+                e?.message || e,
+              );
+            }
+          }
 
           const state = await getPostingState();
           const storageStatus = await chrome.storage.local.get(
