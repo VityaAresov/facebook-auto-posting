@@ -2523,9 +2523,12 @@ function hideHiddenPage() {
 }
 
 // Event listener for the back button
-document.getElementById("backButton").addEventListener("click", () => {
-  hideHiddenPage();
-});
+const backButton = document.getElementById("backButton");
+if (backButton) {
+  backButton.addEventListener("click", () => {
+    hideHiddenPage();
+  });
+}
 const aboutButton = document.getElementById("aboutButton");
 if (aboutButton) {
   aboutButton.addEventListener("click", () => {
@@ -2535,22 +2538,20 @@ if (aboutButton) {
   });
 }
 
-document.getElementById("removeValidationKey").addEventListener("click", () => {
-  chrome.storage.local.remove(
-    ["licenseVerified", "licenseExpiration", "license_key", "licenseProvider"],
-    async () => {
-      // 1. Force a check/reset of the daily limit immediately
-      await checkAndResetDailyLimit();
-
-      // 2. Update UI
-      showCustomModal(I18n.t("keyRemovedTitle"), I18n.t("keyRemovedMsg"));
-      hideHiddenPage();
-
-      // 3. Re-run full validation to update header badges
-      performValidation();
-    },
-  );
-});
+const removeValidationKeyBtn = document.getElementById("removeValidationKey");
+if (removeValidationKeyBtn) {
+  removeValidationKeyBtn.addEventListener("click", () => {
+    chrome.storage.local.remove(
+      ["licenseVerified", "licenseExpiration", "license_key", "licenseProvider"],
+      async () => {
+        await checkAndResetDailyLimit();
+        showCustomModal(I18n.t("keyRemovedTitle"), I18n.t("keyRemovedMsg"));
+        hideHiddenPage();
+        performValidation();
+      },
+    );
+  });
+}
 
 // Add event listener for search input
 searchGroupInput.addEventListener("input", function () {
