@@ -1731,6 +1731,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   const bridgeApiKey = document.getElementById("bridgeApiKey");
   const bridgePollInterval = document.getElementById("bridgePollInterval");
   const bridgeStatusText = document.getElementById("bridgeStatusText");
+  const bridgeGenerateKeyBtn = document.getElementById("bridgeGenerateKeyBtn");
+  const bridgeToggleKeyBtn = document.getElementById("bridgeToggleKeyBtn");
+  const bridgeCopyKeyBtn = document.getElementById("bridgeCopyKeyBtn");
 
   if (backupBtn) {
     backupBtn.addEventListener("click", handleBackupData);
@@ -1740,11 +1743,75 @@ document.addEventListener("DOMContentLoaded", async function () {
     restoreInput.addEventListener("change", handleRestoreData);
   }
 
+  const generateLocalApiKey = () => {
+    const bytes = new Uint8Array(24);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes)
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+  };
+
+  if (bridgeGenerateKeyBtn) {
+    bridgeGenerateKeyBtn.addEventListener("click", async () => {
+      const baseUrl = (bridgeBaseUrl?.value || "").trim() || "http://127.0.0.1:3721";
+      const pollIntervalMs = parseInt(bridgePollInterval?.value || "5000", 10);
+      const newKey = generateLocalApiKey();
+
+      if (bridgeApiKey) bridgeApiKey.value = newKey;
+
+      const config = {
+        enabled: !!bridgeEnabledToggle?.checked,
+        baseUrl,
+        apiKey: newKey,
+        pollIntervalMs: Number.isFinite(pollIntervalMs) ? pollIntervalMs : 5000,
+      };
+      await chrome.storage.local.set({ bridgeConfig: config });
+      if (bridgeStatusText) bridgeStatusText.textContent = "Status: Key generated";
+      showCustomModal("API Bridge", "New API key generated and saved.");
+    });
+  }
+
+  if (bridgeToggleKeyBtn && bridgeApiKey) {
+    bridgeToggleKeyBtn.addEventListener("click", () => {
+      const isHidden = bridgeApiKey.type === "password";
+      bridgeApiKey.type = isHidden ? "text" : "password";
+      bridgeToggleKeyBtn.textContent = isHidden ? "Hide" : "Show";
+    });
+  }
+
+  if (bridgeCopyKeyBtn && bridgeApiKey) {
+    bridgeCopyKeyBtn.addEventListener("click", async () => {
+      const key = (bridgeApiKey.value || "").trim();
+      if (!key) {
+        showCustomModal("API Bridge", "No API key to copy.");
+        return;
+      }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(key);
+        } else {
+          bridgeApiKey.type = "text";
+          bridgeApiKey.select();
+          document.execCommand("copy");
+          bridgeApiKey.type = "password";
+        }
+        if (bridgeStatusText)
+          bridgeStatusText.textContent = "Status: Key copied";
+        showCustomModal("API Bridge", "API key copied to clipboard.");
+      } catch (err) {
+        showCustomModal(
+          "API Bridge",
+          `Copy failed: ${err.message || "Unknown error"}`,
+        );
+      }
+    });
+  }
+
   if (bridgeSaveBtn) {
     bridgeSaveBtn.addEventListener("click", async () => {
       const enabled = !!bridgeEnabledToggle?.checked;
       const baseUrl = (bridgeBaseUrl?.value || "").trim();
-      const apiKey = (bridgeApiKey?.value || "").trim();
+      let apiKey = (bridgeApiKey?.value || "").trim();
       const pollIntervalMs = parseInt(bridgePollInterval?.value || "5000", 10);
 
       if (!baseUrl) {
@@ -1752,8 +1819,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
       if (!apiKey) {
-        showCustomModal("API Bridge", "API key is required.");
-        return;
+        apiKey = generateLocalApiKey();
+        if (bridgeApiKey) bridgeApiKey.value = apiKey;
       }
 
       const config = {

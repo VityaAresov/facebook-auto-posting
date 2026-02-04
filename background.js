@@ -178,11 +178,19 @@ function stopBridgePolling() {
 
 async function ensureBridgeConfig() {
   const { bridgeConfig } = await chrome.storage.local.get("bridgeConfig");
-  if (!bridgeConfig) {
-    await chrome.storage.local.set({ bridgeConfig: BRIDGE_DEFAULT_CONFIG });
-    return { ...BRIDGE_DEFAULT_CONFIG };
+  let cfg = bridgeConfig ? { ...BRIDGE_DEFAULT_CONFIG, ...bridgeConfig } : null;
+  if (!cfg) {
+    cfg = { ...BRIDGE_DEFAULT_CONFIG };
   }
-  return { ...BRIDGE_DEFAULT_CONFIG, ...bridgeConfig };
+
+  if (!cfg.apiKey || cfg.apiKey === "CHANGE_ME") {
+    cfg.apiKey = generateBridgeApiKey();
+    await chrome.storage.local.set({ bridgeConfig: cfg });
+  } else if (!bridgeConfig) {
+    await chrome.storage.local.set({ bridgeConfig: cfg });
+  }
+
+  return cfg;
 }
 
 async function ensureBridgeClientId() {
@@ -191,6 +199,14 @@ async function ensureBridgeClientId() {
   const id = `ext_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
   await chrome.storage.local.set({ bridgeClientId: id });
   return id;
+}
+
+function generateBridgeApiKey() {
+  const bytes = new Uint8Array(24);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 async function pollBridgeOnce() {

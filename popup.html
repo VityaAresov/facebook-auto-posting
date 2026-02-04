@@ -273,13 +273,38 @@
                     <label for="bridgeApiKey" class="col-sm-4 col-form-label"
                       >API Key:</label
                     >
-                    <div class="col-sm-8">
+                    <div class="col-sm-8 d-flex" style="gap: 8px">
                       <input
                         type="password"
                         class="form-control"
                         id="bridgeApiKey"
-                        placeholder="YOUR_KEY"
+                        placeholder="Auto-generated"
+                        style="flex: 1"
                       />
+                      <button
+                        type="button"
+                        id="bridgeGenerateKeyBtn"
+                        class="btn-visual-secondary"
+                        style="white-space: nowrap"
+                      >
+                        Generate
+                      </button>
+                      <button
+                        type="button"
+                        id="bridgeToggleKeyBtn"
+                        class="btn-visual-secondary"
+                        style="white-space: nowrap"
+                      >
+                        Show
+                      </button>
+                      <button
+                        type="button"
+                        id="bridgeCopyKeyBtn"
+                        class="btn-visual-secondary"
+                        style="white-space: nowrap"
+                      >
+                        Copy
+                      </button>
                     </div>
                   </div>
 
