@@ -1,0 +1,30 @@
+Potential Startup Issues & Error Codes
+
+E001:<element_id>
+- Missing required DOM element in popup UI.
+- Example: E001:mainNavPostBtn
+- Fix: Ensure popup.html contains the element with this ID.
+
+E002:storage
+- chrome.storage.local not available in popup context.
+- Fix: Check extension permissions or Chrome runtime availability.
+
+E003:quill
+- Quill editor library not loaded.
+- Fix: Confirm js/quill.js is present and loaded in popup.html.
+
+E004:emoji
+- EmojiButton library not loaded.
+- Fix: Confirm js/emoji-button-3.0.3.min.js is present and loaded.
+
+E005:i18n
+- i18n helper not initialized/available.
+- Fix: Confirm i18n.js is present and loaded in popup.html.
+
+E006:data
+- Data load or storage corruption (future reserved).
+- Fix: Clear extension storage and reload.
+
+E007:unknown
+- Unexpected runtime exception (future reserved).
+- Fix: Check console for stack trace.

@@ -422,8 +422,63 @@ document.addEventListener("DOMContentLoaded", async function () {
   const mainPage = document.getElementById("main");
   const loadingOverlay = document.getElementById("initial-loading-overlay");
 
+  function runStartupDiagnostics() {
+    const issues = [];
+
+    // Core DOM elements required for navigation and rendering
+    const requiredIds = [
+      "main",
+      "initial-loading-overlay",
+      "mainNavPostBtn",
+      "mainNavTemplatesBtn",
+      "postSubNavContainer",
+      "postSwitcherTrack",
+      "templatesSubNavContainer",
+      "templatesSwitcherTrack",
+      "quickPostBTN",
+      "SchedulerBTN",
+      "tagBTN",
+      "groupBTN",
+    ];
+
+    requiredIds.forEach((id) => {
+      if (!document.getElementById(id)) issues.push(`E001:${id}`);
+    });
+
+    if (!chrome?.storage?.local) issues.push("E002:storage");
+    if (typeof Quill === "undefined") issues.push("E003:quill");
+    if (typeof EmojiButton === "undefined") issues.push("E004:emoji");
+    if (typeof I18n === "undefined") issues.push("E005:i18n");
+
+    return issues;
+  }
+
+  function showStartupError(codes, error) {
+    const loadingText = document.querySelector(
+      "#initial-loading-overlay .loading-text",
+    );
+
+    const codeText = codes && codes.length ? `Error Code(s): ${codes}` : "";
+    const baseMsg = "Error loading extension. Please try again.";
+    if (loadingText) {
+      loadingText.textContent = codeText
+        ? `${baseMsg} ${codeText}`
+        : baseMsg;
+      loadingText.style.color = "#dc2626";
+    }
+
+    console.error("Startup failure:", error);
+  }
+
   async function initializeApp() {
     try {
+      const diagIssues = runStartupDiagnostics();
+      if (diagIssues.length > 0) {
+        const codes = diagIssues.join(",");
+        await chrome.storage.local.set({ startupErrorCodes: codes });
+        throw new Error(`STARTUP_DIAGNOSTICS_FAILED:${codes}`);
+      }
+
       // All your existing setup code goes here, but now it's awaited.
       // This ensures everything completes before we show the main app.
       await checkAndResetDailyLimit();
@@ -453,16 +508,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       console.log("App initialization complete.");
     } catch (error) {
-      console.error("Critical error during app initialization:", error);
-
-      // Optionally, show an error message on the loading screen.
-      const loadingText = document.querySelector(
-        "#initial-loading-overlay .loading-text",
-      );
-      if (loadingText) {
-        loadingText.textContent = "Error loading extension. Please try again.";
-        loadingText.style.color = "#dc2626";
+      let codeList = "";
+      if (error && typeof error.message === "string") {
+        const match = error.message.match(/STARTUP_DIAGNOSTICS_FAILED:(.*)$/);
+        if (match && match[1]) codeList = match[1];
       }
+      showStartupError(codeList, error);
     }
   }
 
@@ -473,7 +524,11 @@ document.addEventListener("DOMContentLoaded", async function () {
   if (mainPage && loadingOverlay) {
     mainPage.style.transition = "opacity 0.4s ease-in";
     mainPage.classList.remove("d-none"); // Make it take up space
-    initHierarchicalNav();
+    try {
+      initHierarchicalNav();
+    } catch (e) {
+      console.warn("initHierarchicalNav failed:", e);
+    }
     // A tiny delay to ensure the browser registers the visibility change before starting the fade-in.
     setTimeout(() => {
       mainPage.style.opacity = "1";
@@ -14626,6 +14681,23 @@ function initHierarchicalNav() {
   const scheduledBtn = document.getElementById("scheduledPostsBtn");
   const historyBtn = document.getElementById("historyBTN");
   const campaignsBtn = document.getElementById("campaignsBTN");
+
+  // Hard guard: if critical nav elements are missing, skip setup
+  if (
+    !mainPostBtn ||
+    !postSubNavContainer ||
+    !postTrack ||
+    !quickPostBtn ||
+    !schedulerBtn ||
+    !mainTemplatesBtn ||
+    !templatesSubNavContainer ||
+    !templatesTrack ||
+    !tagBtn ||
+    !groupBtn
+  ) {
+    console.warn("initHierarchicalNav: missing core nav elements.");
+    return;
+  }
 
   // Define all content page IDs for easy toggling
   const allPageIds = [
