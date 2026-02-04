@@ -1744,13 +1744,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 CloseLogButton.addEventListener("click", async () => {
-  if (currentLogData.postsCompleted.length > 0) {
-    sendAnonymousTelemetry(
-      currentLogData.postsCompleted,
-      currentLogData.historyEntry,
-    );
-  }
-
   // Make async
   LogsDiv.classList.add("d-none");
   mainPage.classList.remove("d-none");

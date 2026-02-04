@@ -489,70 +489,91 @@ if (window.autoPosterInjected) {
                 hasActivatedTab = true;
               }
 
-              // 2. Upload Check
-              const loadingSpinner = document.querySelector(
-                '[role="dialog"] [aria-label="Loading..."], [role="dialog"] [aria-label="Posting..."]',
-              );
-              if (loadingSpinner) {
-                console.log("Detected active media upload.");
-                writeInfo(I18n.t("overlayUploading"));
-                const uploadStartTime = Date.now();
-                hasActivatedTab = false;
+            const postComposerDialog = document.querySelector(
+              'div[role="dialog"][aria-label="Create post"]',
+            );
 
-                while (
-                  Date.now() - uploadStartTime <
-                  UPLOAD_MONITORING_TIMEOUT_MS
-                ) {
-                  sendHeartbeat(requestId);
-                  const stillLoadingSpinner = document.querySelector(
-                    '[role="dialog"] [aria-label="Loading..."], [role="dialog"] [aria-label="Posting..."]',
-                  );
-                  if (!stillLoadingSpinner) {
-                    // Upload done
-                    await sleep(4);
-                    // Assume success if no error popped up
-                    chrome.runtime.sendMessage({
-                      action: "popupPostComplete",
-                      requestId: requestId,
-                      success: true,
-                      status: "successful",
-                      telemetry,
-                    });
-                    return;
-                  }
+            // 2. Upload Check (only if the composer dialog is still open)
+            const loadingSpinner = postComposerDialog?.querySelector(
+              '[aria-label="Loading..."], [aria-label="Posting..."]',
+            );
+            if (postComposerDialog && loadingSpinner) {
+              console.log("Detected active media upload.");
+              writeInfo(I18n.t("overlayUploading"));
+              const uploadStartTime = Date.now();
+              hasActivatedTab = false;
+
+              while (
+                Date.now() - uploadStartTime <
+                UPLOAD_MONITORING_TIMEOUT_MS
+              ) {
+                sendHeartbeat(requestId);
+
+                const dialogStillOpen = document.querySelector(
+                  'div[role="dialog"][aria-label="Create post"]',
+                );
+                if (!dialogStillOpen) {
+                  // Dialog closed while upload was in progress - assume success
                   await sleep(2);
+                  chrome.runtime.sendMessage({
+                    action: "popupPostComplete",
+                    requestId: requestId,
+                    success: true,
+                    status: "successful",
+                    telemetry,
+                  });
+                  return;
                 }
-                throw new Error("Media upload timed out.");
-              }
 
-              // 3. Error Check
-              const errorElement = Array.from(
-                document.querySelectorAll(
-                  '[role="alert"], [role="dialog"] span',
-                ),
-              ).find(
-                (el) =>
-                  el.textContent.toLowerCase().includes("couldn't be posted") ||
-                  el.textContent.toLowerCase().includes("failed to post"),
-              );
+                const stillLoadingSpinner = dialogStillOpen.querySelector(
+                  '[aria-label="Loading..."], [aria-label="Posting..."]',
+                );
+                if (!stillLoadingSpinner) {
+                  // Upload done
+                  await sleep(4);
+                  // Assume success if no error popped up
+                  chrome.runtime.sendMessage({
+                    action: "popupPostComplete",
+                    requestId: requestId,
+                    success: true,
+                    status: "successful",
+                    telemetry,
+                  });
+                  return;
+                }
+                await sleep(2);
+              }
+              throw new Error("Media upload timed out.");
+            }
+
+            // 3. Error Check
+            const errorElement = Array.from(
+              document.querySelectorAll(
+                '[role="alert"], [role="dialog"] span',
+              ),
+            ).find(
+              (el) =>
+                el.textContent.toLowerCase().includes("couldn't be posted") ||
+                el.textContent.toLowerCase().includes("failed to post"),
+            );
               if (errorElement) {
                 throw new Error(
                   `Post failed: "${errorElement.textContent.substring(0, 100)}..."`,
                 );
               }
 
-              // 4. Success Check (Disappearance)
-              // If the specific "Create post" dialog is gone, we assume success.
-              const postComposerDialog = document.querySelector(
-                'div[role="dialog"][aria-label="Create post"]',
-              );
+            // 4. Success Check (Disappearance)
+            // If the specific "Create post" dialog is gone, we assume success.
+            const postComposerDialogCheck = document.querySelector(
+              'div[role="dialog"][aria-label="Create post"]',
+            );
 
-              if (!postComposerDialog) {
-                // Double check after a second to ensure it wasn't a flicker
-                await sleep(1);
-                if (
-                  !document.querySelector(
-                    'div[role="dialog"][aria-label="Create post"]',
+            if (!postComposerDialogCheck) {
+              // Double check after a second to ensure it wasn't a flicker
+              await sleep(1);
+              if (
+                !document.querySelector(
+                  'div[role="dialog"][aria-label="Create post"]',
                   )
                 ) {
                   console.log("Success: Composer dialog disappeared.");

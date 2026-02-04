@@ -4579,7 +4579,7 @@ async function executeSinglePopupOrAndroidPost(
   // --- THE WATCHDOG TIMER ---
   // We define a maximum time allow for ONE post (e.g., 4 minutes).
   // If the content script gets stuck, this timer saves the day.
-  const HARD_TIMEOUT_MS = 240000; // 4 Minutes
+  const HARD_TIMEOUT_MS = 600000; // 10 Minutes
 
   try {
     // We wrap the logic in a Promise.race
