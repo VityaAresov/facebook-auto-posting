@@ -1724,6 +1724,13 @@ document.addEventListener("DOMContentLoaded", async function () {
   const backupBtn = document.getElementById("backupDataBtn");
   const restoreBtn = document.getElementById("restoreDataBtn");
   const restoreInput = document.getElementById("restoreDataInput");
+  const bridgeSaveBtn = document.getElementById("bridgeSaveBtn");
+  const bridgeTestBtn = document.getElementById("bridgeTestBtn");
+  const bridgeEnabledToggle = document.getElementById("bridgeEnabledToggle");
+  const bridgeBaseUrl = document.getElementById("bridgeBaseUrl");
+  const bridgeApiKey = document.getElementById("bridgeApiKey");
+  const bridgePollInterval = document.getElementById("bridgePollInterval");
+  const bridgeStatusText = document.getElementById("bridgeStatusText");
 
   if (backupBtn) {
     backupBtn.addEventListener("click", handleBackupData);
@@ -1731,6 +1738,68 @@ document.addEventListener("DOMContentLoaded", async function () {
   if (restoreBtn && restoreInput) {
     restoreBtn.addEventListener("click", () => restoreInput.click());
     restoreInput.addEventListener("change", handleRestoreData);
+  }
+
+  if (bridgeSaveBtn) {
+    bridgeSaveBtn.addEventListener("click", async () => {
+      const enabled = !!bridgeEnabledToggle?.checked;
+      const baseUrl = (bridgeBaseUrl?.value || "").trim();
+      const apiKey = (bridgeApiKey?.value || "").trim();
+      const pollIntervalMs = parseInt(bridgePollInterval?.value || "5000", 10);
+
+      if (!baseUrl) {
+        showCustomModal("API Bridge", "Base URL is required.");
+        return;
+      }
+      if (!apiKey) {
+        showCustomModal("API Bridge", "API key is required.");
+        return;
+      }
+
+      const config = {
+        enabled,
+        baseUrl,
+        apiKey,
+        pollIntervalMs: Number.isFinite(pollIntervalMs) ? pollIntervalMs : 5000,
+      };
+      await chrome.storage.local.set({ bridgeConfig: config });
+      if (bridgeStatusText) bridgeStatusText.textContent = "Status: Saved";
+      showCustomModal("API Bridge", "Settings saved.");
+    });
+  }
+
+  if (bridgeTestBtn) {
+    bridgeTestBtn.addEventListener("click", async () => {
+      const baseUrl = (bridgeBaseUrl?.value || "").trim();
+      const apiKey = (bridgeApiKey?.value || "").trim();
+      if (!baseUrl || !apiKey) {
+        showCustomModal("API Bridge", "Base URL and API key are required.");
+        return;
+      }
+      if (bridgeStatusText) bridgeStatusText.textContent = "Status: Testing...";
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+      try {
+        const res = await fetch(`${baseUrl}/health`, {
+          method: "GET",
+          headers: { "x-api-key": apiKey },
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (bridgeStatusText) bridgeStatusText.textContent = "Status: OK";
+        showCustomModal("API Bridge", "Connection successful.");
+      } catch (err) {
+        clearTimeout(timeout);
+        if (bridgeStatusText)
+          bridgeStatusText.textContent = "Status: Failed";
+        showCustomModal(
+          "API Bridge",
+          `Connection failed: ${err.message || "Unknown error"}`,
+        );
+      }
+    });
   }
   document
     .getElementById("quickInsertMediaButton")
@@ -2501,6 +2570,8 @@ async function showHiddenPage() {
     });
   }
 
+  await loadBridgeConfigIntoUI();
+
   const manifest = chrome.runtime.getManifest();
   document.getElementById("versionInfo").textContent = I18n.t("lblVer", [
     manifest.version,
@@ -2527,6 +2598,37 @@ if (backButton) {
   backButton.addEventListener("click", () => {
     hideHiddenPage();
   });
+}
+
+async function loadBridgeConfigIntoUI() {
+  const bridgeEnabledToggle = document.getElementById("bridgeEnabledToggle");
+  const bridgeBaseUrl = document.getElementById("bridgeBaseUrl");
+  const bridgeApiKey = document.getElementById("bridgeApiKey");
+  const bridgePollInterval = document.getElementById("bridgePollInterval");
+  const bridgeStatusText = document.getElementById("bridgeStatusText");
+
+  if (!bridgeEnabledToggle || !bridgeBaseUrl || !bridgeApiKey || !bridgePollInterval) {
+    return;
+  }
+
+  const defaultConfig = {
+    enabled: true,
+    baseUrl: "http://127.0.0.1:3721",
+    apiKey: "",
+    pollIntervalMs: 5000,
+  };
+
+  const { bridgeConfig } = await chrome.storage.local.get("bridgeConfig");
+  const cfg = { ...defaultConfig, ...(bridgeConfig || {}) };
+
+  bridgeEnabledToggle.checked = !!cfg.enabled;
+  bridgeBaseUrl.value = cfg.baseUrl || defaultConfig.baseUrl;
+  bridgeApiKey.value = cfg.apiKey || "";
+  bridgePollInterval.value = String(cfg.pollIntervalMs || defaultConfig.pollIntervalMs);
+
+  if (bridgeStatusText) {
+    bridgeStatusText.textContent = "Status: Not tested";
+  }
 }
 const aboutButton = document.getElementById("aboutButton");
 if (aboutButton) {

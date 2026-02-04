@@ -69,6 +69,7 @@ chrome.alarms.create(KEEP_ALIVE_ALARM_NAME, {
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === KEEP_ALIVE_ALARM_NAME) {
     keepAlive();
+    pollBridgeOnce();
   }
   // --- IMPORTANT: Keep your existing scheduler alarm logic here ---
   else if (alarm.name === SCHEDULE_CHECK_ALARM) {
@@ -88,6 +89,10 @@ chrome.runtime.onStartup.addListener(() => {
       clearPostingState(); // Clear session state
     }
   });
+  initBridge();
+});
+chrome.runtime.onInstalled.addListener(() => {
+  initBridge();
 });
 // =================================================================
 // ----- S E S S I O N   S T A T E   M A N A G E M E N T -----
@@ -135,6 +140,299 @@ async function clearPostingState() {
 // const { response } = require("express");
 
 const SCHEDULE_CHECK_ALARM = "checkScheduledPostsAlarm";
+
+// ---------------- BRIDGE: LOCAL API POLLING ----------------
+const BRIDGE_DEFAULT_CONFIG = {
+  enabled: true,
+  baseUrl: "http://127.0.0.1:3721",
+  apiKey: "",
+  pollIntervalMs: 5000,
+};
+let bridgePollTimer = null;
+let bridgePollingInFlight = false;
+
+async function initBridge() {
+  const config = await ensureBridgeConfig();
+  if (config.enabled) {
+    startBridgePolling(config.pollIntervalMs);
+  } else {
+    stopBridgePolling();
+  }
+}
+
+function startBridgePolling(intervalMs) {
+  stopBridgePolling();
+  const safeInterval =
+    typeof intervalMs === "number" && intervalMs > 1000 ? intervalMs : 5000;
+  bridgePollTimer = setInterval(() => {
+    pollBridgeOnce();
+  }, safeInterval);
+}
+
+function stopBridgePolling() {
+  if (bridgePollTimer) {
+    clearInterval(bridgePollTimer);
+    bridgePollTimer = null;
+  }
+}
+
+async function ensureBridgeConfig() {
+  const { bridgeConfig } = await chrome.storage.local.get("bridgeConfig");
+  if (!bridgeConfig) {
+    await chrome.storage.local.set({ bridgeConfig: BRIDGE_DEFAULT_CONFIG });
+    return { ...BRIDGE_DEFAULT_CONFIG };
+  }
+  return { ...BRIDGE_DEFAULT_CONFIG, ...bridgeConfig };
+}
+
+async function ensureBridgeClientId() {
+  const { bridgeClientId } = await chrome.storage.local.get("bridgeClientId");
+  if (bridgeClientId) return bridgeClientId;
+  const id = `ext_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  await chrome.storage.local.set({ bridgeClientId: id });
+  return id;
+}
+
+async function pollBridgeOnce() {
+  if (bridgePollingInFlight) return;
+  bridgePollingInFlight = true;
+  try {
+    const config = await ensureBridgeConfig();
+    if (!config.enabled) return;
+    if (!config.baseUrl || !config.apiKey || config.apiKey === "CHANGE_ME")
+      return;
+
+    const now = Date.now();
+    const { bridgeDisabledUntil, bridgeFailureCount } =
+      await chrome.storage.local.get([
+        "bridgeDisabledUntil",
+        "bridgeFailureCount",
+      ]);
+    if (bridgeDisabledUntil && now < bridgeDisabledUntil) return;
+
+    const clientId = await ensureBridgeClientId();
+    const cmd = await bridgeFetchJson(
+      `${config.baseUrl}/v1/commands/next?clientId=${encodeURIComponent(
+        clientId,
+      )}`,
+      config.apiKey,
+    );
+
+    if (cmd && cmd.id && cmd.action) {
+      const result = await executeBridgeCommand(cmd);
+      await bridgeFetchJson(
+        `${config.baseUrl}/v1/commands/${encodeURIComponent(cmd.id)}/ack`,
+        config.apiKey,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            status: result.success ? "success" : "error",
+            result: result.result || null,
+            error: result.error || null,
+          }),
+        },
+      );
+      await sendBridgeStatus(true);
+    } else {
+      await sendBridgeStatus(false);
+    }
+
+    await chrome.storage.local.set({
+      bridgeFailureCount: 0,
+      bridgeDisabledUntil: 0,
+    });
+  } catch (error) {
+    const { bridgeFailureCount = 0 } =
+      await chrome.storage.local.get("bridgeFailureCount");
+    const nextCount = bridgeFailureCount + 1;
+    const backoffMs = Math.min(60000, nextCount * 5000);
+    await chrome.storage.local.set({
+      bridgeFailureCount: nextCount,
+      bridgeDisabledUntil: Date.now() + backoffMs,
+    });
+  } finally {
+    bridgePollingInFlight = false;
+  }
+}
+
+async function bridgeFetchJson(url, apiKey, options = {}) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  const response = await fetch(url, {
+    method: "GET",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+      ...(options.headers || {}),
+    },
+    signal: controller.signal,
+  });
+  clearTimeout(timeout);
+
+  if (response.status === 204) return null;
+  if (!response.ok) {
+    throw new Error(`Bridge HTTP ${response.status}`);
+  }
+  return await response.json();
+}
+
+async function executeBridgeCommand(cmd) {
+  try {
+    switch (cmd.action) {
+      case "start_posting":
+        return await bridgeStartPosting(cmd.payload || {});
+      case "stop_posting":
+        await stopPostingProcess();
+        return { success: true, result: { stopped: true } };
+      case "update_settings":
+        await chrome.storage.local.set({
+          defaultRemoteSettings: cmd.payload || {},
+        });
+        return { success: true };
+      case "get_status": {
+        const status = await buildBridgeStatus();
+        return { success: true, result: status };
+      }
+      default:
+        return { success: false, error: "Unknown action" };
+    }
+  } catch (error) {
+    return { success: false, error: error.message || String(error) };
+  }
+}
+
+async function bridgeStartPosting(payload) {
+  const { postIds, groupCollectionIds, postingMethod, settingsOverrides } =
+    payload || {};
+
+  const storage = await chrome.storage.local.get([
+    "tags",
+    "groups",
+    "defaultRemoteSettings",
+    "isPostingInProgress",
+  ]);
+  if (storage.isPostingInProgress === "started") {
+    return { success: false, error: "Posting already in progress" };
+  }
+
+  const tags = storage.tags || [];
+  const groups = storage.groups || [];
+
+  const selectedPosts = resolveByIdOrTitle(tags, postIds, "post");
+  const selectedGroups = resolveByIdOrTitle(groups, groupCollectionIds, "group");
+
+  if (selectedPosts.length === 0 || selectedGroups.length === 0) {
+    return { success: false, error: "No posts or groups resolved" };
+  }
+
+  const links = [];
+  selectedGroups.forEach((g) => {
+    if (Array.isArray(g.links)) links.push(...g.links);
+  });
+
+  const settings = {
+    ...(storage.defaultRemoteSettings || {}),
+    ...(settingsOverrides || {}),
+  };
+  if (postingMethod) settings.postingMethod = postingMethod;
+
+  const request = {
+    action: settings.postingMethod === "popup" ? "postPosts" : "postPostsDirectApi",
+    selectedPosts,
+    group: { title: "bridge", links },
+    settings,
+    source: "bridge",
+  };
+
+  const { logs } = await handlePostingRequest(request);
+  return {
+    success: true,
+    result: {
+      completed: logs.filter((l) => l.response === "successful").length,
+      failed: logs.filter((l) => l.response === "failed").length,
+      skipped: logs.filter((l) => l.response === "skipped").length,
+    },
+  };
+}
+
+function resolveByIdOrTitle(items, ids, kind) {
+  if (!Array.isArray(ids) || ids.length === 0) return [];
+  const results = [];
+  ids.forEach((id) => {
+    let match = null;
+    if (id === null || id === undefined) return;
+    const idStr = String(id).trim();
+    match = items.find((it) => it && it.id && String(it.id) === idStr) || null;
+    if (!match && !Number.isNaN(Number(idStr))) {
+      const idx = Number(idStr);
+      if (items[idx]) match = items[idx];
+    }
+    if (!match) {
+      const candidates = items.filter(
+        (it) =>
+          it &&
+          typeof it.title === "string" &&
+          it.title.toLowerCase() === idStr.toLowerCase(),
+      );
+      if (candidates.length === 1) match = candidates[0];
+      if (candidates.length > 1) {
+        throw new Error(`Ambiguous ${kind} id: ${idStr}`);
+      }
+    }
+    if (!match) {
+      throw new Error(`Unknown ${kind} id: ${idStr}`);
+    }
+    results.push(match);
+  });
+  return results;
+}
+
+async function stopPostingProcess() {
+  await setPostingState({ stopRequested: true });
+  updatePostingStatus(`Stop signal received. Finishing current step...`);
+}
+
+async function buildBridgeStatus() {
+  const data = await chrome.storage.local.get([
+    "isPostingInProgress",
+    "postingStatus",
+    "latestPostLog",
+    "postingSummary",
+  ]);
+  return {
+    isPosting: data.isPostingInProgress === "started",
+    currentStatus: data.postingStatus || "",
+    lastRun: data.postingSummary || null,
+    latestPostLog: data.latestPostLog || null,
+  };
+}
+
+async function sendBridgeStatus(force) {
+  const config = await ensureBridgeConfig();
+  if (!config.enabled || !config.baseUrl || !config.apiKey) return;
+
+  const { bridgeLastStatusSentAt } =
+    await chrome.storage.local.get("bridgeLastStatusSentAt");
+  const now = Date.now();
+  if (!force && bridgeLastStatusSentAt && now - bridgeLastStatusSentAt < 15000) {
+    return;
+  }
+
+  const clientId = await ensureBridgeClientId();
+  const status = await buildBridgeStatus();
+  await bridgeFetchJson(`${config.baseUrl}/v1/status`, config.apiKey, {
+    method: "POST",
+    body: JSON.stringify({ clientId, ...status }),
+  });
+  await chrome.storage.local.set({ bridgeLastStatusSentAt: now });
+}
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "local" && changes.bridgeConfig) {
+    initBridge();
+  }
+});
 
 // --------------- BEGIN Rule Management System ---------------
 let currentRuleId = null;

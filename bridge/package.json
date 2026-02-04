@@ -1,0 +1,13 @@
+﻿{
+  "name": "auto-poster-bridge",
+  "version": "1.0.0",
+  "description": "Local HTTP bridge for Auto Poster Chrome extension",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

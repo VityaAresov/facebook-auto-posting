@@ -227,6 +227,101 @@
                   />
                 </div>
 
+                <div class="form-section mt-3">
+                  <h6 class="section-subtitle mb-3" style="color: #4b5563">
+                    API Bridge
+                  </h6>
+
+                  <div class="telemetry-form-group">
+                    <div class="telemetry-main-row">
+                      <label for="bridgeEnabledToggle" class="telemetry-label"
+                        >Enable API Bridge</label
+                      >
+                      <div class="toggle-switch">
+                        <input
+                          type="checkbox"
+                          id="bridgeEnabledToggle"
+                          class="toggle-input"
+                        />
+                        <label
+                          for="bridgeEnabledToggle"
+                          class="toggle-label"
+                        ></label>
+                      </div>
+                    </div>
+                    <small class="telemetry-description"
+                      >Allow local automation tools (n8n/Make) to control the
+                      extension.</small
+                    >
+                  </div>
+
+                  <div class="form-group row gap0">
+                    <label for="bridgeBaseUrl" class="col-sm-4 col-form-label"
+                      >Base URL:</label
+                    >
+                    <div class="col-sm-8">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="bridgeBaseUrl"
+                        placeholder="http://127.0.0.1:3721"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group row gap0">
+                    <label for="bridgeApiKey" class="col-sm-4 col-form-label"
+                      >API Key:</label
+                    >
+                    <div class="col-sm-8">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="bridgeApiKey"
+                        placeholder="YOUR_KEY"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group row gap0">
+                    <label for="bridgePollInterval" class="col-sm-4 col-form-label"
+                      >Poll (ms):</label
+                    >
+                    <div class="col-sm-8">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="bridgePollInterval"
+                        min="1000"
+                        step="500"
+                        placeholder="5000"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="d-flex" style="gap: 10px">
+                    <button
+                      type="button"
+                      id="bridgeSaveBtn"
+                      class="btn-visual-secondary"
+                      style="flex: 1"
+                    >
+                      Save API Settings
+                    </button>
+                    <button
+                      type="button"
+                      id="bridgeTestBtn"
+                      class="btn-visual-secondary"
+                      style="flex: 1"
+                    >
+                      Test Connection
+                    </button>
+                  </div>
+                  <small class="form-hint text-center mt-2" id="bridgeStatusText"
+                    >Status: Not tested</small
+                  >
+                </div>
+
               </form>
             </div>
             <div class="card-footer text-center">
