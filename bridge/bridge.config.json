@@ -1,4 +1,5 @@
-﻿{
+﻿# Example config for the bridge
+{
   "port": 3721,
-  "apiKey": "CHANGE_ME"
+  "apiKey": "e229396533ccfe684246923c121e9a297e06271f3993a6ed"
 }

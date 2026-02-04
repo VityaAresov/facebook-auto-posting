@@ -39,6 +39,6 @@
    "version": "2.0.61",
    "web_accessible_resources": [ {
       "matches": [ "http://*/*", "https://*/*" ],
-      "resources": [ "i18n.js", "popup.html", "popup.js", "js/quill.js", "jsemoji-button-3.0.3.min", "bootstrap.bundle.min.js", "assets/icons/*", "restricted.html", "restricted.js" ]
+      "resources": [ "i18n.js", "popup.html", "popup.js", "js/quill.js", "jsemoji-button-3.0.3.min", "bootstrap.bundle.min.js", "assets/icons/*", "restricted.html", "restricted.js", "offscreen.html", "offscreen.js" ]
    } ]
 }

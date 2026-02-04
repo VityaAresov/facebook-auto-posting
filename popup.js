@@ -1803,7 +1803,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       } catch (err) {
         showCustomModal(
           "API Bridge",
-          "Copy failed. Please click Show and copy manually.",
+          `Copy failed: ${err.message || "Unknown error"}. Please click Show and copy manually.`,
         );
       }
     });

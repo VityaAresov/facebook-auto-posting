@@ -334,10 +334,23 @@ async function closeOffscreenDocument() {
 async function copyTextWithOffscreen(text) {
   if (!text) throw new Error("Empty text");
   await ensureOffscreenDocument();
-  const response = await chrome.runtime.sendMessage({
-    action: "offscreen_copy",
-    text,
-  });
+  let response = null;
+  try {
+    response = await chrome.runtime.sendMessage({
+      action: "offscreen_copy",
+      text,
+    });
+  } catch (e) {
+    response = null;
+  }
+  if (!response) {
+    // Offscreen may not be ready yet; retry once after a short delay
+    await new Promise((r) => setTimeout(r, 120));
+    response = await chrome.runtime.sendMessage({
+      action: "offscreen_copy",
+      text,
+    });
+  }
   if (!response?.ok) {
     throw new Error(response?.error || "Copy failed");
   }

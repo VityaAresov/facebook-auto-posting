@@ -9,12 +9,26 @@ A small local HTTP server that lets n8n / Make / scripts control the extension.
    npm install
    ```
 2. Edit `bridge.config.json` and set a strong `apiKey`.
+   - You can copy `bridge.config.example.json` → `bridge.config.json`
 3. Start:
    ```
    npm start
    ```
 
 Server listens on `http://127.0.0.1:3721` by default.
+
+## Docker (optional)
+```
+cd bridge
+docker compose up -d --build
+```
+
+## Cloud server (optional)
+You can run the same bridge on a VPS or server.
+Requirements:
+- HTTPS recommended (public API key on HTTP is not safe)
+- Open port (default 3721) or change `port` in config
+- Update extension settings: `Base URL` → `https://your-domain:PORT`
 
 ## Auth
 Preferred: header `x-api-key: <API_KEY>`

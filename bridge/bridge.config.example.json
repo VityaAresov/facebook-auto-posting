@@ -1,0 +1,5 @@
+﻿# Example config for the bridge
+{
+  "port": 3721,
+  "apiKey": "CHANGE_ME"
+}
