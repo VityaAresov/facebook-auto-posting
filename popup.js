@@ -1787,30 +1787,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
       try {
-        let copied = false;
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          try {
-            await navigator.clipboard.writeText(key);
-            copied = true;
-          } catch (err) {
-            copied = false;
-          }
-        }
-        if (!copied) {
-          // Fallback copy using a temporary textarea
-          const temp = document.createElement("textarea");
-          temp.value = key;
-          temp.setAttribute("readonly", "");
-          temp.style.position = "absolute";
-          temp.style.left = "-9999px";
-          document.body.appendChild(temp);
-          temp.select();
-          const success = document.execCommand("copy");
-          document.body.removeChild(temp);
-          copied = !!success;
-        }
-        if (!copied) {
-          throw new Error("Clipboard unavailable");
+        const response = await new Promise((resolve) => {
+          chrome.runtime.sendMessage(
+            { action: "copyToClipboard", text: key },
+            (resp) => resolve(resp || {}),
+          );
+        });
+
+        if (!response.success) {
+          throw new Error(response.error || "Clipboard unavailable");
         }
         if (bridgeStatusText)
           bridgeStatusText.textContent = "Status: Key copied";

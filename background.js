@@ -209,6 +209,53 @@ function generateBridgeApiKey() {
     .join("");
 }
 
+// ---------------- OFFSCREEN CLIPBOARD ----------------
+const OFFSCREEN_DOCUMENT_URL = "offscreen.html";
+
+async function hasOffscreenDocument() {
+  if (!chrome.runtime?.getContexts) return false;
+  const contexts = await chrome.runtime.getContexts({
+    contextTypes: ["OFFSCREEN_DOCUMENT"],
+  });
+  return contexts.some(
+    (c) => typeof c.documentUrl === "string" && c.documentUrl.endsWith(OFFSCREEN_DOCUMENT_URL),
+  );
+}
+
+async function ensureOffscreenDocument() {
+  if (!chrome.offscreen?.createDocument) {
+    throw new Error("Offscreen API not available");
+  }
+  const exists = await hasOffscreenDocument();
+  if (exists) return;
+  await chrome.offscreen.createDocument({
+    url: OFFSCREEN_DOCUMENT_URL,
+    reasons: [chrome.offscreen.Reason.CLIPBOARD],
+    justification: "Copy API key to clipboard",
+  });
+}
+
+async function closeOffscreenDocument() {
+  if (!chrome.offscreen?.closeDocument) return;
+  const exists = await hasOffscreenDocument();
+  if (exists) await chrome.offscreen.closeDocument();
+}
+
+async function copyTextWithOffscreen(text) {
+  if (!text) throw new Error("Empty text");
+  await ensureOffscreenDocument();
+  const response = await chrome.runtime.sendMessage({
+    action: "offscreen_copy",
+    text,
+  });
+  if (!response?.ok) {
+    throw new Error(response?.error || "Copy failed");
+  }
+  setTimeout(() => {
+    closeOffscreenDocument().catch(() => {});
+  }, 1000);
+}
+
 async function pollBridgeOnce() {
   if (bridgePollingInFlight) return;
   bridgePollingInFlight = true;
@@ -853,6 +900,10 @@ let totalGroups = 0;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   (async () => {
+    if (request.action === "offscreen_copy") {
+      // Handled by offscreen document, not background.
+      return;
+    }
     console.log("Background Listener -- Received action:", request.action);
 
     // Handle short-running, immediate responses first
@@ -905,6 +956,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       let responseData = { success: true, message: "Action completed." };
 
       switch (request.action) {
+        case "copyToClipboard": {
+          try {
+            await copyTextWithOffscreen(request.text || "");
+            sendResponse({ success: true });
+          } catch (e) {
+            sendResponse({
+              success: false,
+              error: e?.message || "Copy failed",
+            });
+          }
+          return;
+        }
         case "remoteLog":
           // Prefix with [Content] to distinguish from background logs
           const prefix = `[Content ${sender.tab?.id || "?"}]`;
