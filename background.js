@@ -209,6 +209,96 @@ function generateBridgeApiKey() {
     .join("");
 }
 
+function generateItemId(prefix) {
+  const bytes = new Uint8Array(8);
+  crypto.getRandomValues(bytes);
+  const rand = Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return `${prefix}_${rand}`;
+}
+
+function normalizeLinks(rawLinks) {
+  const list = Array.isArray(rawLinks) ? rawLinks : [];
+  return list
+    .map((item) => {
+      if (!item) return null;
+      if (Array.isArray(item)) {
+        const title = String(item[0] || "").trim();
+        const url = String(item[1] || "").trim();
+        if (!url) return null;
+        return [title, url];
+      }
+      if (typeof item === "string") {
+        const url = item.trim();
+        if (!url) return null;
+        return ["", url];
+      }
+      if (typeof item === "object") {
+        const title = String(item.title || item.name || "").trim();
+        const url = String(item.url || item.link || "").trim();
+        if (!url) return null;
+        return [title, url];
+      }
+      return null;
+    })
+    .filter(Boolean);
+}
+
+function normalizeTemplate(raw) {
+  const template = raw && typeof raw === "object" ? raw : {};
+  return {
+    id: template.id || null,
+    title: String(template.title || "").trim(),
+    text: String(template.text || template.html || "").trim(),
+    delta: template.delta || null,
+    images: Array.isArray(template.images) ? template.images : [],
+    links: Array.isArray(template.links) ? template.links : [],
+    color: template.color || "#18191A",
+    categoryIds: Array.isArray(template.categoryIds)
+      ? template.categoryIds
+      : [],
+  };
+}
+
+function normalizeGroupCollection(raw) {
+  const group = raw && typeof raw === "object" ? raw : {};
+  return {
+    id: group.id || null,
+    title: String(group.title || "").trim(),
+    links: normalizeLinks(group.links || group.groupLinks || []),
+  };
+}
+
+async function loadTagsGroupsWithIds() {
+  const data = await chrome.storage.local.get(["tags", "groups"]);
+  let tags = Array.isArray(data.tags) ? data.tags : [];
+  let groups = Array.isArray(data.groups) ? data.groups : [];
+  let changed = false;
+
+  tags = tags.map((t) => {
+    if (t && typeof t === "object" && !t.id) {
+      changed = true;
+      return { ...t, id: generateItemId("tag") };
+    }
+    return t;
+  });
+
+  groups = groups.map((g) => {
+    if (g && typeof g === "object" && !g.id) {
+      changed = true;
+      return { ...g, id: generateItemId("group") };
+    }
+    return g;
+  });
+
+  if (changed) {
+    await chrome.storage.local.set({ tags, groups });
+  }
+
+  return { tags, groups, changed };
+}
+
 // ---------------- OFFSCREEN CLIPBOARD ----------------
 const OFFSCREEN_DOCUMENT_URL = "offscreen.html";
 
@@ -348,6 +438,22 @@ async function executeBridgeCommand(cmd) {
       case "stop_posting":
         await stopPostingProcess();
         return { success: true, result: { stopped: true } };
+      case "open":
+        return await bridgeOpen(cmd.payload || {});
+      case "click":
+        return await bridgeClick(cmd.payload || {});
+      case "list_templates":
+        return await bridgeListTemplates();
+      case "list_groups":
+        return await bridgeListGroups();
+      case "upsert_template":
+        return await bridgeUpsertTemplate(cmd.payload || {});
+      case "delete_template":
+        return await bridgeDeleteTemplate(cmd.payload || {});
+      case "upsert_group_collection":
+        return await bridgeUpsertGroupCollection(cmd.payload || {});
+      case "delete_group_collection":
+        return await bridgeDeleteGroupCollection(cmd.payload || {});
       case "update_settings":
         await chrome.storage.local.set({
           defaultRemoteSettings: cmd.payload || {},
@@ -366,12 +472,17 @@ async function executeBridgeCommand(cmd) {
 }
 
 async function bridgeStartPosting(payload) {
-  const { postIds, groupCollectionIds, postingMethod, settingsOverrides } =
-    payload || {};
+  const {
+    postIds,
+    groupCollectionIds,
+    postingMethod,
+    settingsOverrides,
+    posts,
+    groups,
+    groupLinks,
+  } = payload || {};
 
   const storage = await chrome.storage.local.get([
-    "tags",
-    "groups",
     "defaultRemoteSettings",
     "isPostingInProgress",
   ]);
@@ -379,20 +490,39 @@ async function bridgeStartPosting(payload) {
     return { success: false, error: "Posting already in progress" };
   }
 
-  const tags = storage.tags || [];
-  const groups = storage.groups || [];
+  const { tags, groups: storedGroups } = await loadTagsGroupsWithIds();
 
-  const selectedPosts = resolveByIdOrTitle(tags, postIds, "post");
-  const selectedGroups = resolveByIdOrTitle(groups, groupCollectionIds, "group");
+  let selectedPosts = [];
+  let selectedGroups = [];
+  let links = [];
 
-  if (selectedPosts.length === 0 || selectedGroups.length === 0) {
-    return { success: false, error: "No posts or groups resolved" };
+  if (Array.isArray(posts) && posts.length > 0) {
+    selectedPosts = posts.map((p) => normalizeTemplate(p));
+  } else {
+    selectedPosts = resolveByIdOrTitle(tags, postIds, "post");
   }
 
-  const links = [];
-  selectedGroups.forEach((g) => {
-    if (Array.isArray(g.links)) links.push(...g.links);
-  });
+  if (Array.isArray(groupLinks) && groupLinks.length > 0) {
+    links = normalizeLinks(groupLinks);
+  } else if (Array.isArray(groups) && groups.length > 0) {
+    selectedGroups = groups.map((g) => normalizeGroupCollection(g));
+    selectedGroups.forEach((g) => {
+      if (Array.isArray(g.links)) links.push(...g.links);
+    });
+  } else {
+    selectedGroups = resolveByIdOrTitle(
+      storedGroups,
+      groupCollectionIds,
+      "group",
+    );
+    selectedGroups.forEach((g) => {
+      if (Array.isArray(g.links)) links.push(...g.links);
+    });
+  }
+
+  if (selectedPosts.length === 0 || links.length === 0) {
+    return { success: false, error: "No posts or groups resolved" };
+  }
 
   const settings = {
     ...(storage.defaultRemoteSettings || {}),
@@ -401,7 +531,10 @@ async function bridgeStartPosting(payload) {
   if (postingMethod) settings.postingMethod = postingMethod;
 
   const request = {
-    action: settings.postingMethod === "popup" ? "postPosts" : "postPostsDirectApi",
+    action:
+      settings.postingMethod === "popup"
+        ? "postPosts"
+        : "postPostsDirectApi",
     selectedPosts,
     group: { title: "bridge", links },
     settings,
@@ -454,6 +587,180 @@ function resolveByIdOrTitle(items, ids, kind) {
 async function stopPostingProcess() {
   await setPostingState({ stopRequested: true });
   updatePostingStatus(`Stop signal received. Finishing current step...`);
+}
+
+async function bridgeListTemplates() {
+  const { tags } = await loadTagsGroupsWithIds();
+  return {
+    success: true,
+    result: tags.map((t, index) => ({
+      id: t.id || null,
+      title: t.title || "",
+      index,
+    })),
+  };
+}
+
+async function bridgeListGroups() {
+  const { groups } = await loadTagsGroupsWithIds();
+  return {
+    success: true,
+    result: groups.map((g, index) => ({
+      id: g.id || null,
+      title: g.title || "",
+      index,
+    })),
+  };
+}
+
+async function bridgeUpsertTemplate(payload) {
+  const { tags, changed } = await loadTagsGroupsWithIds();
+  const incoming = normalizeTemplate(payload || {});
+  if (!incoming.title) {
+    return { success: false, error: "Template title is required" };
+  }
+
+  let updated = false;
+  for (let i = 0; i < tags.length; i++) {
+    const t = tags[i];
+    if (
+      (incoming.id && t.id === incoming.id) ||
+      t.title.toLowerCase() === incoming.title.toLowerCase()
+    ) {
+      tags[i] = { ...t, ...incoming, id: t.id || incoming.id };
+      updated = true;
+      break;
+    }
+  }
+
+  if (!updated) {
+    const newItem = { ...incoming, id: incoming.id || generateItemId("tag") };
+    tags.push(newItem);
+  }
+
+  await chrome.storage.local.set({ tags });
+  return { success: true };
+}
+
+async function bridgeDeleteTemplate(payload) {
+  const idOrTitle = payload?.id || payload?.title;
+  if (!idOrTitle) {
+    return { success: false, error: "Missing id or title" };
+  }
+  const { tags } = await loadTagsGroupsWithIds();
+  const idStr = String(idOrTitle).trim().toLowerCase();
+  const next = tags.filter((t) => {
+    const matchId = t.id && String(t.id).toLowerCase() === idStr;
+    const matchTitle =
+      t.title && String(t.title).toLowerCase() === idStr;
+    return !(matchId || matchTitle);
+  });
+  await chrome.storage.local.set({ tags: next });
+  return { success: true };
+}
+
+async function bridgeUpsertGroupCollection(payload) {
+  const { groups } = await loadTagsGroupsWithIds();
+  const incoming = normalizeGroupCollection(payload || {});
+  if (!incoming.title) {
+    return { success: false, error: "Group collection title is required" };
+  }
+
+  let updated = false;
+  for (let i = 0; i < groups.length; i++) {
+    const g = groups[i];
+    if (
+      (incoming.id && g.id === incoming.id) ||
+      g.title.toLowerCase() === incoming.title.toLowerCase()
+    ) {
+      groups[i] = { ...g, ...incoming, id: g.id || incoming.id };
+      updated = true;
+      break;
+    }
+  }
+
+  if (!updated) {
+    const newItem = {
+      ...incoming,
+      id: incoming.id || generateItemId("group"),
+    };
+    groups.push(newItem);
+  }
+
+  await chrome.storage.local.set({ groups });
+  return { success: true };
+}
+
+async function bridgeDeleteGroupCollection(payload) {
+  const idOrTitle = payload?.id || payload?.title;
+  if (!idOrTitle) {
+    return { success: false, error: "Missing id or title" };
+  }
+  const { groups } = await loadTagsGroupsWithIds();
+  const idStr = String(idOrTitle).trim().toLowerCase();
+  const next = groups.filter((g) => {
+    const matchId = g.id && String(g.id).toLowerCase() === idStr;
+    const matchTitle =
+      g.title && String(g.title).toLowerCase() === idStr;
+    return !(matchId || matchTitle);
+  });
+  await chrome.storage.local.set({ groups: next });
+  return { success: true };
+}
+
+async function getActiveTabId() {
+  const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+  return tabs && tabs[0] ? tabs[0].id : null;
+}
+
+async function bridgeOpen(payload) {
+  const url = (payload && payload.url) || "";
+  if (!url) return { success: false, error: "Missing url" };
+  const active =
+    typeof payload.active === "boolean" ? payload.active : true;
+  const tab = await chrome.tabs.create({ url, active });
+  return { success: true, result: { tabId: tab.id, url } };
+}
+
+async function bridgeClick(payload) {
+  const selector = payload?.selector || null;
+  const text = payload?.text || null;
+  const tabId = payload?.tabId || (await getActiveTabId());
+
+  if (!tabId) return { success: false, error: "No active tab" };
+  if (!selector && !text)
+    return { success: false, error: "Missing selector or text" };
+
+  const results = await chrome.scripting.executeScript({
+    target: { tabId },
+    func: (sel, txt) => {
+      let el = null;
+      if (sel) el = document.querySelector(sel);
+      if (!el && txt) {
+        const candidates = Array.from(
+          document.querySelectorAll(
+            'button, a, [role="button"], [role="link"], input[type="button"], input[type="submit"]',
+          ),
+        );
+        const needle = txt.trim();
+        el = candidates.find((c) => {
+          const label =
+            (c.innerText || c.value || c.getAttribute("aria-label") || "").trim();
+          return label === needle;
+        });
+      }
+      if (!el) return { clicked: false, reason: "not_found" };
+      el.click();
+      return { clicked: true };
+    },
+    args: [selector, text],
+  });
+
+  const result = results && results[0] ? results[0].result : null;
+  if (!result || !result.clicked) {
+    return { success: false, error: "Element not found" };
+  }
+  return { success: true, result: { clicked: true } };
 }
 
 async function buildBridgeStatus() {

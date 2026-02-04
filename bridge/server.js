@@ -43,7 +43,14 @@ function authMiddleware(req, res, next) {
   if (!config.apiKey) {
     return res.status(500).json({ error: "API key not configured" });
   }
-  const key = req.header("x-api-key");
+
+  const headerKey = req.header("x-api-key");
+  const authHeader = req.header("authorization") || "";
+  const bearerMatch = authHeader.match(/^Bearer\s+(.+)$/i);
+  const bearerKey = bearerMatch ? bearerMatch[1] : "";
+  const queryKey = req.query.api_key || "";
+
+  const key = headerKey || bearerKey || queryKey;
   if (!key || key !== config.apiKey) {
     return res.status(401).json({ error: "Unauthorized" });
   }
@@ -54,9 +61,7 @@ app.get("/health", (req, res) => {
   res.json({ ok: true, uptime: process.uptime() });
 });
 
-app.post("/v1/commands", authMiddleware, (req, res) => {
-  const { action, payload } = req.body || {};
-  if (!action) return res.status(400).json({ error: "Missing action" });
+function enqueueCommand(action, payload) {
   const cmd = {
     id: newId(),
     action,
@@ -70,6 +75,41 @@ app.post("/v1/commands", authMiddleware, (req, res) => {
   };
   store.commands.push(cmd);
   persist();
+  return cmd;
+}
+
+app.post("/v1/commands", authMiddleware, (req, res) => {
+  const { action, payload } = req.body || {};
+  if (!action) return res.status(400).json({ error: "Missing action" });
+  const cmd = enqueueCommand(action, payload);
+  res.json({ id: cmd.id, status: "queued" });
+});
+
+// --- Simple alias endpoints ---
+app.get("/status", authMiddleware, (req, res) => {
+  const clientId = req.query.clientId;
+  if (clientId) {
+    return res.json(store.status[clientId] || null);
+  }
+  res.json(store.status);
+});
+
+app.post("/send", authMiddleware, (req, res) => {
+  const { action, payload } = req.body || {};
+  if (!action) return res.status(400).json({ error: "Missing action" });
+  const cmd = enqueueCommand(action, payload);
+  res.json({ id: cmd.id, status: "queued" });
+});
+
+app.post("/click", authMiddleware, (req, res) => {
+  const payload = req.body || {};
+  const cmd = enqueueCommand("click", payload);
+  res.json({ id: cmd.id, status: "queued" });
+});
+
+app.post("/open", authMiddleware, (req, res) => {
+  const payload = req.body || {};
+  const cmd = enqueueCommand("open", payload);
   res.json({ id: cmd.id, status: "queued" });
 });
 
