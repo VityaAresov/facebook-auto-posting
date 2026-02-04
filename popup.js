@@ -1787,13 +1787,30 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
       try {
+        let copied = false;
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(key);
-        } else {
-          bridgeApiKey.type = "text";
-          bridgeApiKey.select();
-          document.execCommand("copy");
-          bridgeApiKey.type = "password";
+          try {
+            await navigator.clipboard.writeText(key);
+            copied = true;
+          } catch (err) {
+            copied = false;
+          }
+        }
+        if (!copied) {
+          // Fallback copy using a temporary textarea
+          const temp = document.createElement("textarea");
+          temp.value = key;
+          temp.setAttribute("readonly", "");
+          temp.style.position = "absolute";
+          temp.style.left = "-9999px";
+          document.body.appendChild(temp);
+          temp.select();
+          const success = document.execCommand("copy");
+          document.body.removeChild(temp);
+          copied = !!success;
+        }
+        if (!copied) {
+          throw new Error("Clipboard unavailable");
         }
         if (bridgeStatusText)
           bridgeStatusText.textContent = "Status: Key copied";
@@ -1801,7 +1818,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       } catch (err) {
         showCustomModal(
           "API Bridge",
-          `Copy failed: ${err.message || "Unknown error"}`,
+          "Copy failed. Please click Show and copy manually.",
         );
       }
     });

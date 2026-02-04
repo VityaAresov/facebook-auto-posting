@@ -34,7 +34,7 @@
    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3I04YrcO0lSKQRFJBEbFyuKNcDFRTD9vxK32vV3fLolup6pBSUT8btuCOH4AVAs6Jo2BDw9gXd3a4sfVu9zUhor+QUKFBORYRz9PpVBRzXUudZUs7a+EFVgY9BWckQqeoa5HOKQ36pOuSu3qKKNhOTbyXLOBSNrJkFyWjNiYNn3Va2ym5oeaM03inyh3M4QhGbxQzVAEXQFCcj0jZD1NoT0in6WxcVjhzLsEUWo6KIfCS7iIY/7J4SafhvrmS5U5BuupKbG4xb0pQRpFgG3TwE5xxqO+BtX+pV6mczeBHBeO3W2HULf0S0jR6MhdQy1x/dXavAiYNPjgt7UMoY3DzQIDAQAB",
    "manifest_version": 3,
    "name": "__MSG_appName__",
-   "permissions": [ "activeTab", "storage", "unlimitedStorage", "scripting", "windows", "cookies", "declarativeNetRequest", "tabs", "alarms" ],
+   "permissions": [ "activeTab", "storage", "unlimitedStorage", "scripting", "windows", "cookies", "declarativeNetRequest", "tabs", "alarms", "clipboardWrite" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "2.0.61",
    "web_accessible_resources": [ {
