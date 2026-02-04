@@ -493,11 +493,13 @@ if (window.autoPosterInjected) {
               'div[role="dialog"][aria-label="Create post"]',
             );
 
-            // 2. Upload Check (only if the composer dialog is still open)
+            // 2. Upload Check (only if the composer dialog is still open and media was attached)
+            const hasMedia =
+              Array.isArray(post.images) && post.images.length > 0;
             const loadingSpinner = postComposerDialog?.querySelector(
               '[aria-label="Loading..."], [aria-label="Posting..."]',
             );
-            if (postComposerDialog && loadingSpinner) {
+            if (postComposerDialog && hasMedia && loadingSpinner) {
               console.log("Detected active media upload.");
               writeInfo(I18n.t("overlayUploading"));
               const uploadStartTime = Date.now();

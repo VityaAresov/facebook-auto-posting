@@ -1289,6 +1289,13 @@ async function checkForDueScheduledPosts() {
       await startPostingProcess(duePost);
     }
   } catch (error) {
+    const msg = error?.message || String(error);
+    if (msg.includes("No SW")) {
+      console.warn(
+        "checkForDueScheduledPosts skipped: service worker not available.",
+      );
+      return;
+    }
     console.error("Critical error in checkForDueScheduledPosts:", error);
   }
 }
@@ -4664,25 +4671,38 @@ async function executeSinglePopupOrAndroidPost(
     }
   } catch (e) {
     // --- ERROR HANDLING & RECOVERY ---
-    console.error(`[Watchdog] Error in single post execution: ${e.message}`);
+    const errMsg = e?.message || String(e);
+    const lowerMsg = errMsg.toLowerCase();
 
-    if (e.message === "Stop requested") {
+    if (errMsg === "Stop requested") {
       throw e; // Let the main loop handle the stop
     }
 
-    // Mark as failed but DO NOT throw.
-    // This allows the main loop (in handlePostingRequest) to continue to the next iteration.
-    logEntry.response = "failed";
-    logEntry.reason = e.message;
+    if (
+      lowerMsg.includes("window closed") ||
+      lowerMsg.includes("closed prematurely")
+    ) {
+      // Treat manual/early close as a skip, not a hard failure
+      console.warn(`[Watchdog] Posting window closed: ${errMsg}`);
+      logEntry.response = "skipped";
+      logEntry.reason = "Window closed";
+    } else {
+      console.error(`[Watchdog] Error in single post execution: ${errMsg}`);
 
-    if (e.message.includes("Watchdog")) {
-      // Special log for debugging
-      console.warn("Watchdog killed a stuck tab. Continuing to next group.");
+      // Mark as failed but DO NOT throw.
+      // This allows the main loop (in handlePostingRequest) to continue to the next iteration.
+      logEntry.response = "failed";
+      logEntry.reason = errMsg;
+
+      if (errMsg.includes("Watchdog")) {
+        // Special log for debugging
+        console.warn("Watchdog killed a stuck tab. Continuing to next group.");
+      }
     }
 
     telemetryData.errors.push({
       source: "executeSinglePopup_catch",
-      message: e.message,
+      message: errMsg,
     });
   } finally {
     // --- CLEANUP ---
