@@ -2068,52 +2068,79 @@ if (window.autoPosterInjected) {
   // ACTION: Replace the findUniversalSubmitButton function.
   async function findUniversalSubmitButton() {
     console.log(
-      "Searching for Universal Submit Button (V2 - Selector Priority)...",
+      "Searching for Universal Submit Button (V3 - Dialog Anchored)...",
     );
-    // 1. Priority Selectors (The "Golden Path")
-    // We search these globally first because they are highly specific and unlikely to return false positives.
+
+    const getActiveDialog = async () => {
+      // Prefer the dialog that contains the main composer
+      try {
+        const composer = await findMainPostComposer();
+        const dialog = composer
+          ? composer.closest('div[role="dialog"]')
+          : null;
+        if (dialog) return dialog;
+      } catch (e) {
+        // ignore
+      }
+
+      const dialogs = Array.from(document.querySelectorAll('div[role="dialog"]'));
+      const visibleDialogs = dialogs.filter((d) => {
+        return (
+          d.offsetParent !== null && window.getComputedStyle(d).display !== "none"
+        );
+      });
+      if (visibleDialogs.length === 0) return null;
+      return visibleDialogs[visibleDialogs.length - 1];
+    };
+
+    const activeDialog = await getActiveDialog();
+    if (!activeDialog) {
+      console.log("No visible dialogs found for submit search.");
+      return null;
+    }
+
+    // 1. Priority selectors (localized)
     const prioritySelectors = [
+      '[data-testid="react-composer-post-button"]',
+      '[data-testid="composer-submit-button"]',
+      '[data-testid="post_button"]',
       'div[aria-label="Post"][role="button"]',
+      'button[aria-label="Post"]',
       'div[aria-label="Publish"][role="button"]',
-      'div[aria-label="Tweet"][role="button"]',
-      // Localized common ones
+      'button[aria-label="Publish"]',
+      'div[aria-label="Share"][role="button"]',
+      'button[aria-label="Share"]',
+      'div[aria-label="Опубликовать"][role="button"]',
+      'button[aria-label="Опубликовать"]',
+      'div[aria-label="Поделиться"][role="button"]',
+      'button[aria-label="Поделиться"]',
+      'div[aria-label="Publicar"][role="button"]',
+      'button[aria-label="Publicar"]',
+      'div[aria-label="Publier"][role="button"]',
+      'button[aria-label="Publier"]',
+      'div[aria-label="Veröffentlichen"][role="button"]',
+      'button[aria-label="Veröffentlichen"]',
       'div[aria-label="Küldés"][role="button"]',
       'div[aria-label="Közzététel"][role="button"]',
       'div[aria-label="发布"][role="button"]',
-      'div[aria-label="Publier"][role="button"]',
-      'div[aria-label="Veröffentlichen"][role="button"]',
+      'div[aria-label="Send"][role="button"]',
     ];
-    for (const sel of prioritySelectors) {
-      // We get all matches
-      const candidates = Array.from(document.querySelectorAll(sel));
 
-      // We filter for the one that is actually visible and enabled
+    for (const sel of prioritySelectors) {
+      const candidates = Array.from(activeDialog.querySelectorAll(sel));
       const validBtn = candidates.find((btn) => {
         return (
-          btn.offsetParent !== null && // Visible
-          btn.getAttribute("aria-disabled") !== "true" && // Enabled
-          btn.closest('div[role="dialog"]')
-        ); // Must be inside a dialog (avoids header buttons)
+          btn.offsetParent !== null &&
+          btn.getAttribute("aria-disabled") !== "true"
+        );
       });
-
       if (validBtn) {
         console.log(`Found via Priority Selector: ${sel}`);
         return validBtn;
       }
     }
-    // 2. Fallback: Scoring System (Broad Search in Active Dialog)
-    const dialogs = Array.from(document.querySelectorAll('div[role="dialog"]'));
-    const visibleDialogs = dialogs.filter((d) => {
-      return (
-        d.offsetParent !== null && window.getComputedStyle(d).display !== "none"
-      );
-    });
-    if (visibleDialogs.length === 0) {
-      console.log("No visible dialogs found for fallback search.");
-      return null;
-    }
-    // Use the top-most dialog
-    const activeDialog = visibleDialogs[visibleDialogs.length - 1];
+
+    // 2. Fallback: Scoring System within active dialog
     const candidates = Array.from(
       activeDialog.querySelectorAll('div[role="button"], button'),
     );
@@ -2124,10 +2151,15 @@ if (window.autoPosterInjected) {
       "publish",
       "share",
       "tweet",
-      "közzététel",
-      "küldés",
-      "发布",
       "send",
+      "publicar",
+      "publier",
+      "veröffentlichen",
+      "опубликовать",
+      "поделиться",
+      "küldés",
+      "közzététel",
+      "发布",
     ];
     for (const btn of candidates) {
       if (!btn.offsetParent) continue;
@@ -2138,33 +2170,25 @@ if (window.autoPosterInjected) {
       const text = (btn.innerText || "").toLowerCase().trim();
       const label = (btn.getAttribute("aria-label") || "").toLowerCase().trim();
 
-      // Negative filters (Crucial)
+      // Negative filters
       if (label.includes("close") || label.includes("cancel") || label === "x")
         continue;
       if (text === "cancel" || text === "x") continue;
-      if (label.includes("schedule")) continue; // Don't click schedule button
-      if (label.includes("edit privacy")) continue; // Don't click privacy settings
+      if (label.includes("schedule")) continue;
+      if (label.includes("privacy")) continue;
 
-      // Positive Scoring
-      // 1. Exact Match (High Confidence)
       if (keywords.includes(label)) score += 100;
       if (keywords.includes(text)) score += 100;
 
-      // 2. Partial Match (Medium Confidence)
       if (keywords.some((k) => label.includes(k))) score += 20;
       if (keywords.some((k) => text.includes(k))) score += 20;
 
-      // 3. Color Heuristic (Facebook Blue)
       const style = window.getComputedStyle(btn);
-      const bgColor = style.backgroundColor; // returns rgb(r, g, b)
-
-      // Check if it's blue-ish (Blue component is dominant)
-      // FB Blue is roughly rgb(8, 102, 255)
+      const bgColor = style.backgroundColor;
       if (bgColor.startsWith("rgb")) {
         const rgb = bgColor.match(/\d+/g);
         if (rgb && rgb.length === 3) {
           const [r, g, b] = rgb.map(Number);
-          // If Blue is significantly higher than Red and Green, it's likely a primary button
           if (b > r + 20 && b > g + 20) {
             score += 50;
           }
@@ -2176,7 +2200,7 @@ if (window.autoPosterInjected) {
         bestCandidate = btn;
       }
     }
-    // Threshold: Needs at least some matching signal
+
     if (bestCandidate && highestScore >= 20) {
       return bestCandidate;
     }
