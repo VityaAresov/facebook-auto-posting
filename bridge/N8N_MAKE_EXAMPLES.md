@@ -4,7 +4,7 @@
 Method: POST
 URL: http://127.0.0.1:3721/send
 Headers:
-- x-api-key: YOUR_KEY
+- x-api-key: 9abc2df4f9e895350af7257c58a839003a29a5ef31ee3c4b
 - Content-Type: application/json
 Body (RAW JSON):
 {
@@ -25,7 +25,7 @@ Body (RAW JSON):
 Method: POST
 URL: http://127.0.0.1:3721/send
 Headers:
-- x-api-key: YOUR_KEY
+- x-api-key: 9abc2df4f9e895350af7257c58a839003a29a5ef31ee3c4b
 - Content-Type: application/json
 Body:
 {
@@ -40,7 +40,7 @@ Body:
 - Method: POST
 - URL: http://127.0.0.1:3721/send
 - Headers:
-  - x-api-key: YOUR_KEY
+  - x-api-key: 9abc2df4f9e895350af7257c58a839003a29a5ef31ee3c4b
   - Content-Type: application/json
 - Body type: Raw / JSON
 

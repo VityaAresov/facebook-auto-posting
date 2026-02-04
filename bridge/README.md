@@ -75,7 +75,7 @@ Groups:
 ## Example
 ```bash
 curl -X POST http://127.0.0.1:3721/v1/commands \
-  -H "x-api-key: YOUR_KEY" \
+  -H "x-api-key: 9abc2df4f9e895350af7257c58a839003a29a5ef31ee3c4b" \
   -H "Content-Type: application/json" \
   -d '{
     "action": "start_posting",
@@ -91,7 +91,7 @@ curl -X POST http://127.0.0.1:3721/v1/commands \
 ## Inline posting (no stored templates/groups)
 ```bash
 curl -X POST http://127.0.0.1:3721/send \
-  -H "x-api-key: YOUR_KEY" \
+  -H "x-api-key: 9abc2df4f9e895350af7257c58a839003a29a5ef31ee3c4b" \
   -H "Content-Type: application/json" \
   -d '{
     "action": "start_posting",
@@ -111,7 +111,7 @@ curl -X POST http://127.0.0.1:3721/send \
 ## Upsert template
 ```bash
 curl -X POST http://127.0.0.1:3721/send \
-  -H "x-api-key: YOUR_KEY" \
+  -H "x-api-key: 9abc2df4f9e895350af7257c58a839003a29a5ef31ee3c4b" \
   -H "Content-Type: application/json" \
   -d '{
     "action": "upsert_template",
@@ -126,7 +126,7 @@ curl -X POST http://127.0.0.1:3721/send \
 ## Upsert group collection
 ```bash
 curl -X POST http://127.0.0.1:3721/send \
-  -H "x-api-key: YOUR_KEY" \
+  -H "x-api-key: 9abc2df4f9e895350af7257c58a839003a29a5ef31ee3c4b" \
   -H "Content-Type: application/json" \
   -d '{
     "action": "upsert_group_collection",

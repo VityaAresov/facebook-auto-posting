@@ -145,7 +145,7 @@ const SCHEDULE_CHECK_ALARM = "checkScheduledPostsAlarm";
 const BRIDGE_DEFAULT_CONFIG = {
   enabled: true,
   baseUrl: "http://127.0.0.1:3721",
-  apiKey: "",
+  apiKey: "9abc2df4f9e895350af7257c58a839003a29a5ef31ee3c4b",
   pollIntervalMs: 5000,
 };
 let bridgePollTimer = null;
@@ -184,7 +184,7 @@ async function ensureBridgeConfig() {
   }
 
   if (!cfg.apiKey || cfg.apiKey === "CHANGE_ME") {
-    cfg.apiKey = generateBridgeApiKey();
+    cfg.apiKey = BRIDGE_DEFAULT_CONFIG.apiKey;
     await chrome.storage.local.set({ bridgeConfig: cfg });
   } else if (!bridgeConfig) {
     await chrome.storage.local.set({ bridgeConfig: cfg });
