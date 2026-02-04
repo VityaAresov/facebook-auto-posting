@@ -162,6 +162,78 @@ Use saved templates/groups OR send inline content.
 }
 ```
 
+## cURL Examples
+
+### Health
+```bash
+curl http://127.0.0.1:3721/health
+```
+
+### Status
+```bash
+curl "http://127.0.0.1:3721/status?clientId=ext_123" \
+  -H "x-api-key: YOUR_KEY"
+```
+
+### Start posting (inline)
+```bash
+curl -X POST http://127.0.0.1:3721/send \
+  -H "x-api-key: YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "start_posting",
+    "payload": {
+      "posts": [
+        { "title": "Quick Post", "text": "<p>Hello world</p>" }
+      ],
+      "groupLinks": [
+        ["Group A", "https://www.facebook.com/groups/123"],
+        ["Group B", "https://www.facebook.com/groups/456"]
+      ],
+      "postingMethod": "directApi"
+    }
+  }'
+```
+
+### Upsert template
+```bash
+curl -X POST http://127.0.0.1:3721/send \
+  -H "x-api-key: YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "upsert_template",
+    "payload": {
+      "title": "Promo Post",
+      "text": "<p>Buy now!</p>"
+    }
+  }'
+```
+
+### Upsert group collection
+```bash
+curl -X POST http://127.0.0.1:3721/send \
+  -H "x-api-key: YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "upsert_group_collection",
+    "payload": {
+      "title": "Dubai Groups",
+      "links": [
+        ["Group A", "https://www.facebook.com/groups/123"],
+        ["Group B", "https://www.facebook.com/groups/456"]
+      ]
+    }
+  }'
+```
+
+### Stop posting
+```bash
+curl -X POST http://127.0.0.1:3721/send \
+  -H "x-api-key: YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{ "action": "stop_posting" }'
+```
+
 ## Responses
 All `/send` calls return:
 ```json
