@@ -187,25 +187,734 @@
       "result": {
         "stopped": true
       }
+    },
+    {
+      "id": "cmd_1770231255618_q5lqwk",
+      "action": "start_posting",
+      "payload": {
+        "posts": [
+          {
+            "title": "Intro Dubai",
+            "text": "<p>Привет! Я Виктор, видеограф и основатель VIKS Production. Недавно переехал в Дубай, до этого работал в США и снимал для компаний вроде Microsoft, Amazon, FIFA, а также для международных бизнес-ивентов (CES, America Business Forum) и публичных спикеров.</p><p>Сейчас ищу партнёрства в Дубае: бизнес-ивенты, конференции, форумы; компании, которым нужен понятный видеоконтент под продажи и бренд; агентства / продакшены, которым нужен надёжный продакшн-партнёр.</p><p>Формат работы: съёмка и продакшн под ключ; event-видео (анонсы, хайлайты, кейсы); контент под LinkedIn / Instagram / рекламу.</p><p>Если вы занимаетесь ивентами, маркетингом или развиваете компанию в Дубае — буду рад познакомиться и обсудить, чем могу быть полезен.</p><p>Сайт с работами: viksproduction.com<br/>Можно написать прямо мне в личные сообщения.</p>"
+          }
+        ],
+        "groupLinks": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ],
+        "postingMethod": "directApi"
+      },
+      "status": "error",
+      "createdAt": "2026-02-04T18:54:15.618Z",
+      "claimedAt": "2026-02-04T18:54:16.680Z",
+      "completedAt": "2026-02-04T18:56:11.779Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "completed": 1,
+        "failed": 0,
+        "skipped": 2,
+        "completionStatus": "stopped"
+      }
+    },
+    {
+      "id": "cmd_1770231371677_aqgfe4",
+      "action": "stop_posting",
+      "payload": {},
+      "status": "success",
+      "createdAt": "2026-02-04T18:56:11.677Z",
+      "claimedAt": "2026-02-04T18:56:16.687Z",
+      "completedAt": "2026-02-04T18:56:16.693Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "stopped": true
+      }
+    },
+    {
+      "id": "cmd_1770231648763_ofw188",
+      "action": "start_posting",
+      "payload": {
+        "posts": [
+          {
+            "title": "Intro Dubai",
+            "text": "<p>Привет! Я Виктор, видеограф и основатель VIKS Production. Недавно переехал в Дубай, до этого работал в США и снимал для компаний вроде Microsoft, Amazon, FIFA, а также для международных бизнес-ивентов (CES, America Business Forum) и публичных спикеров.</p><p>Сейчас ищу партнёрства в Дубае: бизнес-ивенты, конференции, форумы; компании, которым нужен понятный видеоконтент под продажи и бренд; агентства / продакшены, которым нужен надёжный продакшн-партнёр.</p><p>Формат работы: съёмка и продакшн под ключ; event-видео (анонсы, хайлайты, кейсы); контент под LinkedIn / Instagram / рекламу.</p><p>Если вы занимаетесь ивентами, маркетингом или развиваете компанию в Дубае — буду рад познакомиться и обсудить, чем могу быть полезен.</p><p>Сайт с работами: viksproduction.com<br/>Можно написать прямо мне в личные сообщения.</p>"
+          }
+        ],
+        "groupLinks": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ],
+        "postingMethod": "directApi"
+      },
+      "status": "error",
+      "createdAt": "2026-02-04T19:00:48.763Z",
+      "claimedAt": "2026-02-05T19:41:31.474Z",
+      "completedAt": "2026-02-05T19:44:54.973Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "completed": 1,
+        "failed": 0,
+        "skipped": 2,
+        "completionStatus": "stopped"
+      }
+    },
+    {
+      "id": "cmd_1770231743567_xctzhs",
+      "action": "start_posting",
+      "payload": {
+        "posts": [
+          {
+            "title": "Intro Dubai",
+            "text": "<p>Привет! Я Виктор, видеограф и основатель VIKS Production. Недавно переехал в Дубай, до этого работал в США и снимал для компаний вроде Microsoft, Amazon, FIFA, а также для международных бизнес-ивентов (CES, America Business Forum) и публичных спикеров.</p><p>Сейчас ищу партнёрства в Дубае: бизнес-ивенты, конференции, форумы; компании, которым нужен понятный видеоконтент под продажи и бренд; агентства / продакшены, которым нужен надёжный продакшн-партнёр.</p><p>Формат работы: съёмка и продакшн под ключ; event-видео (анонсы, хайлайты, кейсы); контент под LinkedIn / Instagram / рекламу.</p><p>Если вы занимаетесь ивентами, маркетингом или развиваете компанию в Дубае — буду рад познакомиться и обсудить, чем могу быть полезен.</p><p>Сайт с работами: viksproduction.com<br/>Можно написать прямо мне в личные сообщения.</p>"
+          }
+        ],
+        "groupLinks": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ],
+        "postingMethod": "directApi"
+      },
+      "status": "error",
+      "createdAt": "2026-02-04T19:02:23.567Z",
+      "claimedAt": "2026-02-05T19:37:31.478Z",
+      "completedAt": "2026-02-05T19:37:52.290Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "completed": 1,
+        "failed": 0,
+        "skipped": 2,
+        "completionStatus": "stopped"
+      }
+    },
+    {
+      "id": "cmd_1770231834765_j31ko1",
+      "action": "start_posting",
+      "payload": {
+        "posts": [
+          {
+            "title": "Intro Dubai",
+            "text": "<p>Привет! Я Виктор, видеограф и основатель VIKS Production. Недавно переехал в Дубай, до этого работал в США и снимал для компаний вроде Microsoft, Amazon, FIFA, а также для международных бизнес-ивентов (CES, America Business Forum) и публичных спикеров.</p><p>Сейчас ищу партнёрства в Дубае: бизнес-ивенты, конференции, форумы; компании, которым нужен понятный видеоконтент под продажи и бренд; агентства / продакшены, которым нужен надёжный продакшн-партнёр.</p><p>Формат работы: съёмка и продакшн под ключ; event-видео (анонсы, хайлайты, кейсы); контент под LinkedIn / Instagram / рекламу.</p><p>Если вы занимаетесь ивентами, маркетингом или развиваете компанию в Дубае — буду рад познакомиться и обсудить, чем могу быть полезен.</p><p>Сайт с работами: viksproduction.com<br/>Можно написать прямо мне в личные сообщения.</p>"
+          }
+        ],
+        "groupLinks": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ],
+        "postingMethod": "directApi"
+      },
+      "status": "error",
+      "createdAt": "2026-02-04T19:03:54.765Z",
+      "claimedAt": "2026-02-05T19:37:56.474Z",
+      "completedAt": "2026-02-05T19:39:00.916Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "completed": 1,
+        "failed": 0,
+        "skipped": 2,
+        "completionStatus": "stopped"
+      }
+    },
+    {
+      "id": "cmd_1770232144764_yuofy9",
+      "action": "start_posting",
+      "payload": {
+        "posts": [
+          {
+            "title": "Intro Dubai",
+            "text": "<p>Привет! Я Виктор, видеограф и основатель VIKS Production. Недавно переехал в Дубай, до этого работал в США и снимал для компаний вроде Microsoft, Amazon, FIFA, а также для международных бизнес-ивентов (CES, America Business Forum) и публичных спикеров.</p><p>Сейчас ищу партнёрства в Дубае: бизнес-ивенты, конференции, форумы; компании, которым нужен понятный видеоконтент под продажи и бренд; агентства / продакшены, которым нужен надёжный продакшн-партнёр.</p><p>Формат работы: съёмка и продакшн под ключ; event-видео (анонсы, хайлайты, кейсы); контент под LinkedIn / Instagram / рекламу.</p><p>Если вы занимаетесь ивентами, маркетингом или развиваете компанию в Дубае — буду рад познакомиться и обсудить, чем могу быть полезен.</p><p>Сайт с работами: viksproduction.com<br/>Можно написать прямо мне в личные сообщения.</p>"
+          }
+        ],
+        "groupLinks": [
+          [
+            "Group 1",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Group 2",
+            "https://www.facebook.com/groups/906396412741378"
+          ],
+          [
+            "Group 3",
+            "https://www.facebook.com/groups/1328722378011803"
+          ]
+        ],
+        "postingMethod": "directApi"
+      },
+      "status": "error",
+      "createdAt": "2026-02-04T19:09:04.764Z",
+      "claimedAt": "2026-02-05T19:39:01.467Z",
+      "completedAt": "2026-02-05T19:39:05.463Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "completed": 0,
+        "failed": 1,
+        "skipped": 3,
+        "completionStatus": "stopped"
+      }
+    },
+    {
+      "id": "cmd_1770320610755_ylbvve",
+      "action": "upsert_group_collection",
+      "payload": {
+        "title": "Dubai property",
+        "links": [
+          [
+            "Dubai Real Estate",
+            "https://www.facebook.com/groups/906396412741378/"
+          ],
+          [
+            "DUBAI REAL ESTATE - Investors | Owners | Brokers | Sellers | Buyers",
+            "https://www.facebook.com/groups/782163773159244/"
+          ],
+          [
+            "Dubai Real Estate Agents Mastermind",
+            "https://www.facebook.com/groups/dubairealestateagents/"
+          ],
+          [
+            "Dubai Rental Properties",
+            "https://www.facebook.com/groups/621626108696760/"
+          ],
+          [
+            "DUBAI PRODUCTION CITY (IMPZ) Properties, Dubai",
+            "https://www.facebook.com/groups/239115306690379/"
+          ],
+          [
+            "Real Estate in Dubai, UAE",
+            "https://www.facebook.com/groups/3162334653980190/"
+          ],
+          [
+            "UAE Real Estate Lease, Buy And Sell (Dubai, Sharjah, Ajman)",
+            "https://www.facebook.com/groups/1158634105503270/"
+          ],
+          [
+            "DIRECT DUBAI PROPERTIES (UAE REAL ESTATES)",
+            "https://www.facebook.com/groups/375484415958163/"
+          ],
+          [
+            "Dubai Properties",
+            "https://www.facebook.com/groups/ahmedraja7/"
+          ],
+          [
+            "Dubai Property Investment Group",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Properties in Dubai for Rent and Sale",
+            "https://www.facebook.com/groups/927614315328621/"
+          ]
+        ]
+      },
+      "status": "success",
+      "createdAt": "2026-02-05T19:43:30.755Z",
+      "claimedAt": "2026-02-05T19:44:56.466Z",
+      "completedAt": "2026-02-05T19:44:56.470Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": null
+    },
+    {
+      "id": "cmd_1770320707577_dcnhmv",
+      "action": "upsert_group_collection",
+      "payload": {
+        "title": "Dubai property",
+        "links": [
+          [
+            "Dubai Real Estate",
+            "https://www.facebook.com/groups/906396412741378/"
+          ],
+          [
+            "DUBAI REAL ESTATE - Investors | Owners | Brokers | Sellers | Buyers",
+            "https://www.facebook.com/groups/782163773159244/"
+          ],
+          [
+            "Dubai Real Estate Agents Mastermind",
+            "https://www.facebook.com/groups/dubairealestateagents/"
+          ],
+          [
+            "Dubai Rental Properties",
+            "https://www.facebook.com/groups/621626108696760/"
+          ],
+          [
+            "DUBAI PRODUCTION CITY (IMPZ) Properties, Dubai",
+            "https://www.facebook.com/groups/239115306690379/"
+          ],
+          [
+            "Real Estate in Dubai, UAE",
+            "https://www.facebook.com/groups/3162334653980190/"
+          ],
+          [
+            "UAE Real Estate Lease, Buy And Sell (Dubai, Sharjah, Ajman)",
+            "https://www.facebook.com/groups/1158634105503270/"
+          ],
+          [
+            "DIRECT DUBAI PROPERTIES (UAE REAL ESTATES)",
+            "https://www.facebook.com/groups/375484415958163/"
+          ],
+          [
+            "Dubai Properties",
+            "https://www.facebook.com/groups/ahmedraja7/"
+          ],
+          [
+            "Dubai Property Investment Group",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Properties in Dubai for Rent and Sale",
+            "https://www.facebook.com/groups/927614315328621/"
+          ]
+        ]
+      },
+      "status": "success",
+      "createdAt": "2026-02-05T19:45:07.577Z",
+      "claimedAt": "2026-02-05T19:45:11.470Z",
+      "completedAt": "2026-02-05T19:45:11.474Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": null
+    },
+    {
+      "id": "cmd_1770320855917_vharo0",
+      "action": "upsert_group_collection",
+      "payload": {
+        "title": "Dubai property",
+        "links": [
+          [
+            "Dubai Real Estate",
+            "https://www.facebook.com/groups/906396412741378/"
+          ],
+          [
+            "DUBAI REAL ESTATE - Investors | Owners | Brokers | Sellers | Buyers",
+            "https://www.facebook.com/groups/782163773159244/"
+          ],
+          [
+            "Dubai Real Estate Agents Mastermind",
+            "https://www.facebook.com/groups/dubairealestateagents/"
+          ],
+          [
+            "Dubai Rental Properties",
+            "https://www.facebook.com/groups/621626108696760/"
+          ],
+          [
+            "DUBAI PRODUCTION CITY (IMPZ) Properties, Dubai",
+            "https://www.facebook.com/groups/239115306690379/"
+          ],
+          [
+            "Real Estate in Dubai, UAE",
+            "https://www.facebook.com/groups/3162334653980190/"
+          ],
+          [
+            "UAE Real Estate Lease, Buy And Sell (Dubai, Sharjah, Ajman)",
+            "https://www.facebook.com/groups/1158634105503270/"
+          ],
+          [
+            "DIRECT DUBAI PROPERTIES (UAE REAL ESTATES)",
+            "https://www.facebook.com/groups/375484415958163/"
+          ],
+          [
+            "Dubai Properties",
+            "https://www.facebook.com/groups/ahmedraja7/"
+          ],
+          [
+            "Dubai Property Investment Group",
+            "https://www.facebook.com/groups/35002236885/"
+          ],
+          [
+            "Properties in Dubai for Rent and Sale",
+            "https://www.facebook.com/groups/927614315328621/"
+          ],
+          [
+            "Dubai Real Estate Investors Network",
+            "https://www.facebook.com/groups/1328722378011803/"
+          ],
+          [
+            "Real Estate in Dubai",
+            "https://www.facebook.com/groups/394041411972460/"
+          ],
+          [
+            "PROPERTIES FOR RENT AND SALE IN INTERNATIONAL CITY DUBAI UAE",
+            "https://www.facebook.com/groups/2319566924953052/"
+          ],
+          [
+            "Dubai Real Estate Market",
+            "https://www.facebook.com/groups/1483323382432157/"
+          ],
+          [
+            "Dubai real estate buy and rent",
+            "https://www.facebook.com/groups/1288788895388630/"
+          ],
+          [
+            "Dubai Sale Properties",
+            "https://www.facebook.com/groups/772329304850560/"
+          ],
+          [
+            "Dubai Real Estate دبي للعقارت",
+            "https://www.facebook.com/groups/1091615204672267/"
+          ],
+          [
+            "DUBAI INVESTOR AND BUYERS - REAL ESTATE",
+            "https://www.facebook.com/groups/615134294631106/"
+          ],
+          [
+            "PROPERTIES OF OWNERS, REAL ESTATES, BROKERS DUBAI (U.A.E)",
+            "https://www.facebook.com/groups/owners.properties/"
+          ],
+          [
+            "Dubai, Abu Dhabi, Ajman & RAK Real Estate | Properties for Sale & Rent",
+            "https://www.facebook.com/groups/1116968186142676/"
+          ],
+          [
+            "Invest in Dubai Properties (Buy, Sell, Rent - RESIDENTIAL & COMMERCIAL)",
+            "https://www.facebook.com/groups/investindubaii/"
+          ],
+          [
+            "Real Estate Investor Group Dubai",
+            "https://www.facebook.com/groups/5287541237944753/"
+          ],
+          [
+            "Amazing Dubai Property Group",
+            "https://www.facebook.com/groups/282950926156849/"
+          ],
+          [
+            "Downtown Dubai and Business Bay Properties (For Sale and Rent)",
+            "https://www.facebook.com/groups/3048972145335306/"
+          ],
+          [
+            "Dubai Real Estate",
+            "https://www.facebook.com/groups/750840698341949/"
+          ],
+          [
+            "Dubai Real Estate",
+            "https://www.facebook.com/groups/dubairealestatecommunity/"
+          ],
+          [
+            "Dubai Real Estate Market: Buy, Sell, Rent",
+            "https://www.facebook.com/groups/dubairealestatemarketbuysellrent/"
+          ],
+          [
+            "Real Estate, Properties in UAE - Dubai, Ajman, Abu Dhabi, Ras Al Khaimah",
+            "https://www.facebook.com/groups/10396793378/"
+          ],
+          [
+            "Dubai Properties Sales and Rentals",
+            "https://www.facebook.com/groups/263245178782463/"
+          ],
+          [
+            "Real Estate Dubai",
+            "https://www.facebook.com/groups/602736420320805/"
+          ],
+          [
+            "Ahyan Real Estate Dubai",
+            "https://www.facebook.com/groups/880672575945525/"
+          ],
+          [
+            "Dubai Real Estate",
+            "https://www.facebook.com/groups/450637927073599/"
+          ],
+          [
+            "Dubai Real Estate Ads",
+            "https://www.facebook.com/groups/DubaiRealEstateAds/"
+          ],
+          [
+            "Dubai Real Estate (Property buyer and seller )",
+            "https://www.facebook.com/groups/304954705512998/"
+          ],
+          [
+            "Real Estate Broker in Dubai !",
+            "https://www.facebook.com/groups/367847890243439/"
+          ],
+          [
+            "Dubai Properties for Sale & Rentals - Apartments, Villas, and Commercial.",
+            "https://www.facebook.com/groups/466889067551473/"
+          ],
+          [
+            "Rent & Sale Properties in Dubai",
+            "https://www.facebook.com/groups/6304855376236618/"
+          ],
+          [
+            "Dubai Real Estate Group",
+            "https://www.facebook.com/groups/dubairealestategroup/"
+          ],
+          [
+            "PROPERTY AT DUBAI",
+            "https://www.facebook.com/groups/165210953610463/"
+          ],
+          [
+            "Dubai Properties and Real Estate Group",
+            "https://www.facebook.com/groups/108423132515560/"
+          ],
+          [
+            "Dubai Properties Sales and Rentals",
+            "https://www.facebook.com/groups/263245178782463/"
+          ],
+          [
+            "Buy, Sell or Rent Properties in Dubai : Dubai 2050 Real Estate",
+            "https://www.facebook.com/groups/300720402567883/"
+          ],
+          [
+            "Dubai Real Estate - Distress Deals only",
+            "https://www.facebook.com/groups/distressdealsdubai/"
+          ],
+          [
+            "Properties For Rent & Sale in Dubai",
+            "https://www.facebook.com/groups/747988636889496/"
+          ]
+        ]
+      },
+      "status": "success",
+      "createdAt": "2026-02-05T19:47:35.917Z",
+      "claimedAt": "2026-02-05T19:47:36.470Z",
+      "completedAt": "2026-02-05T19:47:36.478Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": null
+    },
+    {
+      "id": "cmd_1770320930881_7r57kq",
+      "action": "stop_posting",
+      "payload": {},
+      "status": "success",
+      "createdAt": "2026-02-05T19:48:50.881Z",
+      "claimedAt": "2026-02-05T19:48:51.472Z",
+      "completedAt": "2026-02-05T19:48:51.477Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": {
+        "stopped": true
+      }
+    },
+    {
+      "id": "cmd_1770323549088_9uh3vs",
+      "action": "upsert_group_collection",
+      "payload": {
+        "title": "dubai (no real estate)",
+        "links": [
+          [
+            "Dubai Apartments for Rent/Sale",
+            "https://www.facebook.com/groups/dubaiapartmentsforrentandsale/"
+          ],
+          [
+            "British || American || Canadian || European Expats in Dubai",
+            "https://www.facebook.com/groups/1981371775457608/"
+          ],
+          [
+            "Dubai Business Groups",
+            "https://www.facebook.com/groups/948189481921013/"
+          ],
+          [
+            "DUBAI \u001a - Careers, Jobs, Hiring, Agencies, Internships, Training, Work",
+            "https://www.facebook.com/groups/328115430260585/"
+          ],
+          [
+            "JVC & JVT Community Dubai",
+            "https://www.facebook.com/groups/526207152845761/"
+          ],
+          [
+            "Americans in dubai",
+            "https://www.facebook.com/groups/452644451572113/"
+          ],
+          [
+            "Apartments Rooms Villas Homes for Sale Rent in Dubai \u0000",
+            "https://www.facebook.com/groups/apartmentsroomsvillashomesindubai/"
+          ],
+          [
+            "Events in DUBAI",
+            "https://www.facebook.com/groups/1142109189142211/"
+          ],
+          [
+            "Business For sale In Dubai",
+            "https://www.facebook.com/groups/3431071987182136/"
+          ],
+          [
+            "Dubai Based Smart Investor Group",
+            "https://www.facebook.com/groups/160378151269780/"
+          ],
+          [
+            "Dubai Investors & Founders",
+            "https://www.facebook.com/groups/mytablon/"
+          ],
+          [
+            "New Investors In Dubai",
+            "https://www.facebook.com/groups/177067990972/"
+          ]
+        ]
+      },
+      "status": "success",
+      "createdAt": "2026-02-05T20:32:29.088Z",
+      "claimedAt": "2026-02-05T20:32:31.932Z",
+      "completedAt": "2026-02-05T20:32:33.513Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": null
+    },
+    {
+      "id": "cmd_1770327724288_uurx6o",
+      "action": "upsert_group_collection",
+      "payload": {
+        "title": "dubai (no real estate)",
+        "links": [
+          [
+            "Dubai Apartments for Rent/Sale",
+            "https://www.facebook.com/groups/dubaiapartmentsforrentandsale/"
+          ],
+          [
+            "British || American || Canadian || European Expats in Dubai",
+            "https://www.facebook.com/groups/1981371775457608/"
+          ],
+          [
+            "Dubai Business Groups",
+            "https://www.facebook.com/groups/948189481921013/"
+          ],
+          [
+            "DUBAI \u001a - Careers, Jobs, Hiring, Agencies, Internships, Training, Work",
+            "https://www.facebook.com/groups/328115430260585/"
+          ],
+          [
+            "JVC & JVT Community Dubai",
+            "https://www.facebook.com/groups/526207152845761/"
+          ],
+          [
+            "Americans in dubai",
+            "https://www.facebook.com/groups/452644451572113/"
+          ],
+          [
+            "Apartments Rooms Villas Homes for Sale Rent in Dubai \u0000",
+            "https://www.facebook.com/groups/apartmentsroomsvillashomesindubai/"
+          ],
+          [
+            "Events in DUBAI",
+            "https://www.facebook.com/groups/1142109189142211/"
+          ],
+          [
+            "Business For sale In Dubai",
+            "https://www.facebook.com/groups/3431071987182136/"
+          ],
+          [
+            "Dubai Based Smart Investor Group",
+            "https://www.facebook.com/groups/160378151269780/"
+          ],
+          [
+            "Dubai Investors & Founders",
+            "https://www.facebook.com/groups/mytablon/"
+          ],
+          [
+            "New Investors In Dubai",
+            "https://www.facebook.com/groups/177067990972/"
+          ]
+        ]
+      },
+      "status": "success",
+      "createdAt": "2026-02-05T21:42:04.288Z",
+      "claimedAt": "2026-02-05T21:42:06.939Z",
+      "completedAt": "2026-02-05T21:42:08.210Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": null
+    },
+    {
+      "id": "cmd_1770329091761_6tvmcc",
+      "action": "upsert_group_collection",
+      "payload": {
+        "title": "dubai (no real estate)",
+        "links": [
+          [
+            "Dubai Apartments for Rent/Sale",
+            "https://www.facebook.com/groups/dubaiapartmentsforrentandsale/"
+          ],
+          [
+            "British || American || Canadian || European Expats in Dubai",
+            "https://www.facebook.com/groups/1981371775457608/"
+          ],
+          [
+            "Dubai Business Groups",
+            "https://www.facebook.com/groups/948189481921013/"
+          ],
+          [
+            "DUBAI \u001a - Careers, Jobs, Hiring, Agencies, Internships, Training, Work",
+            "https://www.facebook.com/groups/328115430260585/"
+          ],
+          [
+            "JVC & JVT Community Dubai",
+            "https://www.facebook.com/groups/526207152845761/"
+          ],
+          [
+            "Americans in dubai",
+            "https://www.facebook.com/groups/452644451572113/"
+          ],
+          [
+            "Apartments Rooms Villas Homes for Sale Rent in Dubai \u0000",
+            "https://www.facebook.com/groups/apartmentsroomsvillashomesindubai/"
+          ],
+          [
+            "Events in DUBAI",
+            "https://www.facebook.com/groups/1142109189142211/"
+          ],
+          [
+            "Business For sale In Dubai",
+            "https://www.facebook.com/groups/3431071987182136/"
+          ],
+          [
+            "Dubai Based Smart Investor Group",
+            "https://www.facebook.com/groups/160378151269780/"
+          ],
+          [
+            "Dubai Investors & Founders",
+            "https://www.facebook.com/groups/mytablon/"
+          ],
+          [
+            "New Investors In Dubai",
+            "https://www.facebook.com/groups/177067990972/"
+          ]
+        ]
+      },
+      "status": "success",
+      "createdAt": "2026-02-05T22:04:51.761Z",
+      "claimedAt": "2026-02-05T22:04:56.066Z",
+      "completedAt": "2026-02-05T22:04:56.318Z",
+      "clientId": "ext_1770222172627_9l0lje",
+      "result": null
     }
   ],
   "status": {
     "ext_1770222172627_9l0lje": {
       "clientId": "ext_1770222172627_9l0lje",
       "isPosting": false,
-      "currentStatus": "Stop signal received. Finishing current step...",
+      "currentStatus": "",
       "lastRun": null,
-      "latestPostLog": {
-        "linkTitle": "Group 3",
-        "linkURL": "https://www.facebook.com/groups/1328722378011803",
-        "method": "direct_api",
-        "postTitle": "Intro Dubai",
-        "postUrl": "https://www.facebook.com/groups/1328722378011803/permalink/1895489644668404/",
-        "reason": null,
-        "response": "successful",
-        "timestamp": "2026-02-04T18:08:46.128Z"
-      },
-      "updatedAt": "2026-02-04T18:34:31.152Z"
+      "latestPostLog": null,
+      "updatedAt": "2026-02-06T21:26:27.766Z"
     }
   }
 }

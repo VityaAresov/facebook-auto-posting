@@ -417,21 +417,37 @@ if (window.autoPosterInjected) {
 
             await humanizedDelay(securityLevel, "pre_submit");
 
+            const mediaItems = Array.isArray(post.images) ? post.images : [];
+            const hasAttachedMedia = mediaItems.length > 0;
+            const hasAttachedVideo = mediaItems.some((m) => {
+              const t = (m && m.type ? String(m.type) : "").toLowerCase();
+              if (t === "video" || t === "stored_video") return true;
+              const mime = (m && m.mimeType ? String(m.mimeType) : "").toLowerCase();
+              return mime.startsWith("video/");
+            });
+
             // --- 5. SUBMIT BUTTON RETRY LOOP ---
             writeInfo(I18n.t("overlayFinalize"));
 
             let postButton = null;
             let submitAttempts = 0;
-            // Increased attempts, 1s delay per attempt = 10s max wait for button enablement
-            const MAX_SUBMIT_ATTEMPTS = 10;
+            // Media (especially video) can take a long time before Facebook enables the Post button.
+            // IMPORTANT: Never click a disabled Post button; it often results in a "no-op" then a verify timeout.
+            const SUBMIT_ENABLE_TIMEOUT_MS = hasAttachedMedia
+              ? 8 * 60 * 1000
+              : 25 * 1000;
+            const submitStartTime = Date.now();
+            const submitDeadline = submitStartTime + SUBMIT_ENABLE_TIMEOUT_MS;
+            let didClickPost = false;
+            let hasShownUploadingHint = false;
 
-            while (submitAttempts < MAX_SUBMIT_ATTEMPTS) {
+            while (Date.now() < submitDeadline) {
               submitAttempts++;
               console.log(
                 `[Posting] Finding Submit Button - Attempt ${submitAttempts}`,
               );
 
-              // Use the new V2 finder
+              // Use the V3 finder
               postButton = await findUniversalSubmitButton();
 
               if (postButton) {
@@ -439,15 +455,31 @@ if (window.autoPosterInjected) {
                   postButton.getAttribute("aria-disabled") === "true";
 
                 if (isDisabled) {
-                  console.log(
-                    "Submit button found but DISABLED. Nudging composer...",
-                  );
-                  // If disabled, try nudging the text box to wake it up
-                  await nudgePostComposer();
-                  await sleep(1.5);
+                  // If we have media, FB commonly keeps the button disabled while it hydrates/preps the upload.
+                  // Show the uploading overlay and wait.
+                  if (hasAttachedMedia) {
+                    if (
+                      !hasShownUploadingHint &&
+                      Date.now() - submitStartTime > 5000
+                    ) {
+                      writeInfo(I18n.t("overlayUploading"));
+                      hasShownUploadingHint = true;
+                    }
+                    await sleep(2);
+                  } else {
+                    console.log(
+                      "Submit button found but DISABLED. Nudging composer...",
+                    );
+                    // If disabled, try nudging the text box to wake it up
+                    await nudgePostComposer();
+                    await sleep(1.5);
+                  }
                   continue;
                 } else {
                   console.log("Submit button found and ENABLED. Clicking...");
+                  await simulateDeepClick(postButton);
+                  didClickPost = true;
+                  await sleep(2);
                   break;
                 }
               } else {
@@ -456,16 +488,15 @@ if (window.autoPosterInjected) {
               }
             }
 
-            if (postButton) {
-              await simulateDeepClick(postButton);
-              await sleep(2);
-            } else {
-              // Capture snapshot before dying
+            if (!didClickPost) {
+              // Capture snapshot before dying (often shows the real reason: disabled button, upload not ready, etc.)
               telemetry.ui_snapshots.push(
-                await captureUiSnapshot("submit_button_not_found"),
+                await captureUiSnapshot("submit_button_timeout_or_disabled"),
               );
               throw new Error(
-                "Could not find a clickable 'Post' button after multiple attempts.",
+                hasAttachedMedia
+                  ? "Timed out waiting for the 'Post' button to become clickable. Media may still be uploading or Facebook kept the composer locked."
+                  : "Timed out waiting for the 'Post' button to become clickable.",
               );
             }
 
@@ -474,10 +505,73 @@ if (window.autoPosterInjected) {
             // Verification Loop
             writeInfo(I18n.t("overlayVerify"));
             const startTime = Date.now();
-            const GENERAL_VERIFICATION_TIMEOUT_MS = 50 * 1000;
             const UPLOAD_MONITORING_TIMEOUT_MS = 8 * 60 * 1000;
+            // For media posts, Facebook can keep the composer open for minutes (video processing/upload).
+            const GENERAL_VERIFICATION_TIMEOUT_MS = hasAttachedMedia
+              ? UPLOAD_MONITORING_TIMEOUT_MS + 60 * 1000
+              : 50 * 1000;
             let hasActivatedTab = false;
             let hasAttemptedResubmit = false;
+
+            const findPostComposerDialog = () => {
+              // Fast path (legacy, English UI)
+              const strict = document.querySelector(
+                'div[role="dialog"][aria-label="Create post"]',
+              );
+              if (strict) return strict;
+
+              // Fallback: last visible dialog containing a "real" composer textbox.
+              const dialogs = Array.from(
+                document.querySelectorAll('div[role="dialog"]'),
+              ).filter(
+                (d) =>
+                  d.offsetParent !== null &&
+                  window.getComputedStyle(d).display !== "none",
+              );
+              for (let i = dialogs.length - 1; i >= 0; i--) {
+                const d = dialogs[i];
+                if (
+                  d.querySelector(
+                    'div[contenteditable="true"][data-lexical-editor="true"], div[contenteditable="true"][role="textbox"]',
+                  )
+                ) {
+                  return d;
+                }
+              }
+              return null;
+            };
+
+            const findUploadIndicator = (dialogEl) => {
+              if (!dialogEl) return null;
+
+              // Known FB labels (English) + common fallbacks (progressbar/aria-busy)
+              const direct = dialogEl.querySelector(
+                '[aria-label="Loading..."], [aria-label="Posting..."], [aria-label="Uploading..."]',
+              );
+              if (direct) return direct;
+
+              const progress = dialogEl.querySelector('[role="progressbar"]');
+              if (progress) return progress;
+
+              const busy = dialogEl.querySelector('[aria-busy="true"]');
+              if (busy) return busy;
+
+              // Last resort: scan aria-label keywords within the dialog.
+              const labeled = Array.from(
+                dialogEl.querySelectorAll("[aria-label]"),
+              ).find((el) => {
+                const label = (
+                  el.getAttribute("aria-label") || ""
+                ).toLowerCase();
+                return (
+                  label.includes("upload") ||
+                  label.includes("loading") ||
+                  label.includes("posting") ||
+                  label.includes("processing")
+                );
+              });
+              return labeled || null;
+            };
 
             while (Date.now() - startTime < GENERAL_VERIFICATION_TIMEOUT_MS) {
               sendHeartbeat(requestId);
@@ -489,167 +583,167 @@ if (window.autoPosterInjected) {
                 hasActivatedTab = true;
               }
 
-            const postComposerDialog = document.querySelector(
-              'div[role="dialog"][aria-label="Create post"]',
-            );
+              const postComposerDialog = findPostComposerDialog();
 
-            // 1. Success messages / approval dialogs
-            if (postComposerDialog) {
-              const dialogText = (postComposerDialog.innerText || "")
-                .toLowerCase()
-                .trim();
-              const pendingPatterns = [
-                "pending approval",
-                "pending review",
-                "will be reviewed",
-                "sent for approval",
-                "awaiting approval",
-                "ожидает проверки",
-                "на проверке",
-                "отправлен на проверку",
-                "будет проверен",
-              ];
-              const successPatterns = [
-                "your post is now",
-                "post is now",
-                "successfully posted",
-                "опубликован",
-                "успешно опубликован",
-                "размещен",
-              ];
-
-              const isPending = pendingPatterns.some((p) =>
-                dialogText.includes(p),
-              );
-              const isSuccess = successPatterns.some((p) =>
-                dialogText.includes(p),
-              );
-
-              if (isPending || isSuccess) {
-                const doneTexts = [
-                  "done",
-                  "ok",
-                  "got it",
-                  "close",
-                  "готово",
-                  "ок",
-                  "понятно",
-                  "закрыть",
+              // 1. Success messages / approval dialogs
+              if (postComposerDialog) {
+                const dialogText = (postComposerDialog.innerText || "")
+                  .toLowerCase()
+                  .trim();
+                const pendingPatterns = [
+                  "pending approval",
+                  "pending review",
+                  "will be reviewed",
+                  "sent for approval",
+                  "awaiting approval",
+                  "ожидает проверки",
+                  "на проверке",
+                  "отправлен на проверку",
+                  "будет проверен",
                 ];
-                const buttons = Array.from(
-                  postComposerDialog.querySelectorAll(
-                    'button, [role="button"]',
-                  ),
-                );
-                const doneBtn = buttons.find((b) => {
-                  const label = (
-                    b.getAttribute("aria-label") ||
-                    b.innerText ||
-                    ""
-                  )
-                    .toLowerCase()
-                    .trim();
-                  return doneTexts.includes(label);
-                });
-                if (doneBtn) {
-                  doneBtn.click();
+                const successPatterns = [
+                  "your post is now",
+                  "post is now",
+                  "successfully posted",
+                  "опубликован",
+                  "успешно опубликован",
+                  "размещен",
+                ];
+
+                const isPending = pendingPatterns.some((p) => dialogText.includes(p));
+                const isSuccess = successPatterns.some((p) => dialogText.includes(p));
+
+                if (isPending || isSuccess) {
+                  const doneTexts = [
+                    "done",
+                    "ok",
+                    "got it",
+                    "close",
+                    "готово",
+                    "ок",
+                    "понятно",
+                    "закрыть",
+                  ];
+                  const buttons = Array.from(
+                    postComposerDialog.querySelectorAll('button, [role="button"]'),
+                  );
+                  const doneBtn = buttons.find((b) => {
+                    const label = (
+                      b.getAttribute("aria-label") || b.innerText || ""
+                    )
+                      .toLowerCase()
+                      .trim();
+                    return doneTexts.includes(label);
+                  });
+                  if (doneBtn) {
+                    doneBtn.click();
+                  }
+                  chrome.runtime.sendMessage({
+                    action: "popupPostComplete",
+                    requestId: requestId,
+                    success: true,
+                    status: isPending ? "pending_approval" : "successful",
+                    telemetry,
+                  });
+                  return;
                 }
-                chrome.runtime.sendMessage({
-                  action: "popupPostComplete",
-                  requestId: requestId,
-                  success: true,
-                  status: isPending ? "pending_approval" : "successful",
-                  telemetry,
-                });
-                return;
               }
-            }
 
-            // 2. Upload Check (only if the composer dialog is still open and media was attached)
-            const hasMedia =
-              Array.isArray(post.images) && post.images.length > 0;
-            const loadingSpinner = postComposerDialog?.querySelector(
-              '[aria-label="Loading..."], [aria-label="Posting..."]',
-            );
-            if (postComposerDialog && hasMedia && loadingSpinner) {
-              console.log("Detected active media upload.");
-              writeInfo(I18n.t("overlayUploading"));
-              const uploadStartTime = Date.now();
-              hasActivatedTab = false;
+              // 2. Upload Check (only if the composer dialog is still open and media was attached)
+              const uploadIndicator = findUploadIndicator(postComposerDialog);
+              if (postComposerDialog && hasAttachedMedia && uploadIndicator) {
+                console.log("Detected active media upload.");
+                writeInfo(I18n.t("overlayUploading"));
+                const uploadStartTime = Date.now();
+                hasActivatedTab = false;
 
-              while (
-                Date.now() - uploadStartTime <
-                UPLOAD_MONITORING_TIMEOUT_MS
-              ) {
-                sendHeartbeat(requestId);
+                while (Date.now() - uploadStartTime < UPLOAD_MONITORING_TIMEOUT_MS) {
+                  sendHeartbeat(requestId);
 
-                const dialogStillOpen = document.querySelector(
-                  'div[role="dialog"][aria-label="Create post"]',
-                );
-                if (!dialogStillOpen) {
-                  // Dialog closed while upload was in progress - assume success
+                  const dialogStillOpen = findPostComposerDialog();
+                  if (!dialogStillOpen) {
+                    // Dialog closed while upload was in progress - assume success
+                    await sleep(2);
+                    chrome.runtime.sendMessage({
+                      action: "popupPostComplete",
+                      requestId: requestId,
+                      success: true,
+                      status: "successful",
+                      telemetry,
+                    });
+                    return;
+                  }
+
+                  const stillUploading = findUploadIndicator(dialogStillOpen);
+                  if (!stillUploading) {
+                    // Upload done (or at least no longer showing progress indicators)
+                    await sleep(4);
+                    // Assume success if no error popped up
+                    chrome.runtime.sendMessage({
+                      action: "popupPostComplete",
+                      requestId: requestId,
+                      success: true,
+                      status: "successful",
+                      telemetry,
+                    });
+                    return;
+                  }
                   await sleep(2);
-                  chrome.runtime.sendMessage({
-                    action: "popupPostComplete",
-                    requestId: requestId,
-                    success: true,
-                    status: "successful",
-                    telemetry,
-                  });
-                  return;
                 }
-
-                const stillLoadingSpinner = dialogStillOpen.querySelector(
-                  '[aria-label="Loading..."], [aria-label="Posting..."]',
-                );
-                if (!stillLoadingSpinner) {
-                  // Upload done
-                  await sleep(4);
-                  // Assume success if no error popped up
-                  chrome.runtime.sendMessage({
-                    action: "popupPostComplete",
-                    requestId: requestId,
-                    success: true,
-                    status: "successful",
-                    telemetry,
-                  });
-                  return;
-                }
-                await sleep(2);
+                throw new Error("Media upload timed out.");
               }
-              throw new Error("Media upload timed out.");
-            }
 
-            // 3. Error Check
-            const errorElement = Array.from(
-              document.querySelectorAll(
-                '[role="alert"], [role="dialog"] span',
-              ),
-            ).find(
-              (el) =>
-                el.textContent.toLowerCase().includes("couldn't be posted") ||
-                el.textContent.toLowerCase().includes("failed to post"),
-            );
+              // 2.5 Resubmit fallback: sometimes FB ignores the first click (esp. with heavy media).
+              if (
+                postComposerDialog &&
+                !hasAttemptedResubmit &&
+                Date.now() - startTime > 10000
+              ) {
+                try {
+                  const possibleSubmit = await findUniversalSubmitButton();
+                  const isDisabled = possibleSubmit?.getAttribute("aria-disabled") === "true";
+                  if (possibleSubmit && !isDisabled) {
+                    console.log(
+                      "Verification: composer still open with enabled submit button. Retrying click once...",
+                    );
+                    writeInfo(I18n.t("overlayUnresponsive"));
+                    await simulateDeepClick(possibleSubmit);
+                    await sleep(2);
+                    await handleOptionalNotNowButton();
+                  }
+                } catch (e) {
+                  // ignore resubmit failures; verification will continue
+                } finally {
+                  hasAttemptedResubmit = true;
+                }
+              }
+
+              // 3. Error Check
+              const errorElement = Array.from(
+                document.querySelectorAll('[role="alert"], [role="dialog"] span'),
+              ).find((el) => {
+                const txt = (el.textContent || "").toLowerCase();
+                return (
+                  txt.includes("couldn't be posted") ||
+                  txt.includes("failed to post") ||
+                  txt.includes("something went wrong") ||
+                  txt.includes("please try again")
+                );
+              });
               if (errorElement) {
                 throw new Error(
                   `Post failed: "${errorElement.textContent.substring(0, 100)}..."`,
                 );
               }
 
-            // 4. Success Check (Disappearance)
-            // If the specific "Create post" dialog is gone, we assume success.
-            const postComposerDialogCheck = document.querySelector(
-              'div[role="dialog"][aria-label="Create post"]',
-            );
+              // 4. Success Check (Disappearance)
+              // If the post composer dialog is gone, we assume success.
+              const postComposerDialogCheck = findPostComposerDialog();
 
-            if (!postComposerDialogCheck) {
-              // Double check after a second to ensure it wasn't a flicker
-              await sleep(1);
-              if (
-                !document.querySelector(
-                  'div[role="dialog"][aria-label="Create post"]',
-                  )
-                ) {
+              if (!postComposerDialogCheck) {
+                // Double check after a second to ensure it wasn't a flicker
+                await sleep(1);
+                if (!findPostComposerDialog()) {
                   console.log("Success: Composer dialog disappeared.");
 
                   if (post.commentOption === "disable") await disableComments();
@@ -666,9 +760,16 @@ if (window.autoPosterInjected) {
                   return;
                 }
               }
+
+              // Avoid a tight busy-loop. Also throttles heartbeat spam.
               await sleep(1);
             }
-            throw new Error("Timeout: Could not confirm post status.");
+            telemetry.ui_snapshots.push(await captureUiSnapshot("verify_timeout"));
+            throw new Error(
+              hasAttachedVideo
+                ? "Timeout: Could not confirm post status. Video uploads can take several minutes; Facebook may have kept the composer open."
+                : "Timeout: Could not confirm post status.",
+            );
           } catch (error) {
             console.error(`[Request ID: ${requestId}] Error:`, error);
             chrome.runtime.sendMessage({
