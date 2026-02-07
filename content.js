@@ -349,17 +349,23 @@ if (window.autoPosterInjected) {
                 await simulateDeepClick(modalButton);
                 writeInfo(I18n.t("overlayOpenModal"));
 
-                let checkCount = 0;
-                while (checkCount < 5) {
-                  await sleep(1);
-                  if (document.querySelector('div[role="dialog"]')) {
-                    modalIsOpen = true;
-                    break;
-                  }
-                  checkCount++;
-                }
-              }
-            }
+                 let checkCount = 0;
+                 // Give FB time to hydrate the modal. Also require a real editor inside the dialog,
+                 // not just any random dialog (cookie prompts, upsells, etc.).
+                 while (checkCount < 12) {
+                   await sleep(1);
+                   const dialog = document.querySelector('div[role="dialog"]');
+                   const editorInDialog = document.querySelector(
+                     'div[role="dialog"] [contenteditable="true"]',
+                   );
+                   if (dialog && editorInDialog) {
+                     modalIsOpen = true;
+                     break;
+                   }
+                   checkCount++;
+                 }
+               }
+             }
 
             if (!modalIsOpen) {
               telemetry.ui_snapshots.push(
@@ -1558,17 +1564,25 @@ if (window.autoPosterInjected) {
     for (let i = 0; i < 30; i++) {
       // 1. Get ALL contenteditable elements currently in the DOM
       const allEditables = Array.from(
-        document.querySelectorAll('div[contenteditable="true"]'),
+        document.querySelectorAll('[contenteditable="true"]'),
       );
 
       // 2. Filter: Find the "Golden" Editor
       const validEditor = allEditables.find((el) => {
-        // A. Must be visible
-        if (!el.offsetParent) return false;
+        // A. Must be visible (offsetParent is unreliable for position:fixed)
+        const style = window.getComputedStyle(el);
+        if (
+          style.display === "none" ||
+          style.visibility === "hidden" ||
+          style.opacity === "0"
+        )
+          return false;
+        const rect = el.getBoundingClientRect();
+        if (rect.width < 10 || rect.height < 10) return false;
 
         // B. Must be inside a Dialog (Crucial Check)
         // We check if it has an ancestor with role="dialog"
-        const parentDialog = el.closest('[role="dialog"]');
+        const parentDialog = el.closest('div[role="dialog"]');
         if (!parentDialog) return false;
 
         // C. Must NOT be a Search or Comment field
@@ -1578,11 +1592,14 @@ if (window.autoPosterInjected) {
 
         // D. Technical Attributes (Facebook specific)
         // The main editor usually has role="textbox" and specifically NOT role="combobox" (search)
-        const role = el.getAttribute("role");
+        const role = (el.getAttribute("role") || "").toLowerCase();
         const isLexical = el.getAttribute("data-lexical-editor") === "true";
 
         if (isLexical) return true; // High confidence
         if (role === "textbox") return true; // Medium confidence
+
+        // Fallback: large editable area inside dialog
+        if (rect.width > 200 && rect.height > 40) return true;
 
         return false;
       });
@@ -2440,45 +2457,81 @@ if (window.autoPosterInjected) {
   // END: DEFINITIVE STYLE-PRESERVING LOGIC
   // ======================================================================
 
-  async function getFileInput(context) {
-    let fileInput;
+  async function getFileInput(context, mediaItem = null) {
+    const preferVideo =
+      !!mediaItem &&
+      (String(mediaItem.type || "").toLowerCase() === "video" ||
+        String(mediaItem.type || "").toLowerCase() === "stored_video" ||
+        String(mediaItem.mimeType || "").toLowerCase().startsWith("video/"));
 
-    // Define the selectors based on the context
-    const postSelector =
-      'input[type="file"].x1s85apg[accept="image/*,image/heif,image/heic,video/*,video/mp4,video/x-m4v,video/x-matroska,.mkv"]';
-    const productSelector =
-      'input[type="file"][accept="image/*,image/heif,image/heic"]';
-
-    const selector = context === "post" ? postSelector : productSelector;
-
-    // Try to find the file input
-    const fileInputs = document.querySelectorAll(selector);
-    console.log(fileInputs.length, "lengthsssss");
-
-    if (fileInputs.length === 1) {
-      fileInput = fileInputs[0];
-      return fileInput;
-    } else if (fileInputs.length > 1) {
-      fileInput = fileInputs[1];
-      // Return the file input or null if still not found
-      return fileInput;
-    }
-
-    // If no input is found, attempt to click the Photo/Video button and retry
-    if (fileInputs.length === 0) {
-      const photoVideoButton = document.querySelector(
-        'div[aria-label="Photo/video"][role="button"]',
+    const getLastVisibleDialog = () => {
+      const dialogs = Array.from(
+        document.querySelectorAll('div[role="dialog"]'),
+      ).filter(
+        (d) =>
+          d.offsetParent !== null &&
+          window.getComputedStyle(d).display !== "none",
       );
-      if (photoVideoButton) {
-        console.log("photoVideoButton found and clicked");
-        photoVideoButton.click();
-        await sleep(0.5); // Wait for the file input to appear
-        // Retry finding the file input after clicking the button
-        fileInput = document.querySelectorAll(selector)[0];
-        // Return the file input or null if still not found
-        return fileInput;
-      }
+      return dialogs.length ? dialogs[dialogs.length - 1] : null;
+    };
+
+    let root = document;
+    try {
+      const composer = await findMainPostComposer();
+      const activeDialog = composer ? composer.closest('div[role="dialog"]') : null;
+      root = activeDialog || getLastVisibleDialog() || document;
+    } catch (e) {
+      root = getLastVisibleDialog() || document;
     }
+
+    const scoreInput = (input) => {
+      if (!input) return -9999;
+      const accept = String(input.getAttribute("accept") || "").toLowerCase();
+      let score = 0;
+
+      if (input.disabled) score -= 1000;
+      if (input.multiple) score += 10;
+
+      if (context === "product") {
+        if (accept.includes("image")) score += 100;
+        if (accept.includes("video")) score -= 50;
+      } else {
+        // post context
+        if (preferVideo && accept.includes("video")) score += 120;
+        if (!preferVideo && accept.includes("image")) score += 80;
+        if (accept.includes("video")) score += 20;
+        if (accept.includes("image")) score += 20;
+        // Some FB inputs omit accept; don't discard them entirely.
+        if (!accept) score += 5;
+      }
+
+      // Prefer inputs inside dialogs/forms (FB usually mounts file inputs there)
+      if (input.closest('div[role="dialog"]')) score += 15;
+
+      return score;
+    };
+
+    const pickBest = (container) => {
+      const inputs = Array.from(container.querySelectorAll('input[type="file"]'));
+      if (inputs.length === 0) return null;
+      let best = null;
+      let bestScore = -9999;
+      for (const inp of inputs) {
+        const s = scoreInput(inp);
+        if (s > bestScore) {
+          bestScore = s;
+          best = inp;
+        }
+      }
+      return best;
+    };
+
+    // 1) Prefer searching inside the active dialog
+    const bestInRoot = pickBest(root);
+    if (bestInRoot) return bestInRoot;
+
+    // 2) Fallback: search globally
+    return pickBest(document);
   }
 
   // Helper function to convert dataURI to Blob
@@ -4452,7 +4505,7 @@ if (window.autoPosterInjected) {
   // ACTION: Update insertMediaToPost to handle stored videos
   async function insertMediaToPost(mediaItem, context = "post") {
     await sleep(1);
-    const fileInput = await getFileInput(context);
+    const fileInput = await getFileInput(context, mediaItem);
     if (!fileInput) return;
 
     try {
@@ -4479,12 +4532,10 @@ if (window.autoPosterInjected) {
       dataTransfer.items.add(file);
       fileInput.files = dataTransfer.files;
 
-      const events = [
-        new Event("change", { bubbles: true }),
-        new Event("focus", { bubbles: true }),
-        new MouseEvent("click", { bubbles: true }),
-      ];
-      await Promise.all(events.map((event) => fileInput.dispatchEvent(event)));
+      // Don't click the input: Chrome blocks file pickers without a user gesture and Facebook
+      // sometimes triggers a native picker call in its click handlers.
+      fileInput.dispatchEvent(new Event("input", { bubbles: true }));
+      fileInput.dispatchEvent(new Event("change", { bubbles: true }));
 
       // If it's a video, give it extra time to register the upload start
       if (mediaItem.type === "video" || mediaItem.type === "stored_video") {
@@ -4670,7 +4721,15 @@ function disableUnloadPrompt() {
 }
 function isElementVisible(element) {
   if (!element) return false;
-  // The offsetParent check is a very reliable and fast way to determine
-  // if an element or any of its parents have `display: none`.
-  return !!element.offsetParent;
+  // offsetParent is unreliable for `position: fixed` elements (common in FB dialogs).
+  const style = window.getComputedStyle(element);
+  if (
+    style.display === "none" ||
+    style.visibility === "hidden" ||
+    style.opacity === "0"
+  ) {
+    return false;
+  }
+  const rect = element.getBoundingClientRect();
+  return rect.width > 0 && rect.height > 0;
 }

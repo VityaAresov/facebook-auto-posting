@@ -911,10 +911,23 @@
     "ext_1770222172627_9l0lje": {
       "clientId": "ext_1770222172627_9l0lje",
       "isPosting": false,
-      "currentStatus": "",
-      "lastRun": null,
-      "latestPostLog": null,
-      "updatedAt": "2026-02-06T21:26:27.766Z"
+      "currentStatus": "Posting stopped by user.",
+      "lastRun": {
+        "completedAt": "2026-02-07T09:09:55.251Z",
+        "completionStatus": "stopped",
+        "failed": 52,
+        "successful": 0
+      },
+      "latestPostLog": {
+        "linkTitle": "Link 28",
+        "linkURL": "https://www.facebook.com/groups/1342862452947614/",
+        "method": "popup",
+        "postTitle": "Dubai business 2500aed",
+        "reason": "Timeout: Could not confirm post status. Video uploads can take several minutes; Facebook may have kept the composer open.",
+        "response": "failed",
+        "timestamp": "2026-02-07T08:59:49.904Z"
+      },
+      "updatedAt": "2026-02-07T09:10:38.696Z"
     }
   }
 }
