@@ -2822,28 +2822,51 @@ searchGroupInput.addEventListener("input", function () {
 // let selectedPosts = [];
 
 // Show or hide options when clicking the input
-selectPostInput.addEventListener("click", () => {
-  if (selectPostOptions.classList.contains("d-none")) {
-    selectPostOptions.classList.remove("d-none");
-  } else {
-    selectPostOptions.classList.add("d-none");
-  }
-});
+if (selectPostInput && selectPostOptions) {
+  selectPostInput.addEventListener("click", (event) => {
+    // Prevent global document click handlers from immediately closing the dropdown.
+    event.stopPropagation();
+    if (selectPostOptions.classList.contains("d-none")) {
+      selectPostOptions.classList.remove("d-none");
+    } else {
+      selectPostOptions.classList.add("d-none");
+    }
+  });
+}
 // Toggle dropdown visibility on input click
-selectGroupInput.addEventListener("click", () => {
-  if (selectGroupOptions.classList.contains("d-none")) {
-    selectGroupOptions.classList.remove("d-none");
-  } else {
-    selectGroupOptions.classList.add("d-none");
-  }
-});
+if (selectGroupInput) {
+  selectGroupInput.addEventListener("click", (event) => {
+    // Prevent global document click handlers from immediately closing the dropdown.
+    event.stopPropagation();
+
+    // Re-resolve in case the options container was replaced (we clone it when repopulating).
+    if (!selectGroupOptions || !document.contains(selectGroupOptions)) {
+      selectGroupOptions = document.getElementById("selectGroupOptions");
+    }
+    if (!selectGroupOptions) return;
+
+    if (selectGroupOptions.classList.contains("d-none")) {
+      selectGroupOptions.classList.remove("d-none");
+    } else {
+      selectGroupOptions.classList.add("d-none");
+    }
+  });
+}
 // Close options dropdown when clicking outside
 document.addEventListener("click", (event) => {
-  if (!selectPostWrapper.contains(event.target)) {
-    selectPostOptions.classList.add("d-none");
+  if (selectPostWrapper && selectPostOptions) {
+    if (!selectPostWrapper.contains(event.target)) {
+      selectPostOptions.classList.add("d-none");
+    }
   }
-  if (!selectGroupWrapper.contains(event.target)) {
-    selectGroupOptions.classList.add("d-none");
+  if (selectGroupWrapper) {
+    // Options container can be replaced during re-render; always resolve before acting.
+    if (!selectGroupOptions || !document.contains(selectGroupOptions)) {
+      selectGroupOptions = document.getElementById("selectGroupOptions");
+    }
+    if (selectGroupOptions && !selectGroupWrapper.contains(event.target)) {
+      selectGroupOptions.classList.add("d-none");
+    }
   }
 });
 
@@ -4484,73 +4507,115 @@ function removeSelectedTag(postIndex) {
 }
 // Function to populate post options after loading tags
 function populateSelectGroupOptions() {
-  // Re-fetch reference in case DOM changed
-  selectGroupOptions = document.getElementById("selectGroupOptions");
-  if (!selectGroupOptions) return;
+  // Always load the latest groups from storage so this dropdown works even if the
+  // group collections were updated while the "Groups" page was not visible.
+  chrome.storage.local.get(["groups"], (result) => {
+    groups = Array.isArray(result.groups) ? result.groups : [];
 
-  selectGroupOptions.innerHTML = "";
-  // Cloning to remove old event listeners is a good safety practice
-  const newOptions = selectGroupOptions.cloneNode(true);
-  selectGroupOptions.replaceWith(newOptions);
-  selectGroupOptions = newOptions;
+    // Re-fetch reference in case DOM changed
+    selectGroupOptions = document.getElementById("selectGroupOptions");
+    if (!selectGroupOptions) return;
 
-  groups.forEach((group, index) => {
-    const optionDiv = document.createElement("div");
-    optionDiv.className = "option";
-    optionDiv.setAttribute("data-index", index);
+    selectGroupOptions.innerHTML = "";
+    // Cloning to remove old event listeners is a good safety practice
+    const newOptions = selectGroupOptions.cloneNode(true);
+    selectGroupOptions.replaceWith(newOptions);
+    selectGroupOptions = newOptions;
 
-    const { badgeHTML, tooltipContent } = createFreshnessBarHTML(index, groups);
+    // Keep existing selections only if they still point at valid indices.
+    selectedGroups = (Array.isArray(selectedGroups) ? selectedGroups : [])
+      .filter(
+        (g) =>
+          g &&
+          Number.isInteger(g.index) &&
+          g.index >= 0 &&
+          g.index < groups.length,
+      )
+      .map((g) => ({ index: g.index, group: groups[g.index] }));
 
-    optionDiv.innerHTML = `
-            <div class="collection-details">
-                <span class="option-title">${
-                  group.title || `Group ${index + 1}`
-                }</span>
-            </div>
-            <div class="collection-info-badge">${badgeHTML}</div>
-        `;
+    if (groups.length === 0) {
+      // Make the dropdown visibly "work" even if empty, otherwise it feels unclickable.
+      const emptyDiv = document.createElement("div");
+      emptyDiv.className = "option";
+      emptyDiv.style.cursor = "default";
+      emptyDiv.style.color = "#6b7280";
+      emptyDiv.textContent =
+        "No group collections found. Go to Templates -> Group Collections to add one.";
+      selectGroupOptions.appendChild(emptyDiv);
+      return;
+    }
 
-    const infoBadge = optionDiv.querySelector(".collection-info-badge");
-    if (infoBadge && tooltipContent) {
-      infoBadge.addEventListener("mouseenter", () =>
-        showFreshnessTooltip(infoBadge, tooltipContent),
+    groups.forEach((group, index) => {
+      const optionDiv = document.createElement("div");
+      optionDiv.className = "option";
+      optionDiv.setAttribute("data-index", index);
+
+      let badgeHTML = "";
+      let tooltipContent = "";
+      try {
+        const freshness = createFreshnessBarHTML(index, groups);
+        badgeHTML = freshness?.badgeHTML || "";
+        tooltipContent = freshness?.tooltipContent || "";
+      } catch (e) {
+        // Don't block selection if freshness UI fails.
+        badgeHTML = "";
+        tooltipContent = "";
+      }
+
+      optionDiv.innerHTML = `
+              <div class="collection-details">
+                  <span class="option-title">${
+                    group.title || `Group ${index + 1}`
+                  }</span>
+              </div>
+              <div class="collection-info-badge">${badgeHTML}</div>
+          `;
+
+      const infoBadge = optionDiv.querySelector(".collection-info-badge");
+      if (infoBadge && tooltipContent) {
+        infoBadge.addEventListener("mouseenter", () =>
+          showFreshnessTooltip(infoBadge, tooltipContent),
+        );
+        infoBadge.addEventListener("mouseleave", hideFreshnessTooltip);
+      }
+
+      selectGroupOptions.appendChild(optionDiv);
+    });
+
+    // Event Delegation for Selection
+    selectGroupOptions.addEventListener("click", (event) => {
+      const optionDiv = event.target.closest(".option");
+      if (!optionDiv) return;
+
+      const groupIndexRaw = optionDiv.getAttribute("data-index");
+      if (groupIndexRaw === null) return; // Ignore placeholder rows
+      const groupIndex = parseInt(groupIndexRaw, 10);
+      if (isNaN(groupIndex) || !groups[groupIndex]) return;
+
+      if (selectedGroups.some((g) => g.index === groupIndex)) {
+        // Deselect
+        selectedGroups = selectedGroups.filter((g) => g.index !== groupIndex);
+        removeSelectedGroup(groupIndex);
+        optionDiv.style.backgroundColor = "";
+      } else {
+        // Select
+        selectedGroups.push({ index: groupIndex, group: groups[groupIndex] });
+        addSelectedGroup(groupIndex);
+        optionDiv.style.backgroundColor = "#f0f0f0";
+      }
+
+      // *** FIX: Call BOTH update functions ***
+      enableStartPostingIfReady();
+      updateSchedulerFeatureVisibility();
+    });
+
+    // Restore visual state for already selected items
+    selectedGroups.forEach((g) => {
+      const optionDiv = selectGroupOptions.querySelector(
+        `[data-index="${g.index}"]`,
       );
-      infoBadge.addEventListener("mouseleave", hideFreshnessTooltip);
-    }
-
-    selectGroupOptions.appendChild(optionDiv);
-  });
-
-  // Event Delegation for Selection
-  selectGroupOptions.addEventListener("click", (event) => {
-    const optionDiv = event.target.closest(".option");
-    if (!optionDiv) return;
-
-    const groupIndex = parseInt(optionDiv.getAttribute("data-index"), 10);
-
-    if (selectedGroups.some((g) => g.index === groupIndex)) {
-      // Deselect
-      selectedGroups = selectedGroups.filter((g) => g.index !== groupIndex);
-      removeSelectedGroup(groupIndex);
-      optionDiv.style.backgroundColor = "";
-    } else {
-      // Select
-      selectedGroups.push({ index: groupIndex, group: groups[groupIndex] });
-      addSelectedGroup(groupIndex);
-      optionDiv.style.backgroundColor = "#f0f0f0";
-    }
-
-    // *** FIX: Call BOTH update functions ***
-    enableStartPostingIfReady();
-    updateSchedulerFeatureVisibility();
-  });
-
-  // Restore visual state for already selected items
-  selectedGroups.forEach((g) => {
-    const optionDiv = selectGroupOptions.querySelector(
-      `[data-index="${g.index}"]`,
-    );
-    if (optionDiv) optionDiv.style.backgroundColor = "#f0f0f0";
+      if (optionDiv) optionDiv.style.backgroundColor = "#f0f0f0";
+    });
   });
 }
 
