@@ -331,6 +331,56 @@ if (window.autoPosterInjected) {
             }
             await performScrollNudge(securityLevel);
 
+            const normalizeUiText = (s) =>
+              String(s || "")
+                .toLowerCase()
+                .replace(/\s+/g, " ")
+                .trim();
+
+            const getVisibleElementText = (el) => {
+              if (!el) return "";
+              try {
+                if (!isElementVisible(el)) return "";
+              } catch (e) {
+                // If visibility helper isn't ready for some reason, fall back to best-effort text extraction.
+              }
+              return normalizeUiText(
+                el.getAttribute("aria-label") ||
+                  el.innerText ||
+                  el.textContent ||
+                  "",
+              );
+            };
+
+            const detectJoinGroupRequired = () => {
+              // If user isn't a member, FB usually shows a visible "Join group" button and posting can't proceed.
+              try {
+                if (!String(location.href || "").includes("/groups/")) return null;
+                const joinPatterns = [
+                  "join group",
+                  "request to join",
+                  "request membership",
+                  "вступить",
+                  "запрос на вступление",
+                  "подать заявку",
+                ];
+                const candidates = Array.from(
+                  document.querySelectorAll(
+                    'button, a[role="button"], div[role="button"]',
+                  ),
+                );
+                const joinBtn = candidates.find((b) => {
+                  const txt = getVisibleElementText(b);
+                  if (!txt) return false;
+                  return joinPatterns.some((p) => txt.includes(p));
+                });
+                if (joinBtn) {
+                  return "Cannot post: Join group required (you are not a member).";
+                }
+              } catch (e) {}
+              return null;
+            };
+
             // --- 3. OPEN MODAL ---
             let modalIsOpen = false;
             let openAttempts = 0;
@@ -371,7 +421,10 @@ if (window.autoPosterInjected) {
               telemetry.ui_snapshots.push(
                 await captureUiSnapshot("modal_open_fail"),
               );
-              throw new Error("Failed to open 'Create Post' dialog.");
+              const joinReason = detectJoinGroupRequired();
+              throw new Error(
+                joinReason || "Failed to open 'Create Post' dialog.",
+              );
             }
 
             await humanizedDelay(securityLevel, "pre_text");
@@ -529,11 +582,7 @@ if (window.autoPosterInjected) {
               // Fallback: last visible dialog containing a "real" composer textbox.
               const dialogs = Array.from(
                 document.querySelectorAll('div[role="dialog"]'),
-              ).filter(
-                (d) =>
-                  d.offsetParent !== null &&
-                  window.getComputedStyle(d).display !== "none",
-              );
+              ).filter((d) => isElementVisible(d));
               for (let i = dialogs.length - 1; i >= 0; i--) {
                 const d = dialogs[i];
                 if (
@@ -579,6 +628,204 @@ if (window.autoPosterInjected) {
               return labeled || null;
             };
 
+            const pendingPatterns = [
+              "pending approval",
+              "pending review",
+              "pending admin approval",
+              "awaiting approval",
+              "awaiting admin approval",
+              "will be reviewed",
+              "admins will review",
+              "sent for approval",
+              "sent to admins",
+              "submitted for review",
+              "will appear after approval",
+              "will appear once approved",
+              "after it is approved",
+              "after it's approved",
+              "ожидает проверки",
+              "ожидает одобрения",
+              "ожидает одобрения администратора",
+              "ожидает одобрения администраторов",
+              "на проверке",
+              "на рассмотрении",
+              "отправлен на проверку",
+              "отправлен на рассмотрение",
+              "пост отправлен на рассмотрение",
+              "публикация отправлена на рассмотрение",
+              "будет проверен",
+              "будет опубликован после одобрения",
+              "будет опубликована после одобрения",
+              "будет опубликован после проверки",
+              "будет опубликована после проверки",
+            ];
+            const successPatterns = [
+              "your post is now",
+              "your post is now live",
+              "your post is now published",
+              "post is now",
+              "successfully posted",
+              "post shared",
+              "your post was shared",
+              "your post has been posted",
+              "published",
+              "posted",
+              "shared in",
+              "posted in",
+              "опубликован",
+              "опубликовано",
+              "успешно опубликован",
+              "успешно опубликовано",
+              "размещен",
+              "размещено",
+              "ваш пост опубликован",
+              "ваша публикация опубликована",
+            ];
+            const blockedPatterns = [
+              "join group",
+              "request to join",
+              "you must join",
+              "must join",
+              "only members can post",
+              "you can't post",
+              "you cannot post",
+              "can't post to this group",
+              "can't post in this group",
+              "cannot post to this group",
+              "don't have permission to post",
+              "do not have permission to post",
+              "not allowed to post",
+              "posting is turned off",
+              "posting has been turned off",
+              "only admins can post",
+              "only administrators can post",
+              "only moderators can post",
+              "temporarily blocked from posting",
+              "temporarily restricted",
+              "account restricted",
+              "вступите",
+              "вступить",
+              "запрос на вступление",
+              "только участники могут публиковать",
+              "только администраторы могут публиковать",
+              "публикации отключены",
+              "публикации в этой группе отключены",
+              "вы не можете публиковать",
+              "нельзя публиковать",
+              "у вас нет разрешения",
+              "у вас нет прав",
+              "вам запрещено публиковать",
+              "вы временно не можете публиковать",
+              "ваш аккаунт ограничен",
+              "вы заблокированы",
+            ];
+            const errorPatterns = [
+              "couldn't be posted",
+              "could not be posted",
+              "failed to post",
+              "something went wrong",
+              "please try again",
+              "try again later",
+              "an error occurred",
+              "error",
+              "не удалось опубликовать",
+              "не удалось разместить",
+              "ошибка",
+              "попробуйте еще раз",
+              "попробуйте позже",
+            ];
+
+            const normalizeOutcomeText = (s) =>
+              String(s || "")
+                .toLowerCase()
+                .replace(/\s+/g, " ")
+                .trim();
+
+            const textSnippet = (s, maxLen = 160) => {
+              const t = normalizeOutcomeText(s);
+              if (!t) return "";
+              return t.length > maxLen ? `${t.substring(0, maxLen)}...` : t;
+            };
+
+            const clickDoneLikeButtonIfPresent = (dialogEl) => {
+              if (!dialogEl) return;
+              const doneTexts = [
+                "done",
+                "ok",
+                "okay",
+                "got it",
+                "close",
+                "готово",
+                "ок",
+                "понятно",
+                "закрыть",
+              ];
+              const buttons = Array.from(
+                dialogEl.querySelectorAll("button, [role=\"button\"]"),
+              );
+              const doneBtn = buttons.find((b) => {
+                const label = normalizeOutcomeText(
+                  b.getAttribute("aria-label") || b.innerText || "",
+                );
+                return doneTexts.includes(label);
+              });
+              if (doneBtn) doneBtn.click();
+            };
+
+            const scanForOutcome = (dialogEl = null) => {
+              // A very common root cause for "modal open fail" or "verify timeout" is not being a group member.
+              const joinReason = detectJoinGroupRequired();
+              if (joinReason) return { kind: "blocked", message: joinReason };
+
+              const candidates = [];
+              if (dialogEl) candidates.push(dialogEl);
+
+              const addVisibleMatches = (selector) => {
+                try {
+                  const els = Array.from(document.querySelectorAll(selector));
+                  for (const el of els) {
+                    if (el && isElementVisible(el)) candidates.push(el);
+                  }
+                } catch (e) {}
+              };
+
+              addVisibleMatches('div[role="dialog"]');
+              addVisibleMatches('[role="alert"]');
+              addVisibleMatches('[role="status"]');
+              addVisibleMatches('[aria-live="polite"]');
+              addVisibleMatches('[aria-live="assertive"]');
+
+              const seen = new Set();
+              for (const el of candidates) {
+                if (!el || seen.has(el)) continue;
+                seen.add(el);
+
+                const txt = normalizeOutcomeText(el.innerText || el.textContent || "");
+                if (!txt) continue;
+
+                if (blockedPatterns.some((p) => txt.includes(p))) {
+                  return {
+                    kind: "blocked",
+                    message: `Posting restricted/blocked: "${textSnippet(txt)}"`,
+                  };
+                }
+                if (pendingPatterns.some((p) => txt.includes(p))) {
+                  return { kind: "done", status: "pending_approval", dialog: el };
+                }
+                if (successPatterns.some((p) => txt.includes(p))) {
+                  return { kind: "done", status: "successful", dialog: el };
+                }
+                if (errorPatterns.some((p) => txt.includes(p))) {
+                  return {
+                    kind: "error",
+                    message: `Post failed: "${textSnippet(txt)}"`,
+                  };
+                }
+              }
+
+              return null;
+            };
+
             while (Date.now() - startTime < GENERAL_VERIFICATION_TIMEOUT_MS) {
               sendHeartbeat(requestId);
 
@@ -591,68 +838,30 @@ if (window.autoPosterInjected) {
 
               const postComposerDialog = findPostComposerDialog();
 
-              // 1. Success messages / approval dialogs
-              if (postComposerDialog) {
-                const dialogText = (postComposerDialog.innerText || "")
-                  .toLowerCase()
-                  .trim();
-                const pendingPatterns = [
-                  "pending approval",
-                  "pending review",
-                  "will be reviewed",
-                  "sent for approval",
-                  "awaiting approval",
-                  "ожидает проверки",
-                  "на проверке",
-                  "отправлен на проверку",
-                  "будет проверен",
-                ];
-                const successPatterns = [
-                  "your post is now",
-                  "post is now",
-                  "successfully posted",
-                  "опубликован",
-                  "успешно опубликован",
-                  "размещен",
-                ];
-
-                const isPending = pendingPatterns.some((p) => dialogText.includes(p));
-                const isSuccess = successPatterns.some((p) => dialogText.includes(p));
-
-                if (isPending || isSuccess) {
-                  const doneTexts = [
-                    "done",
-                    "ok",
-                    "got it",
-                    "close",
-                    "готово",
-                    "ок",
-                    "понятно",
-                    "закрыть",
-                  ];
-                  const buttons = Array.from(
-                    postComposerDialog.querySelectorAll('button, [role="button"]'),
-                  );
-                  const doneBtn = buttons.find((b) => {
-                    const label = (
-                      b.getAttribute("aria-label") || b.innerText || ""
-                    )
-                      .toLowerCase()
-                      .trim();
-                    return doneTexts.includes(label);
-                  });
-                  if (doneBtn) {
-                    doneBtn.click();
-                  }
+              // 1. Detect Success/Pending/Blocked/Error messages (composer dialog, toasts, alerts, etc.)
+              const outcome = scanForOutcome(postComposerDialog);
+              if (outcome) {
+                if (outcome.kind === "done") {
+                  // If the message is inside a dialog, try to dismiss it.
+                  if (postComposerDialog) clickDoneLikeButtonIfPresent(postComposerDialog);
                   chrome.runtime.sendMessage({
                     action: "popupPostComplete",
                     requestId: requestId,
                     success: true,
-                    status: isPending ? "pending_approval" : "successful",
+                    status: outcome.status || "successful",
                     telemetry,
                   });
                   return;
                 }
+                // blocked/error
+                telemetry.ui_snapshots.push(
+                  await captureUiSnapshot(
+                    outcome.kind === "blocked"
+                      ? "verify_detected_blocked"
+                      : "verify_detected_error",
+                  ),
+                );
+                throw new Error(outcome.message || "Posting failed.");
               }
 
               // 2. Upload Check (only if the composer dialog is still open and media was attached)
@@ -670,21 +879,61 @@ if (window.autoPosterInjected) {
                   if (!dialogStillOpen) {
                     // Dialog closed while upload was in progress - assume success
                     await sleep(2);
+                    const finalOutcome = scanForOutcome(null);
+                    const finalStatus =
+                      finalOutcome?.kind === "done"
+                        ? finalOutcome.status
+                        : "successful";
                     chrome.runtime.sendMessage({
                       action: "popupPostComplete",
                       requestId: requestId,
                       success: true,
-                      status: "successful",
+                      status: finalStatus,
                       telemetry,
                     });
                     return;
+                  }
+
+                  const midOutcome = scanForOutcome(dialogStillOpen);
+                  if (midOutcome) {
+                    if (midOutcome.kind === "done") {
+                      clickDoneLikeButtonIfPresent(dialogStillOpen);
+                      chrome.runtime.sendMessage({
+                        action: "popupPostComplete",
+                        requestId: requestId,
+                        success: true,
+                        status: midOutcome.status || "successful",
+                        telemetry,
+                      });
+                      return;
+                    }
+                    telemetry.ui_snapshots.push(
+                      await captureUiSnapshot(
+                        midOutcome.kind === "blocked"
+                          ? "upload_detected_blocked"
+                          : "upload_detected_error",
+                      ),
+                    );
+                    throw new Error(midOutcome.message || "Posting failed.");
                   }
 
                   const stillUploading = findUploadIndicator(dialogStillOpen);
                   if (!stillUploading) {
                     // Upload done (or at least no longer showing progress indicators)
                     await sleep(4);
-                    // Assume success if no error popped up
+                    // If a pending/success toast appeared, use it; otherwise assume success.
+                    const finalOutcome = scanForOutcome(dialogStillOpen);
+                    if (finalOutcome?.kind === "done") {
+                      clickDoneLikeButtonIfPresent(dialogStillOpen);
+                      chrome.runtime.sendMessage({
+                        action: "popupPostComplete",
+                        requestId: requestId,
+                        success: true,
+                        status: finalOutcome.status || "successful",
+                        telemetry,
+                      });
+                      return;
+                    }
                     chrome.runtime.sendMessage({
                       action: "popupPostComplete",
                       requestId: requestId,
@@ -696,6 +945,9 @@ if (window.autoPosterInjected) {
                   }
                   await sleep(2);
                 }
+                telemetry.ui_snapshots.push(
+                  await captureUiSnapshot("upload_timeout"),
+                );
                 throw new Error("Media upload timed out.");
               }
 
@@ -724,25 +976,7 @@ if (window.autoPosterInjected) {
                 }
               }
 
-              // 3. Error Check
-              const errorElement = Array.from(
-                document.querySelectorAll('[role="alert"], [role="dialog"] span'),
-              ).find((el) => {
-                const txt = (el.textContent || "").toLowerCase();
-                return (
-                  txt.includes("couldn't be posted") ||
-                  txt.includes("failed to post") ||
-                  txt.includes("something went wrong") ||
-                  txt.includes("please try again")
-                );
-              });
-              if (errorElement) {
-                throw new Error(
-                  `Post failed: "${errorElement.textContent.substring(0, 100)}..."`,
-                );
-              }
-
-              // 4. Success Check (Disappearance)
+              // 3. Success Check (Disappearance)
               // If the post composer dialog is gone, we assume success.
               const postComposerDialogCheck = findPostComposerDialog();
 

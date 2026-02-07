@@ -910,24 +910,24 @@
   "status": {
     "ext_1770222172627_9l0lje": {
       "clientId": "ext_1770222172627_9l0lje",
-      "isPosting": true,
-      "currentStatus": "Posting to group 1/52: Link 1",
+      "isPosting": false,
+      "currentStatus": "Posting stopped by user.",
       "lastRun": {
-        "completedAt": "2026-02-07T20:46:07.160Z",
-        "completionStatus": "completed",
-        "failed": 0,
+        "completedAt": "2026-02-07T21:24:45.443Z",
+        "completionStatus": "stopped",
+        "failed": 51,
         "successful": 1
       },
       "latestPostLog": {
         "linkTitle": "Link 1",
-        "linkURL": "https://www.facebook.com/groups/247551395387958/",
+        "linkURL": "https://www.facebook.com/groups/100405944180365/",
         "method": "popup",
-        "postTitle": "Dubai Models",
+        "postTitle": "Dubai business 2500aed",
         "reason": null,
         "response": "successful",
-        "timestamp": "2026-02-07T20:45:08.134Z"
+        "timestamp": "2026-02-07T21:21:25.083Z"
       },
-      "updatedAt": "2026-02-07T20:49:17.990Z"
+      "updatedAt": "2026-02-07T21:37:20.414Z"
     }
   }
 }

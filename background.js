@@ -1787,6 +1787,112 @@ async function sleep(seconds) {
     }
   }
 }
+
+async function blobToDataUrl(blob) {
+  const mimeType = blob?.type || "application/octet-stream";
+  const buffer = await blob.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+
+  // Chunked conversion to avoid call stack issues on large buffers.
+  let binary = "";
+  const chunkSize = 0x2000; // 8192
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize);
+    binary += String.fromCharCode(...chunk);
+  }
+
+  return `data:${mimeType};base64,${btoa(binary)}`;
+}
+
+// Prepares media items for the Direct API posting flow.
+// Direct API currently supports images only (videos must use Popup/Classic mode).
+async function preprocessMedia(media, compressImages = true) {
+  const data =
+    typeof media === "string"
+      ? media
+      : media?.data || media?.url || media?.src || null;
+  const typeHint =
+    typeof media === "object" && media?.type
+      ? String(media.type).toLowerCase()
+      : "";
+  const mimeHint =
+    typeof media === "object" && media?.mimeType
+      ? String(media.mimeType).toLowerCase()
+      : "";
+
+  if (!data || typeof data !== "string") {
+    return { data: null, type: typeHint || "unknown" };
+  }
+
+  const lower = data.toLowerCase();
+  const isVideo =
+    typeHint === "video" ||
+    typeHint === "stored_video" ||
+    mimeHint.startsWith("video/") ||
+    lower.startsWith("data:video/");
+
+  if (isVideo) {
+    throw new Error(
+      "Direct API mode does not support video attachments. Switch posting method to Popup (Classic) or remove the video.",
+    );
+  }
+
+  if (!compressImages) {
+    return { data, type: "image" };
+  }
+
+  try {
+    const res = await fetch(data);
+    const blob = await res.blob();
+    if (!blob || !blob.size) return { data, type: "image" };
+    if (!String(blob.type || "").startsWith("image/")) return { data, type: typeHint || "unknown" };
+
+    // If the environment doesn't support image processing, keep original.
+    if (typeof createImageBitmap !== "function" || typeof OffscreenCanvas === "undefined") {
+      return { data, type: "image" };
+    }
+
+    const originalSize = blob.size;
+    const bitmap = await createImageBitmap(blob);
+
+    const maxDim = 1600;
+    let targetW = bitmap.width;
+    let targetH = bitmap.height;
+    const maxSide = Math.max(targetW, targetH);
+    if (maxSide > maxDim) {
+      const scale = maxDim / maxSide;
+      targetW = Math.max(1, Math.round(targetW * scale));
+      targetH = Math.max(1, Math.round(targetH * scale));
+    }
+
+    const canvas = new OffscreenCanvas(targetW, targetH);
+    const ctx = canvas.getContext("2d", { alpha: false });
+    if (!ctx) {
+      bitmap.close?.();
+      return { data, type: "image" };
+    }
+
+    // White background avoids black artifacts if the source had transparency.
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, targetW, targetH);
+    ctx.drawImage(bitmap, 0, 0, targetW, targetH);
+    bitmap.close?.();
+
+    const outBlob = await canvas.convertToBlob({
+      type: "image/jpeg",
+      quality: 0.85,
+    });
+
+    if (!outBlob || !outBlob.size) return { data, type: "image" };
+    if (outBlob.size >= originalSize) return { data, type: "image" };
+
+    return { data: await blobToDataUrl(outBlob), type: "image" };
+  } catch (e) {
+    console.warn("preprocessMedia failed; using original media.", e);
+    return { data, type: "image" };
+  }
+}
+
 function updatePostingStatus(message) {
   chrome.storage.local.set({ postingStatus: message }, function () {
     console.log("Posting status updated:", message);
@@ -5869,6 +5975,63 @@ function getDelayBasedOnSecurity(baseSeconds, securityLevel) {
   return Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
 }
 
+async function executeSingleDirectApiPost(
+  post,
+  groupLink,
+  fbTokens,
+  tabId,
+  settings,
+) {
+  const telemetryData = { ui_snapshots: [], errors: [] };
+
+  const logEntry = {
+    linkTitle: groupLink?.[0] || "N/A",
+    linkURL: groupLink?.[1] || "N/A",
+    postTitle: post?.title || "Untitled",
+    response: "failed",
+    reason: null,
+    timestamp: new Date().toISOString(),
+    method: "direct_api",
+  };
+
+  if (!groupLink?.[1]) {
+    logEntry.response = "skipped";
+    logEntry.reason = "Invalid group link";
+    chrome.storage.local.set({ latestPostLog: logEntry });
+    return { log: logEntry, telemetry: telemetryData };
+  }
+
+  try {
+    const result = await postToFacebookDirectApiShared(
+      {
+        text: post?.text || "",
+        images: Array.isArray(post?.mediaUrls) ? post.mediaUrls : [],
+        url: groupLink[1],
+        commentOption: settings?.commentOption,
+        firstCommentText: settings?.firstCommentText,
+      },
+      fbTokens,
+      tabId,
+    );
+
+    logEntry.response = "successful";
+    logEntry.reason = null;
+    if (result?.url) logEntry.postUrl = result.url;
+  } catch (e) {
+    const errMsg = e?.message || String(e);
+    logEntry.response = "failed";
+    logEntry.reason = errMsg;
+    telemetryData.errors.push({
+      source: "executeSingleDirectApiPost",
+      message: errMsg,
+    });
+  } finally {
+    chrome.storage.local.set({ latestPostLog: logEntry });
+  }
+
+  return { log: logEntry, telemetry: telemetryData };
+}
+
 // in background.js
 // ACTION: Replace this function to correctly return the 'wasStopped' flag.
 
@@ -5936,20 +6099,22 @@ async function handleRetryRequest(request) {
       }
 
       const groupLink = [failedLog.linkTitle, failedLog.linkURL];
-      const postWithMedia = { ...postObject, mediaUrls: [] };
-      if (postObject.images?.length > 0) {
-        for (const media of postObject.images) {
-          const processed = await preprocessMedia(
-            media,
-            originalSettings.compressImages,
-          );
-          if (processed.data) postWithMedia.mediaUrls.push(processed.data);
-        }
-      }
 
       try {
         let newLogResult;
         if (postingMethod === "directApi") {
+          const postWithMedia = { ...postObject, mediaUrls: [] };
+          if (postObject.images?.length > 0) {
+            for (const media of postObject.images) {
+              const processed = await preprocessMedia(
+                media,
+                originalSettings.compressImages,
+              );
+              if (processed && processed.data)
+                postWithMedia.mediaUrls.push(processed.data);
+            }
+          }
+
           newLogResult = await executeSingleDirectApiPost(
             postWithMedia,
             groupLink,
