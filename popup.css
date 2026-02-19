@@ -6966,6 +6966,32 @@ div[style*="border: 1px solid rgb(209, 213, 219)"]:focus-within {
   background-color: #fffbeb;
   color: #92400e;
 }
+.live-log-status.status-processing_video {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+}
+
+#selectGroupWrapper,
+#quickSelectGroupWrapper {
+  position: relative;
+  z-index: 20;
+}
+
+#selectGroupOptions,
+#quickSelectGroupOptions {
+  z-index: 5000 !important;
+  pointer-events: auto;
+}
+
+#selectGroupOptions.d-none,
+#quickSelectGroupOptions.d-none {
+  pointer-events: none;
+}
+
+#selectGroupOptions .option.option-empty {
+  cursor: pointer;
+  font-style: italic;
+}
 
 .live-log-status .spinner {
   width: 10px;

@@ -610,10 +610,7 @@ async function bridgeStartPosting(payload) {
     if (
       completionStatus === "completed" &&
       logs.length > 0 &&
-      logs.every(
-        (l) =>
-          l.response !== "successful" && l.response !== "pending_approval",
-      )
+      logs.every((l) => !isSuccessLikeStatus(l.response))
     ) {
       completionStatus = "error";
     }
@@ -648,7 +645,7 @@ async function bridgeStartPosting(payload) {
   return {
     success: completionStatus === "completed",
     result: {
-      completed: logs.filter((l) => l.response === "successful").length,
+      completed: logs.filter((l) => isSuccessLikeStatus(l.response)).length,
       failed: logs.filter((l) => l.response === "failed").length,
       skipped: logs.filter((l) => l.response === "skipped").length,
       completionStatus,
@@ -1451,11 +1448,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             if (
               completionStatus === "completed" &&
               collectedLogs.length > 0 &&
-              collectedLogs.every(
-                (l) =>
-                  l.response !== "successful" &&
-                  l.response !== "pending_approval",
-              )
+              collectedLogs.every((l) => !isSuccessLikeStatus(l.response))
             ) {
               completionStatus = "error";
             }
@@ -1584,6 +1577,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             userPrompt = `Intent: "${request.targetDescription}"\nCandidates:\n${request.domSnapshot}`;
           }
 
+          const aiConfig = await chrome.storage.local.get([
+            "aiApiKey",
+            "aiApiKeyData",
+          ]);
+          const hasAiKey =
+            (typeof aiConfig.aiApiKey === "string" &&
+              aiConfig.aiApiKey.trim().length > 0) ||
+            (typeof aiConfig.aiApiKeyData?.key === "string" &&
+              aiConfig.aiApiKeyData.key.trim().length > 0);
+          if (!hasAiKey) {
+            sendResponse({ success: false, error: "ai_disabled" });
+            break;
+          }
+
           try {
             const aiResponseStr = await callDeepSeekApi(
               userPrompt,
@@ -1603,7 +1610,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             sendResponse(responseData);
           } catch (e) {
             console.error("AI Selector Failed:", e);
-            sendResponse({ success: false, error: e.message });
+            const msg = String(e?.message || e || "").toLowerCase();
+            if (msg.includes("ai api key missing")) {
+              sendResponse({ success: false, error: "ai_disabled" });
+            } else {
+              sendResponse({ success: false, error: e.message });
+            }
           }
           break;
         case "aiGenerateCampaignStrategy":
@@ -1893,6 +1905,115 @@ async function preprocessMedia(media, compressImages = true) {
   }
 }
 
+const SUCCESS_LIKE_STATUSES = new Set([
+  "successful",
+  "pending_approval",
+  "processing_video",
+]);
+
+const NON_ACTIONABLE_REASON_CODES = new Set([
+  "group_unavailable",
+  "broken_link",
+  "join_required",
+  "group_paused",
+  "posting_restricted",
+  "not_group_page",
+]);
+
+function isSuccessLikeStatus(status) {
+  return SUCCESS_LIKE_STATUSES.has(String(status || "").toLowerCase());
+}
+
+function normalizeReasonCode(code) {
+  const normalized = String(code || "")
+    .trim()
+    .toLowerCase();
+  return normalized || null;
+}
+
+function inferReasonCodeFromMessage(errorMessage, explicitCode = null) {
+  const normalizedExplicit = normalizeReasonCode(explicitCode);
+  if (normalizedExplicit) return normalizedExplicit;
+
+  const msg = String(errorMessage || "").toLowerCase();
+  if (!msg) return null;
+
+  if (
+    msg.includes("join group") ||
+    msg.includes("request to join") ||
+    msg.includes("not a member")
+  ) {
+    return "join_required";
+  }
+  if (msg.includes("content unavailable") || msg.includes("broken link")) {
+    return "broken_link";
+  }
+  if (msg.includes("not a group page")) {
+    return "not_group_page";
+  }
+  if (msg.includes("group unavailable")) {
+    return "group_unavailable";
+  }
+  if (msg.includes("group paused")) {
+    return "group_paused";
+  }
+  if (
+    msg.includes("posting restricted") ||
+    msg.includes("permission to post") ||
+    msg.includes("cannot post") ||
+    msg.includes("can't post")
+  ) {
+    return "posting_restricted";
+  }
+
+  return null;
+}
+
+function isNonActionableReasonCode(code) {
+  return NON_ACTIONABLE_REASON_CODES.has(normalizeReasonCode(code));
+}
+
+function getPopupWatchdogTimeoutMs(post) {
+  const media = Array.isArray(post?.images) ? post.images : [];
+  if (media.length === 0) return 8 * 60 * 1000; // text only
+
+  const hasVideo = media.some((m) => {
+    const type = String(m?.type || "").toLowerCase();
+    const mime = String(m?.mimeType || "").toLowerCase();
+    return (
+      type === "video" ||
+      type === "stored_video" ||
+      mime.startsWith("video/")
+    );
+  });
+
+  return hasVideo ? 25 * 60 * 1000 : 15 * 60 * 1000;
+}
+
+async function safePreprocessMedia(
+  media,
+  compressImages = true,
+  contextLabel = "unknown",
+) {
+  try {
+    return await preprocessMedia(media, compressImages);
+  } catch (error) {
+    console.warn(
+      `[safePreprocessMedia] ${contextLabel}: preprocess failed, using original media.`,
+      error,
+    );
+    const fallbackData =
+      typeof media === "string"
+        ? media
+        : media?.data || media?.url || media?.src || null;
+    const fallbackType =
+      typeof media === "object" && media?.type
+        ? String(media.type).toLowerCase()
+        : "unknown";
+    return { data: fallbackData, type: fallbackType };
+  }
+}
+
 function updatePostingStatus(message) {
   chrome.storage.local.set({ postingStatus: message }, function () {
     console.log("Posting status updated:", message);
@@ -1920,9 +2041,8 @@ async function finalizePosting(
 ) {
   const logsToSave = Array.isArray(finalLogs) ? finalLogs : [];
 
-  const successful = logsToSave.filter(
-    (log) =>
-      log.response === "successful" || log.response === "pending_approval",
+  const successful = logsToSave.filter((log) =>
+    isSuccessLikeStatus(log.response),
   ).length;
   const failedOrSkipped = logsToSave.length - successful;
 
@@ -2965,16 +3085,9 @@ async function savePostingHistory(completedPosts, postsInfo) {
     timestamp: new Date().toISOString(),
     postsCompleted: logs,
     summary: {
-      successful: logs.filter(
-        (post) =>
-          post.response === "successful" ||
-          post.response === "pending_approval",
-      ).length,
-      failed: logs.filter(
-        (post) =>
-          post.response !== "successful" &&
-          post.response !== "pending_approval",
-      ).length,
+      successful: logs.filter((post) => isSuccessLikeStatus(post.response))
+        .length,
+      failed: logs.filter((post) => !isSuccessLikeStatus(post.response)).length,
       completedAt: new Date().toISOString(),
     },
     // *** FIX: Ensure postsInfo (which contains telemetry) is saved correctly ***
@@ -3889,9 +4002,10 @@ async function processPostsDirectApi(selectedPosts, group, settings) {
         const newPost = { ...post, mediaUrls: [] };
         if (post.images?.length > 0) {
           for (const media of post.images) {
-            const processed = await preprocessMedia(
+            const processed = await safePreprocessMedia(
               media,
               settings.compressImages,
+              `processPostsDirectApi:${post.title || "untitled"}`,
             );
             if (processed && processed.data)
               newPost.mediaUrls.push(processed.data);
@@ -3946,6 +4060,7 @@ async function processPostsDirectApi(selectedPosts, group, settings) {
         linkTitle: groupLinkTitle,
         linkURL: groupLinkURL || "N/A",
         postTitle: currentPost.title || "Untitled Post",
+        reasonCode: null,
         timestamp: new Date().toISOString(),
       };
 
@@ -4038,10 +4153,25 @@ async function processPostsDirectApi(selectedPosts, group, settings) {
             groupLinkURL,
             settings,
           );
-          logEntry.response = fallbackResult.success ? "successful" : "failed";
+          const fallbackReasonCode = inferReasonCodeFromMessage(
+            fallbackResult.error,
+            fallbackResult.reasonCode,
+          );
+          const fallbackStatus =
+            fallbackResult.status ||
+            (fallbackResult.success
+              ? "successful"
+              : isNonActionableReasonCode(fallbackReasonCode)
+                ? "skipped"
+                : "failed");
+          logEntry.response = fallbackStatus;
+          logEntry.reasonCode = fallbackReasonCode;
           logEntry.method = "popup_fallback";
           logEntry.reason = fallbackResult.success
-            ? `Fallback successful after Direct API failed: ${directApiError.message}`
+            ? fallbackStatus === "skipped"
+              ? fallbackResult.error ||
+                `Skipped by popup fallback after Direct API failed: ${directApiError.message}`
+              : `Fallback successful after Direct API failed: ${directApiError.message}`
             : `Direct API and Fallback both failed. Fallback error: ${fallbackResult.error}`;
           if (fallbackResult.telemetry)
             telemetry.ui_snapshots.push(
@@ -4071,10 +4201,8 @@ async function processPostsDirectApi(selectedPosts, group, settings) {
 
       const isLastOverallPost = i + 1 === totalOperations;
 
-      // 1. Pending is now treated as success for timing purposes
-      const consideredSuccessful =
-        logEntry.response === "successful" ||
-        logEntry.response === "pending_approval";
+      // Pending approval and processing_video are success-like for pacing decisions.
+      const consideredSuccessful = isSuccessLikeStatus(logEntry.response);
 
       // 2. Check if we should wait (Success OR "Delay on Failure" is checked)
       const shouldWaitFullDelay =
@@ -4929,9 +5057,10 @@ async function handleFallbackPosting(
     const result = await responsePromise;
 
     completedCallback({
-      success: true, // If promise resolved, it was successful.
-      status: result.status,
-      error: null,
+      success: !!result.success,
+      status: result.status || (result.success ? "successful" : "failed"),
+      error: result.error || null,
+      reasonCode: normalizeReasonCode(result.reasonCode),
     });
   } catch (error) {
     console.error("[Fallback] Error during fallback posting:", error);
@@ -5463,6 +5592,7 @@ async function executeSinglePopupOrAndroidPost(
     postTitle: post.title || "Untitled",
     response: "skipped",
     reason: "Execution timed out (Watchdog)", // Default reason
+    reasonCode: null,
     timestamp: new Date().toISOString(),
     method: "popup",
   };
@@ -5505,9 +5635,9 @@ async function executeSinglePopupOrAndroidPost(
   let tabClosedListener = null;
 
   // --- THE WATCHDOG TIMER ---
-  // We define a maximum time allow for ONE post (e.g., 4 minutes).
-  // If the content script gets stuck, this timer saves the day.
-  const HARD_TIMEOUT_MS = 600000; // 10 Minutes
+  // Timeout is media-aware: text-only < image < video.
+  // This avoids killing legitimate long-running video uploads.
+  const HARD_TIMEOUT_MS = getPopupWatchdogTimeoutMs(post);
 
   try {
     // We wrap the logic in a Promise.race
@@ -5596,11 +5726,29 @@ async function executeSinglePopupOrAndroidPost(
     }
 
     if (result.success) {
-      logEntry.response = result.status;
-      logEntry.reason = null;
+      logEntry.response = result.status || "successful";
+      logEntry.reasonCode = normalizeReasonCode(result.reasonCode);
+      if (logEntry.response === "skipped" || logEntry.response === "failed") {
+        logEntry.reason = result.error || "Skipped";
+      } else {
+        logEntry.reason = null;
+      }
     } else {
-      logEntry.response = "failed";
+      const reasonCode = inferReasonCodeFromMessage(
+        result.error,
+        result.reasonCode,
+      );
+      logEntry.reasonCode = reasonCode;
+      if (isNonActionableReasonCode(reasonCode)) {
+        logEntry.response = "skipped";
+      } else {
+        logEntry.response = "failed";
+      }
       logEntry.reason = result.error || "Unknown error";
+    }
+
+    if (!logEntry.reasonCode && logEntry.reason) {
+      logEntry.reasonCode = inferReasonCodeFromMessage(logEntry.reason);
     }
   } catch (e) {
     // --- ERROR HANDLING & RECOVERY ---
@@ -5619,16 +5767,25 @@ async function executeSinglePopupOrAndroidPost(
       console.warn(`[Watchdog] Posting window closed: ${errMsg}`);
       logEntry.response = "skipped";
       logEntry.reason = "Window closed";
+      logEntry.reasonCode = "window_closed";
     } else if (lowerMsg.includes("not a group page")) {
       logEntry.response = "skipped";
       logEntry.reason = errMsg;
+      logEntry.reasonCode = "not_group_page";
     } else {
-      console.error(`[Watchdog] Error in single post execution: ${errMsg}`);
+      const reasonCode = inferReasonCodeFromMessage(errMsg);
+      logEntry.reasonCode = reasonCode;
+      if (isNonActionableReasonCode(reasonCode)) {
+        logEntry.response = "skipped";
+        logEntry.reason = errMsg;
+      } else {
+        console.error(`[Watchdog] Error in single post execution: ${errMsg}`);
 
-      // Mark as failed but DO NOT throw.
-      // This allows the main loop (in handlePostingRequest) to continue to the next iteration.
-      logEntry.response = "failed";
-      logEntry.reason = errMsg;
+        // Mark as failed but DO NOT throw.
+        // This allows the main loop (in handlePostingRequest) to continue to the next iteration.
+        logEntry.response = "failed";
+        logEntry.reason = errMsg;
+      }
 
       if (errMsg.includes("Watchdog")) {
         // Special log for debugging
@@ -5657,9 +5814,7 @@ async function executeSinglePopupOrAndroidPost(
   }
 
   // Delay Logic (same as before)
-  const consideredSuccessful =
-    logEntry.response === "successful" ||
-    logEntry.response === "pending_approval";
+  const consideredSuccessful = isSuccessLikeStatus(logEntry.response);
   const shouldWaitFullDelay =
     consideredSuccessful || settings.delayAfterFailure === true;
   const isLast = currentGroupIndex + 1 === totalGroups;
@@ -5990,6 +6145,7 @@ async function executeSingleDirectApiPost(
     postTitle: post?.title || "Untitled",
     response: "failed",
     reason: null,
+    reasonCode: null,
     timestamp: new Date().toISOString(),
     method: "direct_api",
   };
@@ -6019,7 +6175,11 @@ async function executeSingleDirectApiPost(
     if (result?.url) logEntry.postUrl = result.url;
   } catch (e) {
     const errMsg = e?.message || String(e);
-    logEntry.response = "failed";
+    const reasonCode = inferReasonCodeFromMessage(errMsg);
+    logEntry.reasonCode = reasonCode;
+    logEntry.response = isNonActionableReasonCode(reasonCode)
+      ? "skipped"
+      : "failed";
     logEntry.reason = errMsg;
     telemetryData.errors.push({
       source: "executeSingleDirectApiPost",
@@ -6106,9 +6266,10 @@ async function handleRetryRequest(request) {
           const postWithMedia = { ...postObject, mediaUrls: [] };
           if (postObject.images?.length > 0) {
             for (const media of postObject.images) {
-              const processed = await preprocessMedia(
+              const processed = await safePreprocessMedia(
                 media,
                 originalSettings.compressImages,
+                `handleRetryRequest:${postTitleToFind || "untitled"}`,
               );
               if (processed && processed.data)
                 postWithMedia.mediaUrls.push(processed.data);
@@ -6200,7 +6361,7 @@ async function handleRetryRequest(request) {
 }
 
 function handlePopupResponse(request) {
-  const { requestId, success, error, status, telemetry } = request;
+  const { requestId, success, error, status, reasonCode, telemetry } = request;
 
   if (popupResponseQueue.has(requestId)) {
     const promise = popupResponseQueue.get(requestId);
@@ -6216,6 +6377,7 @@ function handlePopupResponse(request) {
       success: success,
       status: status || (success ? "successful" : "failed"),
       error: error || null,
+      reasonCode: normalizeReasonCode(reasonCode),
       telemetry: telemetry || {},
     });
 

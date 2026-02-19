@@ -350,12 +350,12 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
   }
 
   // Handle Data Refreshes for other pages (when not posting)
-  if (
-    changes.groups &&
-    !document.getElementById("groupsPage").classList.contains("d-none")
-  ) {
+  if (changes.groups) {
     groups = changes.groups.newValue || [];
-    LoadGroups();
+    populateSelectGroupOptions();
+    if (!document.getElementById("groupsPage").classList.contains("d-none")) {
+      LoadGroups();
+    }
   }
   if (
     changes.postingHistory &&
@@ -2833,22 +2833,66 @@ if (selectPostInput && selectPostOptions) {
     }
   });
 }
-// Toggle dropdown visibility on input click
-if (selectGroupInput) {
-  selectGroupInput.addEventListener("click", (event) => {
-    // Prevent global document click handlers from immediately closing the dropdown.
+function getSelectGroupOptionsEl() {
+  if (!selectGroupOptions || !document.contains(selectGroupOptions)) {
+    selectGroupOptions = document.getElementById("selectGroupOptions");
+  }
+  return selectGroupOptions;
+}
+
+function openSelectGroupDropdown() {
+  const optionsEl = getSelectGroupOptionsEl();
+  if (!optionsEl) return;
+  optionsEl.classList.remove("d-none");
+  populateSelectGroupOptions();
+}
+
+function closeSelectGroupDropdown() {
+  const optionsEl = getSelectGroupOptionsEl();
+  if (!optionsEl) return;
+  optionsEl.classList.add("d-none");
+}
+
+function toggleSelectGroupDropdown() {
+  const optionsEl = getSelectGroupOptionsEl();
+  if (!optionsEl) return;
+  const isHidden = optionsEl.classList.contains("d-none");
+  if (isHidden) {
+    openSelectGroupDropdown();
+  } else {
+    closeSelectGroupDropdown();
+  }
+}
+
+// Toggle dropdown visibility on wrapper/input interaction.
+if (selectGroupWrapper) {
+  let pointerFocus = false;
+
+  selectGroupWrapper.addEventListener("mousedown", () => {
+    pointerFocus = true;
+    setTimeout(() => {
+      pointerFocus = false;
+    }, 0);
+  });
+
+  selectGroupWrapper.addEventListener("click", (event) => {
     event.stopPropagation();
+    toggleSelectGroupDropdown();
+  });
 
-    // Re-resolve in case the options container was replaced (we clone it when repopulating).
-    if (!selectGroupOptions || !document.contains(selectGroupOptions)) {
-      selectGroupOptions = document.getElementById("selectGroupOptions");
-    }
-    if (!selectGroupOptions) return;
+  // Keyboard accessibility for Enter / Space.
+  selectGroupWrapper.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    event.stopPropagation();
+    toggleSelectGroupDropdown();
+  });
 
-    if (selectGroupOptions.classList.contains("d-none")) {
-      selectGroupOptions.classList.remove("d-none");
-    } else {
-      selectGroupOptions.classList.add("d-none");
+  // Focus-open for keyboard navigation (without fighting mouse click toggle).
+  selectGroupWrapper.addEventListener("focusin", (event) => {
+    if (pointerFocus) return;
+    if (event.target === selectGroupInput || selectGroupWrapper.contains(event.target)) {
+      openSelectGroupDropdown();
     }
   });
 }
@@ -2860,12 +2904,9 @@ document.addEventListener("click", (event) => {
     }
   }
   if (selectGroupWrapper) {
-    // Options container can be replaced during re-render; always resolve before acting.
-    if (!selectGroupOptions || !document.contains(selectGroupOptions)) {
-      selectGroupOptions = document.getElementById("selectGroupOptions");
-    }
-    if (selectGroupOptions && !selectGroupWrapper.contains(event.target)) {
-      selectGroupOptions.classList.add("d-none");
+    const optionsEl = getSelectGroupOptionsEl();
+    if (optionsEl && !selectGroupWrapper.contains(event.target)) {
+      closeSelectGroupDropdown();
     }
   }
 });
@@ -4017,6 +4058,44 @@ function addGroupInput(group) {
   }
 }
 
+const NON_RETRYABLE_REASON_CODES = new Set([
+  "group_unavailable",
+  "broken_link",
+  "join_required",
+  "group_paused",
+  "posting_restricted",
+  "not_group_page",
+]);
+
+function isSuccessLikeResponseStatus(status) {
+  return (
+    status === "successful" ||
+    status === "pending_approval" ||
+    status === "processing_video"
+  );
+}
+
+function isRetryableLogEntry(log) {
+  if (!log || isSuccessLikeResponseStatus(log.response)) return false;
+
+  const reasonCode = String(log.reasonCode || "")
+    .trim()
+    .toLowerCase();
+  if (NON_RETRYABLE_REASON_CODES.has(reasonCode)) return false;
+
+  const reason = String(log.reason || "").toLowerCase();
+  if (
+    reason.includes("join group") ||
+    reason.includes("request to join") ||
+    reason.includes("not a group page") ||
+    reason.includes("content unavailable")
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
 function MapLogsUL(postsCompleted, targetContainer, historyEntry = null) {
   const logsContainer = targetContainer;
   currentLogData = { postsCompleted, historyEntry };
@@ -4024,8 +4103,7 @@ function MapLogsUL(postsCompleted, targetContainer, historyEntry = null) {
   logsContainer.innerHTML = "";
 
   const successfulPosts = postsCompleted.filter(
-    (post) =>
-      post.response === "successful" || post.response === "pending_approval",
+    (post) => isSuccessLikeResponseStatus(post.response),
   ).length;
   const failedOrSkippedPosts = postsCompleted.length - successfulPosts;
 
@@ -4064,10 +4142,7 @@ function MapLogsUL(postsCompleted, targetContainer, historyEntry = null) {
 
   let canRetry = false;
   if (failedOrSkippedPosts > 0 && historyEntry) {
-    const failedItems = postsCompleted.filter(
-      (post) =>
-        post.response !== "successful" && post.response !== "pending_approval",
-    );
+    const failedItems = postsCompleted.filter((post) => isRetryableLogEntry(post));
     canRetry = failedItems.some((log) => {
       const cleanTitle = (log.postTitle || "").replace(
         /\s*\(AI Variation \d+\)$/,
@@ -4125,12 +4200,12 @@ function MapLogsUL(postsCompleted, targetContainer, historyEntry = null) {
 
     let filteredPosts = postsCompleted;
     if (filter === "successful") {
-      filteredPosts = postsCompleted.filter(
-        (p) => p.response === "successful" || p.response === "pending_approval",
+      filteredPosts = postsCompleted.filter((p) =>
+        isSuccessLikeResponseStatus(p.response),
       );
     } else if (filter === "failed") {
       filteredPosts = postsCompleted.filter(
-        (p) => p.response !== "successful" && p.response !== "pending_approval",
+        (p) => !isSuccessLikeResponseStatus(p.response),
       );
     }
 
@@ -4165,6 +4240,11 @@ function MapLogsUL(postsCompleted, targetContainer, historyEntry = null) {
               statusIcon = "";
               break;
             case "pending_approval":
+              status = I18n.t("statusPending");
+              statusClass = "pending";
+              statusIcon = "";
+              break;
+            case "processing_video":
               status = I18n.t("statusPending");
               statusClass = "pending";
               statusIcon = "";
@@ -4513,14 +4593,13 @@ function populateSelectGroupOptions() {
     groups = Array.isArray(result.groups) ? result.groups : [];
 
     // Re-fetch reference in case DOM changed
-    selectGroupOptions = document.getElementById("selectGroupOptions");
+    selectGroupOptions =
+      typeof getSelectGroupOptionsEl === "function"
+        ? getSelectGroupOptionsEl()
+        : document.getElementById("selectGroupOptions");
     if (!selectGroupOptions) return;
 
     selectGroupOptions.innerHTML = "";
-    // Cloning to remove old event listeners is a good safety practice
-    const newOptions = selectGroupOptions.cloneNode(true);
-    selectGroupOptions.replaceWith(newOptions);
-    selectGroupOptions = newOptions;
 
     // Keep existing selections only if they still point at valid indices.
     selectedGroups = (Array.isArray(selectedGroups) ? selectedGroups : [])
@@ -4536,12 +4615,14 @@ function populateSelectGroupOptions() {
     if (groups.length === 0) {
       // Make the dropdown visibly "work" even if empty, otherwise it feels unclickable.
       const emptyDiv = document.createElement("div");
-      emptyDiv.className = "option";
-      emptyDiv.style.cursor = "default";
+      emptyDiv.className = "option option-empty";
+      emptyDiv.setAttribute("data-index", "-1");
       emptyDiv.style.color = "#6b7280";
       emptyDiv.textContent =
         "No group collections found. Go to Templates -> Group Collections to add one.";
       selectGroupOptions.appendChild(emptyDiv);
+      enableStartPostingIfReady();
+      updateSchedulerFeatureVisibility();
       return;
     }
 
@@ -4582,40 +4663,68 @@ function populateSelectGroupOptions() {
       selectGroupOptions.appendChild(optionDiv);
     });
 
-    // Event Delegation for Selection
-    selectGroupOptions.addEventListener("click", (event) => {
-      const optionDiv = event.target.closest(".option");
-      if (!optionDiv) return;
+    if (selectGroupOptions.dataset.boundSelection !== "true") {
+      selectGroupOptions.addEventListener("click", (event) => {
+        const optionDiv = event.target.closest(".option");
+        if (!optionDiv || !selectGroupOptions.contains(optionDiv)) return;
 
-      const groupIndexRaw = optionDiv.getAttribute("data-index");
-      if (groupIndexRaw === null) return; // Ignore placeholder rows
-      const groupIndex = parseInt(groupIndexRaw, 10);
-      if (isNaN(groupIndex) || !groups[groupIndex]) return;
+        const groupIndexRaw = optionDiv.getAttribute("data-index");
+        if (groupIndexRaw === "-1") {
+          showCustomModal(
+            "No Collections",
+            "No group collections found. Open Templates -> Group Collections and add at least one collection.",
+          );
+          return;
+        }
 
-      if (selectedGroups.some((g) => g.index === groupIndex)) {
-        // Deselect
-        selectedGroups = selectedGroups.filter((g) => g.index !== groupIndex);
-        removeSelectedGroup(groupIndex);
-        optionDiv.style.backgroundColor = "";
-      } else {
-        // Select
-        selectedGroups.push({ index: groupIndex, group: groups[groupIndex] });
-        addSelectedGroup(groupIndex);
-        optionDiv.style.backgroundColor = "#f0f0f0";
-      }
+        if (groupIndexRaw === null) return;
+        const groupIndex = parseInt(groupIndexRaw, 10);
+        if (isNaN(groupIndex) || !groups[groupIndex]) return;
 
-      // *** FIX: Call BOTH update functions ***
-      enableStartPostingIfReady();
-      updateSchedulerFeatureVisibility();
-    });
+        if (selectedGroups.some((g) => g.index === groupIndex)) {
+          selectedGroups = selectedGroups.filter((g) => g.index !== groupIndex);
+          removeSelectedGroup(groupIndex);
+        } else {
+          selectedGroups.push({ index: groupIndex, group: groups[groupIndex] });
+          addSelectedGroup(groupIndex);
+        }
+
+        syncSelectGroupOptionHighlights();
+        enableStartPostingIfReady();
+        updateSchedulerFeatureVisibility();
+      });
+      selectGroupOptions.dataset.boundSelection = "true";
+    }
 
     // Restore visual state for already selected items
-    selectedGroups.forEach((g) => {
-      const optionDiv = selectGroupOptions.querySelector(
-        `[data-index="${g.index}"]`,
-      );
-      if (optionDiv) optionDiv.style.backgroundColor = "#f0f0f0";
-    });
+    syncSelectGroupOptionHighlights();
+  });
+}
+
+function syncSelectGroupOptionHighlights() {
+  const optionsEl =
+    typeof getSelectGroupOptionsEl === "function"
+      ? getSelectGroupOptionsEl()
+      : document.getElementById("selectGroupOptions");
+  if (!optionsEl) return;
+
+  const selectedSet = new Set(
+    (Array.isArray(selectedGroups) ? selectedGroups : [])
+      .map((g) => g.index)
+      .filter((idx) => Number.isInteger(idx)),
+  );
+
+  const options = optionsEl.querySelectorAll(".option[data-index]");
+  options.forEach((option) => {
+    const raw = option.getAttribute("data-index");
+    const index = parseInt(raw, 10);
+    if (Number.isInteger(index) && selectedSet.has(index)) {
+      option.style.backgroundColor = "#f0f0f0";
+      option.classList.add("selected");
+    } else {
+      option.style.backgroundColor = "";
+      option.classList.remove("selected");
+    }
   });
 }
 
@@ -4632,13 +4741,7 @@ function addSelectedGroup(groupIndex) {
     selectedGroups = selectedGroups.filter((g) => g.index !== groupIndex);
     groupItem.remove();
     enableStartPostingIfReady();
-    // Update the option to be deselected in the dropdown list
-    const optionDiv = selectGroupOptions.querySelector(
-      `[data-index="${groupIndex}"]`,
-    );
-    if (optionDiv) {
-      optionDiv.style.backgroundColor = ""; // Reset background color
-    }
+    syncSelectGroupOptionHighlights();
   });
   // console.log(selectedGroups);
   groupItem.appendChild(removeTag);
@@ -4656,6 +4759,7 @@ function removeSelectedGroup(groupIndex) {
       break;
     }
   }
+  syncSelectGroupOptionHighlights();
   updateSchedulerFeatureVisibility();
 }
 
@@ -4684,14 +4788,7 @@ function clearSelectedGroups() {
     selectedGroupsContainer.innerHTML = ""; // Clear all selected groups
   }
 
-  const selectGroupOptions = document.getElementById("selectGroupOptions");
-  if (selectGroupOptions) {
-    // Reset the dropdown options' styles
-    const options = selectGroupOptions.querySelectorAll(".option");
-    options.forEach((option) => {
-      option.style.backgroundColor = ""; // Reset background color
-    });
-  }
+  syncSelectGroupOptionHighlights();
 }
 
 // in popup.js
@@ -8557,10 +8654,17 @@ function savePostingHistory(completedPosts, postsInfo) {
     postsCompleted: completedPosts,
     summary: {
       successful: completedPosts.filter(
-        (post) => post.response === "successful",
+        (post) =>
+          post.response === "successful" ||
+          post.response === "pending_approval" ||
+          post.response === "processing_video",
       ).length,
-      failed: completedPosts.filter((post) => post.response === "failed")
-        .length,
+      failed: completedPosts.filter(
+        (post) =>
+          post.response !== "successful" &&
+          post.response !== "pending_approval" &&
+          post.response !== "processing_video",
+      ).length,
       completedAt: timestamp,
     },
     postsInfo: postsInfo || {}, // Store additional info about the posts
@@ -11883,9 +11987,8 @@ function handleRetryClick(historyId) {
     return;
   }
 
-  const failedLogs = historyEntry.postsCompleted.filter(
-    (log) =>
-      log.response !== "successful" && log.response !== "pending_approval",
+  const failedLogs = historyEntry.postsCompleted.filter((log) =>
+    isRetryableLogEntry(log),
   );
   const originalSettings = historyEntry.postsInfo.settings || {};
 
@@ -13717,6 +13820,11 @@ function renderLiveLog(logEntries) {
           "statusPending",
         )}</span></span>`;
         break;
+      case "processing_video":
+        statusHtml = `<span class="live-log-status status-processing_video"><i class="fa fa-video-camera"></i><span>${I18n.t(
+          "statusPending",
+        )}</span></span>`;
+        break;
       case "failed":
         // We keep entry.reason as is because it comes from the background/content script logic
         // and might contain technical details that are hard to localize dynamically without a map.
@@ -14967,6 +15075,7 @@ function initHierarchicalNav() {
     hideAllPages();
     if (schedulerBtn.classList.contains("active")) {
       document.getElementById("SchedulerPage")?.classList.remove("d-none");
+      populateSelectGroupOptions();
     } else {
       document.getElementById("quickPostPage")?.classList.remove("d-none");
     }
@@ -15072,6 +15181,7 @@ function initHierarchicalNav() {
       updateSwitcherVisuals(postTrack, quickPostBtn, schedulerBtn, "scheduler");
       hideAllPages();
       document.getElementById("SchedulerPage")?.classList.remove("d-none");
+      populateSelectGroupOptions();
     });
   }
 

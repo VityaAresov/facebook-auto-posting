@@ -309,8 +309,11 @@ if (window.autoPosterInjected) {
 
             // 1. Dead Page Check
             const pageStatus = checkPageStatus();
-            if (pageStatus.status === "broken")
-              throw new Error(pageStatus.reason);
+            if (pageStatus.status === "broken") {
+              const pageErr = new Error(pageStatus.reason);
+              if (pageStatus.reasonCode) pageErr.reasonCode = pageStatus.reasonCode;
+              throw pageErr;
+            }
 
             // 2. Load Data
             const result = await new Promise((r) =>
@@ -337,6 +340,22 @@ if (window.autoPosterInjected) {
                 .replace(/\s+/g, " ")
                 .trim();
 
+            const SKIPPABLE_REASON_CODES = new Set([
+              "group_unavailable",
+              "broken_link",
+              "join_required",
+              "group_paused",
+              "posting_restricted",
+              "not_group_page",
+            ]);
+
+            const makeCodedError = (message, reasonCode = null, status = null) => {
+              const err = new Error(message || "Unknown posting error");
+              if (reasonCode) err.reasonCode = reasonCode;
+              if (status) err.status = status;
+              return err;
+            };
+
             const getVisibleElementText = (el) => {
               if (!el) return "";
               try {
@@ -352,6 +371,23 @@ if (window.autoPosterInjected) {
               );
             };
 
+            const sendCompletion = ({
+              success,
+              status,
+              error = null,
+              reasonCode = null,
+            }) => {
+              chrome.runtime.sendMessage({
+                action: "popupPostComplete",
+                requestId,
+                success: !!success,
+                status: status || (success ? "successful" : "failed"),
+                error: error || null,
+                reasonCode: reasonCode || null,
+                telemetry,
+              });
+            };
+
             const detectJoinGroupRequired = () => {
               // If user isn't a member, FB usually shows a visible "Join group" button and posting can't proceed.
               try {
@@ -360,6 +396,7 @@ if (window.autoPosterInjected) {
                   "join group",
                   "request to join",
                   "request membership",
+                  "become a member",
                   "вступить",
                   "запрос на вступление",
                   "подать заявку",
@@ -375,11 +412,95 @@ if (window.autoPosterInjected) {
                   return joinPatterns.some((p) => txt.includes(p));
                 });
                 if (joinBtn) {
-                  return "Cannot post: Join group required (you are not a member).";
+                  return {
+                    reason:
+                      "Cannot post: Join group required (you are not a member).",
+                    reasonCode: "join_required",
+                  };
                 }
               } catch (e) {}
               return null;
             };
+
+            const hasVisibleComposerCandidate = () => {
+              const editors = Array.from(
+                document.querySelectorAll('[contenteditable="true"]'),
+              );
+              return editors.some((el) => {
+                if (!isElementVisible(el)) return false;
+                const role = (el.getAttribute("role") || "").toLowerCase();
+                const label = normalizeUiText(
+                  el.getAttribute("aria-label") ||
+                    el.getAttribute("aria-placeholder") ||
+                    "",
+                );
+                if (role === "combobox") return false;
+                if (label.includes("search") || label.includes("comment"))
+                  return false;
+                const rect = el.getBoundingClientRect();
+                return rect.width >= 120 && rect.height >= 20;
+              });
+            };
+
+            const resolveBuySellPostTypeChooser = async () => {
+              const chooserDialogs = Array.from(
+                document.querySelectorAll('div[role="dialog"]'),
+              ).filter((d) => isElementVisible(d));
+              if (chooserDialogs.length === 0) return false;
+
+              const chooserDialog = chooserDialogs[chooserDialogs.length - 1];
+              const chooserText = normalizeUiText(
+                chooserDialog.innerText || chooserDialog.textContent || "",
+              );
+              const likelyChooser =
+                chooserText.includes("what are you selling") ||
+                chooserText.includes("choose post type") ||
+                chooserText.includes("sell something") ||
+                chooserText.includes("discussion") ||
+                chooserText.includes("обсуждение");
+
+              if (!likelyChooser) return false;
+
+              const discussionPatterns = [
+                "discussion",
+                "post",
+                "create post",
+                "обсуждение",
+                "публикац",
+              ];
+              const disallowedPatterns = [
+                "sell",
+                "item for sale",
+                "marketplace",
+                "list item",
+                "продать",
+                "на продажу",
+              ];
+
+              const candidates = Array.from(
+                chooserDialog.querySelectorAll(
+                  'button, div[role="button"], a[role="button"]',
+                ),
+              ).filter((el) => isElementVisible(el));
+
+              const discussionBtn = candidates.find((btn) => {
+                const txt = getVisibleElementText(btn);
+                if (!txt) return false;
+                if (disallowedPatterns.some((p) => txt.includes(p))) return false;
+                return discussionPatterns.some((p) => txt.includes(p));
+              });
+
+              if (!discussionBtn) return false;
+
+              await simulateDeepClick(discussionBtn);
+              await sleep(1.2);
+              return true;
+            };
+
+            const joinGate = detectJoinGroupRequired();
+            if (joinGate) {
+              throw makeCodedError(joinGate.reason, joinGate.reasonCode);
+            }
 
             // --- 3. OPEN MODAL ---
             let modalIsOpen = false;
@@ -389,7 +510,7 @@ if (window.autoPosterInjected) {
               openAttempts++;
               console.log(`[Posting] Opening Modal - Attempt ${openAttempts}`);
 
-              let modalButton = await findWithSmartCache(
+              const modalButton = await findWithSmartCache(
                 "learned_open_modal_btn",
                 findRobustPostModalButton,
                 "The button to create a new post.",
@@ -399,31 +520,45 @@ if (window.autoPosterInjected) {
                 await simulateDeepClick(modalButton);
                 writeInfo(I18n.t("overlayOpenModal"));
 
-                 let checkCount = 0;
-                 // Give FB time to hydrate the modal. Also require a real editor inside the dialog,
-                 // not just any random dialog (cookie prompts, upsells, etc.).
-                 while (checkCount < 12) {
-                   await sleep(1);
-                   const dialog = document.querySelector('div[role="dialog"]');
-                   const editorInDialog = document.querySelector(
-                     'div[role="dialog"] [contenteditable="true"]',
-                   );
-                   if (dialog && editorInDialog) {
-                     modalIsOpen = true;
-                     break;
-                   }
-                   checkCount++;
-                 }
-               }
-             }
+                let checkCount = 0;
+                // Give FB time to hydrate the modal. Do not require strict dialog ancestry,
+                // because some FB variants render composer/editor outside classic dialog shells.
+                while (checkCount < 14) {
+                  await sleep(1);
+
+                  if (hasVisibleComposerCandidate()) {
+                    modalIsOpen = true;
+                    break;
+                  }
+
+                  // Buy/Sell groups can show a post-type chooser before the real editor.
+                  // Resolve it and continue waiting for composer hydration.
+                  await resolveBuySellPostTypeChooser();
+                  checkCount++;
+                }
+              }
+            }
 
             if (!modalIsOpen) {
               telemetry.ui_snapshots.push(
                 await captureUiSnapshot("modal_open_fail"),
               );
               const joinReason = detectJoinGroupRequired();
-              throw new Error(
-                joinReason || "Failed to open 'Create Post' dialog.",
+              if (joinReason) {
+                throw makeCodedError(joinReason.reason, joinReason.reasonCode);
+              }
+
+              const refreshedStatus = checkPageStatus();
+              if (refreshedStatus.status === "broken") {
+                throw makeCodedError(
+                  refreshedStatus.reason,
+                  refreshedStatus.reasonCode || "broken_link",
+                );
+              }
+
+              throw makeCodedError(
+                "Failed to open 'Create Post' dialog.",
+                null,
               );
             }
 
@@ -571,6 +706,9 @@ if (window.autoPosterInjected) {
               : 50 * 1000;
             let hasActivatedTab = false;
             let hasAttemptedResubmit = false;
+            let sawUploadEvidence = false;
+            let sawPendingApprovalHint = false;
+            let sawBlockingOrErrorHint = false;
 
             const findPostComposerDialog = () => {
               // Fast path (legacy, English UI)
@@ -775,7 +913,13 @@ if (window.autoPosterInjected) {
             const scanForOutcome = (dialogEl = null) => {
               // A very common root cause for "modal open fail" or "verify timeout" is not being a group member.
               const joinReason = detectJoinGroupRequired();
-              if (joinReason) return { kind: "blocked", message: joinReason };
+              if (joinReason) {
+                return {
+                  kind: "blocked",
+                  message: joinReason.reason,
+                  reasonCode: joinReason.reasonCode,
+                };
+              }
 
               const candidates = [];
               if (dialogEl) candidates.push(dialogEl);
@@ -804,21 +948,41 @@ if (window.autoPosterInjected) {
                 if (!txt) continue;
 
                 if (blockedPatterns.some((p) => txt.includes(p))) {
+                  const joinBlock =
+                    txt.includes("join group") ||
+                    txt.includes("request to join") ||
+                    txt.includes("you must join") ||
+                    txt.includes("must join") ||
+                    txt.includes("only members can post") ||
+                    txt.includes("вступить") ||
+                    txt.includes("запрос на вступление");
                   return {
                     kind: "blocked",
                     message: `Posting restricted/blocked: "${textSnippet(txt)}"`,
+                    reasonCode: joinBlock ? "join_required" : "posting_restricted",
                   };
                 }
                 if (pendingPatterns.some((p) => txt.includes(p))) {
-                  return { kind: "done", status: "pending_approval", dialog: el };
+                  return {
+                    kind: "done",
+                    status: "pending_approval",
+                    reasonCode: "pending_approval",
+                    dialog: el,
+                  };
                 }
                 if (successPatterns.some((p) => txt.includes(p))) {
-                  return { kind: "done", status: "successful", dialog: el };
+                  return {
+                    kind: "done",
+                    status: "successful",
+                    reasonCode: null,
+                    dialog: el,
+                  };
                 }
                 if (errorPatterns.some((p) => txt.includes(p))) {
                   return {
                     kind: "error",
                     message: `Post failed: "${textSnippet(txt)}"`,
+                    reasonCode: "failed_unknown",
                   };
                 }
               }
@@ -842,18 +1006,20 @@ if (window.autoPosterInjected) {
               const outcome = scanForOutcome(postComposerDialog);
               if (outcome) {
                 if (outcome.kind === "done") {
+                  if (outcome.status === "pending_approval") {
+                    sawPendingApprovalHint = true;
+                  }
                   // If the message is inside a dialog, try to dismiss it.
                   if (postComposerDialog) clickDoneLikeButtonIfPresent(postComposerDialog);
-                  chrome.runtime.sendMessage({
-                    action: "popupPostComplete",
-                    requestId: requestId,
+                  sendCompletion({
                     success: true,
                     status: outcome.status || "successful",
-                    telemetry,
+                    reasonCode: outcome.reasonCode || null,
                   });
                   return;
                 }
                 // blocked/error
+                sawBlockingOrErrorHint = true;
                 telemetry.ui_snapshots.push(
                   await captureUiSnapshot(
                     outcome.kind === "blocked"
@@ -861,7 +1027,21 @@ if (window.autoPosterInjected) {
                       : "verify_detected_error",
                   ),
                 );
-                throw new Error(outcome.message || "Posting failed.");
+                throw makeCodedError(
+                  outcome.message || "Posting failed.",
+                  outcome.reasonCode ||
+                    (outcome.kind === "blocked"
+                      ? "posting_restricted"
+                      : "failed_unknown"),
+                );
+              }
+
+              const midPageStatus = checkPageStatus();
+              if (midPageStatus.status === "broken") {
+                throw makeCodedError(
+                  midPageStatus.reason,
+                  midPageStatus.reasonCode || "broken_link",
+                );
               }
 
               // 2. Upload Check (only if the composer dialog is still open and media was attached)
@@ -869,6 +1049,7 @@ if (window.autoPosterInjected) {
               if (postComposerDialog && hasAttachedMedia && uploadIndicator) {
                 console.log("Detected active media upload.");
                 writeInfo(I18n.t("overlayUploading"));
+                sawUploadEvidence = true;
                 const uploadStartTime = Date.now();
                 hasActivatedTab = false;
 
@@ -884,12 +1065,10 @@ if (window.autoPosterInjected) {
                       finalOutcome?.kind === "done"
                         ? finalOutcome.status
                         : "successful";
-                    chrome.runtime.sendMessage({
-                      action: "popupPostComplete",
-                      requestId: requestId,
+                    sendCompletion({
                       success: true,
                       status: finalStatus,
-                      telemetry,
+                      reasonCode: finalOutcome?.reasonCode || null,
                     });
                     return;
                   }
@@ -897,16 +1076,18 @@ if (window.autoPosterInjected) {
                   const midOutcome = scanForOutcome(dialogStillOpen);
                   if (midOutcome) {
                     if (midOutcome.kind === "done") {
+                      if (midOutcome.status === "pending_approval") {
+                        sawPendingApprovalHint = true;
+                      }
                       clickDoneLikeButtonIfPresent(dialogStillOpen);
-                      chrome.runtime.sendMessage({
-                        action: "popupPostComplete",
-                        requestId: requestId,
+                      sendCompletion({
                         success: true,
                         status: midOutcome.status || "successful",
-                        telemetry,
+                        reasonCode: midOutcome.reasonCode || null,
                       });
                       return;
                     }
+                    sawBlockingOrErrorHint = true;
                     telemetry.ui_snapshots.push(
                       await captureUiSnapshot(
                         midOutcome.kind === "blocked"
@@ -914,7 +1095,13 @@ if (window.autoPosterInjected) {
                           : "upload_detected_error",
                       ),
                     );
-                    throw new Error(midOutcome.message || "Posting failed.");
+                    throw makeCodedError(
+                      midOutcome.message || "Posting failed.",
+                      midOutcome.reasonCode ||
+                        (midOutcome.kind === "blocked"
+                          ? "posting_restricted"
+                          : "failed_unknown"),
+                    );
                   }
 
                   const stillUploading = findUploadIndicator(dialogStillOpen);
@@ -924,22 +1111,21 @@ if (window.autoPosterInjected) {
                     // If a pending/success toast appeared, use it; otherwise assume success.
                     const finalOutcome = scanForOutcome(dialogStillOpen);
                     if (finalOutcome?.kind === "done") {
+                      if (finalOutcome.status === "pending_approval") {
+                        sawPendingApprovalHint = true;
+                      }
                       clickDoneLikeButtonIfPresent(dialogStillOpen);
-                      chrome.runtime.sendMessage({
-                        action: "popupPostComplete",
-                        requestId: requestId,
+                      sendCompletion({
                         success: true,
                         status: finalOutcome.status || "successful",
-                        telemetry,
+                        reasonCode: finalOutcome.reasonCode || null,
                       });
                       return;
                     }
-                    chrome.runtime.sendMessage({
-                      action: "popupPostComplete",
-                      requestId: requestId,
+                    sendCompletion({
                       success: true,
                       status: "successful",
-                      telemetry,
+                      reasonCode: null,
                     });
                     return;
                   }
@@ -948,7 +1134,8 @@ if (window.autoPosterInjected) {
                 telemetry.ui_snapshots.push(
                   await captureUiSnapshot("upload_timeout"),
                 );
-                throw new Error("Media upload timed out.");
+                sawBlockingOrErrorHint = true;
+                throw makeCodedError("Media upload timed out.", "failed_unknown");
               }
 
               // 2.5 Resubmit fallback: sometimes FB ignores the first click (esp. with heavy media).
@@ -990,12 +1177,10 @@ if (window.autoPosterInjected) {
                   else if (post.commentOption === "comment")
                     await addFirstComment(firstCommentTextSpunText);
 
-                  chrome.runtime.sendMessage({
-                    action: "popupPostComplete",
-                    requestId: requestId,
+                  sendCompletion({
                     success: true,
                     status: "successful",
-                    telemetry,
+                    reasonCode: null,
                   });
                   return;
                 }
@@ -1005,19 +1190,75 @@ if (window.autoPosterInjected) {
               await sleep(1);
             }
             telemetry.ui_snapshots.push(await captureUiSnapshot("verify_timeout"));
-            throw new Error(
+
+            if (sawPendingApprovalHint) {
+              sendCompletion({
+                success: true,
+                status: "pending_approval",
+                reasonCode: "pending_approval",
+              });
+              return;
+            }
+
+            if (hasAttachedVideo && sawUploadEvidence && !sawBlockingOrErrorHint) {
+              sendCompletion({
+                success: true,
+                status: "processing_video",
+                reasonCode: "processing_video",
+              });
+              return;
+            }
+
+            throw makeCodedError(
               hasAttachedVideo
                 ? "Timeout: Could not confirm post status. Video uploads can take several minutes; Facebook may have kept the composer open."
                 : "Timeout: Could not confirm post status.",
+              "failed_unknown",
             );
           } catch (error) {
             console.error(`[Request ID: ${requestId}] Error:`, error);
-            chrome.runtime.sendMessage({
-              action: "popupPostComplete",
-              requestId: requestId,
-              success: false,
-              error: error.message,
-              telemetry: telemetry,
+            const lowerMsg = normalizeUiText(error?.message || "");
+            const explicitCode =
+              error?.reasonCode && typeof error.reasonCode === "string"
+                ? error.reasonCode
+                : null;
+            const inferredCode =
+              explicitCode ||
+              (lowerMsg.includes("join group") ||
+              lowerMsg.includes("request to join") ||
+              lowerMsg.includes("not a member")
+                ? "join_required"
+                : null) ||
+              (lowerMsg.includes("content unavailable") ||
+              lowerMsg.includes("broken link")
+                ? "broken_link"
+                : null) ||
+              (lowerMsg.includes("not a group page")
+                ? "not_group_page"
+                : null) ||
+              (lowerMsg.includes("group unavailable")
+                ? "group_unavailable"
+                : null) ||
+              (lowerMsg.includes("group paused")
+                ? "group_paused"
+                : null) ||
+              (lowerMsg.includes("restricted") ||
+              lowerMsg.includes("permission to post") ||
+              lowerMsg.includes("cannot post")
+                ? "posting_restricted"
+                : null);
+
+            const finalStatus =
+              error?.status ||
+              (inferredCode && SKIPPABLE_REASON_CODES.has(inferredCode)
+                ? "skipped"
+                : "failed");
+
+            sendCompletion({
+              success: finalStatus !== "failed",
+              status: finalStatus,
+              error: error?.message || "Unknown posting error",
+              reasonCode: inferredCode,
             });
           } finally {
             if (keepAlivePort) keepAlivePort.disconnect();
@@ -1715,7 +1956,7 @@ if (window.autoPosterInjected) {
       ),
     ).filter((el) => {
       // Filter out invisible or obviously wrong elements (like search bars, comments)
-      if (!el.offsetParent) return false; // Invisible
+      if (!isElementVisible(el)) return false; // Invisible
       const label = (el.getAttribute("aria-label") || "").toLowerCase();
       if (label.includes("search") || label.includes("comment")) return false;
       return true;
@@ -1794,62 +2035,75 @@ if (window.autoPosterInjected) {
   async function findMainPostComposer() {
     console.log("Starting Bottom-Up Search for Composer...");
 
-    // Extended retry loop (6 seconds) to allow full modal hydration
-    for (let i = 0; i < 30; i++) {
-      // 1. Get ALL contenteditable elements currently in the DOM
+    const scoreEditor = (el) => {
+      if (!el || !isElementVisible(el)) return -9999;
+
+      const rect = el.getBoundingClientRect();
+      if (rect.width < 10 || rect.height < 10) return -9999;
+
+      const label = (el.getAttribute("aria-label") || "").toLowerCase();
+      const placeholder = (el.getAttribute("aria-placeholder") || "").toLowerCase();
+      const role = (el.getAttribute("role") || "").toLowerCase();
+      const text = (el.innerText || "").toLowerCase();
+      const inDialog = !!el.closest('div[role="dialog"]');
+      const isLexical = el.getAttribute("data-lexical-editor") === "true";
+      const isCombobox = role === "combobox";
+
+      if (
+        label.includes("search") ||
+        placeholder.includes("search") ||
+        label.includes("comment") ||
+        placeholder.includes("comment")
+      ) {
+        return -9999;
+      }
+
+      let score = 0;
+      if (inDialog) score += 20;
+      if (isLexical) score += 15;
+      if (role === "textbox") score += 10;
+      if (isCombobox) score -= 20;
+
+      if (rect.width > 200) score += 8;
+      if (rect.height > 40) score += 8;
+
+      const keywordBlob = `${label} ${placeholder} ${text}`;
+      if (
+        keywordBlob.includes("write something") ||
+        keywordBlob.includes("what's on your mind") ||
+        keywordBlob.includes("create post") ||
+        keywordBlob.includes("discussion")
+      ) {
+        score += 12;
+      }
+
+      return score;
+    };
+
+    for (let i = 0; i < 35; i++) {
       const allEditables = Array.from(
         document.querySelectorAll('[contenteditable="true"]'),
       );
+      let best = null;
+      let bestScore = -9999;
 
-      // 2. Filter: Find the "Golden" Editor
-      const validEditor = allEditables.find((el) => {
-        // A. Must be visible (offsetParent is unreliable for position:fixed)
-        const style = window.getComputedStyle(el);
-        if (
-          style.display === "none" ||
-          style.visibility === "hidden" ||
-          style.opacity === "0"
-        )
-          return false;
-        const rect = el.getBoundingClientRect();
-        if (rect.width < 10 || rect.height < 10) return false;
-
-        // B. Must be inside a Dialog (Crucial Check)
-        // We check if it has an ancestor with role="dialog"
-        const parentDialog = el.closest('div[role="dialog"]');
-        if (!parentDialog) return false;
-
-        // C. Must NOT be a Search or Comment field
-        // We check labels on the element itself and its close parents
-        const label = (el.getAttribute("aria-label") || "").toLowerCase();
-        if (label.includes("search") || label.includes("comment")) return false;
-
-        // D. Technical Attributes (Facebook specific)
-        // The main editor usually has role="textbox" and specifically NOT role="combobox" (search)
-        const role = (el.getAttribute("role") || "").toLowerCase();
-        const isLexical = el.getAttribute("data-lexical-editor") === "true";
-
-        if (isLexical) return true; // High confidence
-        if (role === "textbox") return true; // Medium confidence
-
-        // Fallback: large editable area inside dialog
-        if (rect.width > 200 && rect.height > 40) return true;
-
-        return false;
-      });
-
-      if (validEditor) {
-        console.log("Found valid composer inside dialog:", validEditor);
-        return validEditor;
+      for (const el of allEditables) {
+        const score = scoreEditor(el);
+        if (score > bestScore) {
+          bestScore = score;
+          best = el;
+        }
       }
 
-      // Wait 200ms before retrying
+      if (best && bestScore >= 10) {
+        console.log("Found best composer candidate:", { bestScore, best });
+        return best;
+      }
+
       await sleep(0.2);
     }
 
-    console.warn(
-      "Bottom-Up search failed. No valid editor found inside a dialog.",
-    );
+    console.warn("Bottom-Up search failed. No valid composer candidate found.");
     return null;
   }
   // in content.js
@@ -2076,7 +2330,7 @@ if (window.autoPosterInjected) {
 
       if (textNode) {
         const btn = textNode.closest('[role="button"]');
-        if (btn && btn.offsetParent) {
+        if (btn && isElementVisible(btn)) {
           console.log(`Found confirmation button by text: "${text}"`);
           btn.click();
           clicked = true;
@@ -2115,7 +2369,7 @@ if (window.autoPosterInjected) {
             if (label.includes("close") || label.includes("bezárás"))
               return false;
             // Must be visible
-            if (!btn.offsetParent) return false;
+            if (!isElementVisible(btn)) return false;
             return true;
           });
 
@@ -2286,22 +2540,91 @@ if (window.autoPosterInjected) {
 
   // --- 1. Dead Page Detector ---
   function checkPageStatus() {
-    const text = document.body.textContent || "";
+    const href = String(location.href || "");
+    const text = (document.body?.textContent || "").toLowerCase();
 
-    // Signature of the "Content Unavailable" page provided
-    if (
-      text.includes("This content isn't available") ||
-      text.includes("content isn't available at the moment")
-    ) {
-      return { status: "broken", reason: "Content Unavailable / Broken Link" };
+    if (!href.includes("/groups/")) {
+      return {
+        status: "broken",
+        reason: "Not a group page.",
+        reasonCode: "not_group_page",
+      };
     }
 
-    if (text.includes("This group is paused")) {
-      return { status: "broken", reason: "Group Paused by Admins" };
+    const unavailablePatterns = [
+      "this content isn't available",
+      "content isn't available at the moment",
+      "content unavailable",
+      "this page isn't available",
+      "страница недоступна",
+      "контент недоступен",
+      "содержимое недоступно",
+    ];
+    if (unavailablePatterns.some((p) => text.includes(p))) {
+      return {
+        status: "broken",
+        reason: "Content Unavailable / Broken Link",
+        reasonCode: "broken_link",
+      };
     }
 
-    if (text.includes("You temporarily can't join and post")) {
-      return { status: "broken", reason: "Account Restricted" };
+    const groupUnavailablePatterns = [
+      "this group isn't available",
+      "group isn't available",
+      "group is unavailable",
+      "эта группа недоступна",
+      "группа недоступна",
+    ];
+    if (groupUnavailablePatterns.some((p) => text.includes(p))) {
+      return {
+        status: "broken",
+        reason: "Group Unavailable",
+        reasonCode: "group_unavailable",
+      };
+    }
+
+    if (text.includes("this group is paused")) {
+      return {
+        status: "broken",
+        reason: "Group Paused by Admins",
+        reasonCode: "group_paused",
+      };
+    }
+
+    const joinRequiredPatterns = [
+      "join group",
+      "request to join",
+      "request membership",
+      "must join this group",
+      "only members can post",
+      "become a member",
+      "вступить",
+      "запрос на вступление",
+      "только участники могут публиковать",
+    ];
+    if (joinRequiredPatterns.some((p) => text.includes(p))) {
+      return {
+        status: "broken",
+        reason: "Join required before posting",
+        reasonCode: "join_required",
+      };
+    }
+
+    const restrictedPatterns = [
+      "you temporarily can't join and post",
+      "you are temporarily blocked",
+      "account restricted",
+      "your account is restricted",
+      "temporarily restricted",
+      "вы временно не можете публиковать",
+      "ваш аккаунт ограничен",
+    ];
+    if (restrictedPatterns.some((p) => text.includes(p))) {
+      return {
+        status: "broken",
+        reason: "Posting restricted",
+        reasonCode: "posting_restricted",
+      };
     }
 
     return { status: "ok" };
@@ -2311,14 +2634,13 @@ if (window.autoPosterInjected) {
   // ACTION: Replace the findWithSmartCache function.
 
   async function findWithSmartCache(cacheKey, primaryFinder, description) {
-    // ... (Tier 1 & Tier 2 Standard Checks) ...
     if (primaryFinder) {
       try {
         let el = null;
         if (typeof primaryFinder === "function") el = await primaryFinder();
         else if (typeof primaryFinder === "string")
           el = document.querySelector(primaryFinder);
-        if (el && el.offsetParent) return el;
+        if (el && isElementVisible(el)) return el;
       } catch (e) {}
     }
 
@@ -2328,15 +2650,13 @@ if (window.autoPosterInjected) {
       );
       if (cacheData[cacheKey]) {
         const el = document.querySelector(cacheData[cacheKey]);
-        if (el && el.offsetParent) return el;
+        if (el && isElementVisible(el)) return el;
         chrome.storage.local.remove(cacheKey);
       }
     } catch (e) {}
 
-    // --- TIER 3: AI VISUAL ANALYSIS ---
     console.log(`[SmartFind] Tier 3: Asking AI to find: "${description}"`);
 
-    // 1. Determine Scope
     const isOpeningModal =
       description.toLowerCase().includes("create a new post") ||
       description.toLowerCase().includes("write something");
@@ -2348,14 +2668,9 @@ if (window.autoPosterInjected) {
       scopeElement = document.querySelector('[role="main"]') || document.body;
       useRawHtml = false;
     } else {
-      // Dialog Scope
       const dialogs = Array.from(
         document.querySelectorAll('div[role="dialog"]'),
-      ).filter(
-        (d) =>
-          d.offsetParent !== null &&
-          window.getComputedStyle(d).display !== "none",
-      );
+      ).filter((d) => isElementVisible(d));
 
       if (dialogs.length > 0) {
         scopeElement = dialogs[dialogs.length - 1];
@@ -2365,39 +2680,30 @@ if (window.autoPosterInjected) {
       }
     }
 
-    // 2. Prepare Snapshot
     let snapshotData = "";
 
     if (useRawHtml) {
-      // --- HTML SANITIZATION (The Fix) ---
-      let clone = scopeElement.cloneNode(true);
-      // Remove heavy elements
+      const clone = scopeElement.cloneNode(true);
       clone
         .querySelectorAll("svg, path, img, video, style, script, noscript")
         .forEach((el) => el.remove());
 
       let cleanHtml = clone.outerHTML;
-      // Remove huge attributes (base64, long react keys)
       cleanHtml = cleanHtml.replace(
         /\s(style|d|src|data-[a-z0-9-]+)="[^"]*"/gi,
         "",
       );
-      cleanHtml = cleanHtml.replace(/<!--[\s\S]*?-->/g, ""); // Comments
+      cleanHtml = cleanHtml.replace(/<!--[\s\S]*?-->/g, "");
 
-      // Hard truncate to ensure message passes
       if (cleanHtml.length > 15000)
         cleanHtml = cleanHtml.substring(0, 15000) + "...";
       snapshotData = cleanHtml;
     } else {
-      // List Mode
       const candidates = Array.from(
         scopeElement.querySelectorAll(
           'div[role="button"], div[role="textbox"], span[role="button"]',
         ),
-      ).filter(
-        (el) =>
-          el.offsetParent !== null && el.getBoundingClientRect().height > 5,
-      );
+      ).filter((el) => isElementVisible(el) && el.getBoundingClientRect().height > 5);
 
       snapshotData = candidates
         .slice(0, 60)
@@ -2412,7 +2718,6 @@ if (window.autoPosterInjected) {
         .join("\n");
     }
 
-    // 3. AI Request
     try {
       const response = await chrome.runtime.sendMessage({
         action: "aiSelectorFallback",
@@ -2427,15 +2732,11 @@ if (window.autoPosterInjected) {
         if (useRawHtml && response.selector) {
           bestEl = scopeElement.querySelector(response.selector);
         } else if (!useRawHtml && response.index > -1) {
-          // Re-query list for index strategy
           const candidates = Array.from(
             scopeElement.querySelectorAll(
               'div[role="button"], div[role="textbox"], span[role="button"]',
             ),
-          ).filter(
-            (el) =>
-              el.offsetParent !== null && el.getBoundingClientRect().height > 5,
-          );
+          ).filter((el) => isElementVisible(el) && el.getBoundingClientRect().height > 5);
           bestEl = candidates[response.index];
         }
 
@@ -2446,8 +2747,18 @@ if (window.autoPosterInjected) {
             chrome.storage.local.set({ [cacheKey]: newSelector });
           return bestEl;
         }
+      } else if (response?.error === "ai_disabled") {
+        return null;
       }
     } catch (err) {
+      const msg = String(err?.message || err || "").toLowerCase();
+      if (
+        msg.includes("receiving end does not exist") ||
+        msg.includes("timeout") ||
+        msg.includes("ai api key missing")
+      ) {
+        return null;
+      }
       console.error("[SmartFind] AI request failed:", err);
     }
 
@@ -2469,7 +2780,7 @@ if (window.autoPosterInjected) {
     // 2. Filter visible elements
     const visibleList = rawList.filter((el) => {
       // A. Must have layout
-      if (!el.offsetParent) return false;
+      if (!isElementVisible(el)) return false;
 
       // B. Size check (Relaxed to 1x1 to catch everything that is technically rendered)
       const rect = el.getBoundingClientRect();
@@ -2508,11 +2819,7 @@ if (window.autoPosterInjected) {
       }
 
       const dialogs = Array.from(document.querySelectorAll('div[role="dialog"]'));
-      const visibleDialogs = dialogs.filter((d) => {
-        return (
-          d.offsetParent !== null && window.getComputedStyle(d).display !== "none"
-        );
-      });
+      const visibleDialogs = dialogs.filter((d) => isElementVisible(d));
       if (visibleDialogs.length === 0) return null;
       return visibleDialogs[visibleDialogs.length - 1];
     };
@@ -2554,7 +2861,7 @@ if (window.autoPosterInjected) {
       const candidates = Array.from(activeDialog.querySelectorAll(sel));
       const validBtn = candidates.find((btn) => {
         return (
-          btn.offsetParent !== null &&
+          isElementVisible(btn) &&
           btn.getAttribute("aria-disabled") !== "true"
         );
       });
@@ -2586,7 +2893,7 @@ if (window.autoPosterInjected) {
       "发布",
     ];
     for (const btn of candidates) {
-      if (!btn.offsetParent) continue;
+      if (!isElementVisible(btn)) continue;
       const rect = btn.getBoundingClientRect();
       if (rect.width < 10 || rect.height < 10) continue;
 
@@ -2701,11 +3008,7 @@ if (window.autoPosterInjected) {
     const getLastVisibleDialog = () => {
       const dialogs = Array.from(
         document.querySelectorAll('div[role="dialog"]'),
-      ).filter(
-        (d) =>
-          d.offsetParent !== null &&
-          window.getComputedStyle(d).display !== "none",
-      );
+      ).filter((d) => isElementVisible(d));
       return dialogs.length ? dialogs[dialogs.length - 1] : null;
     };
 
@@ -3202,94 +3505,114 @@ if (window.autoPosterInjected) {
   async function findRobustPostModalButton() {
     console.log("Starting robust search for post modal button (Universal)...");
 
-    // --- STRATEGY 1: Profile Picture Neighbor (The "Gray Pill") ---
-    // Works in ALL languages. Looks for the input-like div next to the user's avatar.
-    try {
-      // 1. Find profile images that look like avatars (rounded, small)
-      const imgs = Array.from(document.querySelectorAll("img")).filter(
-        (img) => {
-          const w = img.clientWidth;
-          return w > 20 && w < 60 && img.style.borderRadius === "50%";
-        },
-      );
-
-      for (const img of imgs) {
-        // 2. Look at the container row
-        const row = img.closest('div[style*="display: flex"], .x6s0dn4'); // Common flex containers
-        if (!row) continue;
-
-        // 3. Find the sibling "button" (The gray pill)
-        const siblingBtn = row.querySelector(
-          'div[role="button"], div[style*="border-radius"]',
-        );
-
-        // Validation:
-        // - Must NOT contain the image itself
-        // - Must be to the right of the image (structurally, usually next sibling or close)
-        // - Text usually empty or placeholder-like
-        if (siblingBtn && !siblingBtn.contains(img)) {
-          const text = siblingBtn.innerText.trim();
-          const rect = siblingBtn.getBoundingClientRect();
-
-          // It should be wider than it is tall (a bar)
-          if (rect.width > rect.height * 2) {
-            console.log("Found modal opener via Profile Neighbor strategy.");
-            return siblingBtn;
-          }
-        }
-      }
-    } catch (e) {
-      console.warn("Profile neighbor check failed", e);
-    }
-
-    // --- STRATEGY 2: Common Aria Labels (Multilingual) ---
-    const commonLabels = [
+    const positiveKeywords = [
       "create post",
       "write something",
-      "what's on your mind", // English
+      "what's on your mind",
+      "create a public post",
+      "discussion",
+      "beitrag erstellen",
+      "crear publicación",
       "créer une publication",
-      "à quoi pensez-vous", // French
-      "crear publicación", // Spanish
-      "beitrag erstellen", // German
-      "bejegyzés létrehozása",
-      "írj valamit", // Hungarian
+      "bejegyzés",
+      "публикац",
+      "создать",
+      "создать публикацию",
+      "分享近况",
       "创建帖子",
-      "发布", // Chinese
-      "إلغاء",
-      "بم تفكر", // Arabic
+      "بم تفكر",
     ];
 
-    for (const label of commonLabels) {
-      // Use partial match for robustness
-      const el = document.querySelector(`div[aria-label*="${label}" i]`);
-      if (el && el.offsetParent) return el;
-    }
-
-    // --- STRATEGY 3: Fallback English Text ---
-    // Last resort for English users
-    const textQueries = [
-      "Write something",
-      "What's on your mind",
-      "Create a public post",
+    const negativeKeywords = [
+      "cancel",
+      "close",
+      "not now",
+      "dismiss",
+      "search",
+      "comment",
+      "sell",
+      "item for sale",
+      "marketplace",
+      "photo",
+      "video",
+      "poll",
+      "event",
+      "reel",
+      "join group",
+      "report",
+      "more",
+      "settings",
+      "на продажу",
+      "продать",
+      "отмена",
+      "закрыть",
     ];
-    for (const query of textQueries) {
-      const xpath = `//div[@role="button"]//*[contains(text(), "${query}")]`;
-      const result = document.evaluate(
-        xpath,
-        document,
-        null,
-        XPathResult.FIRST_ORDERED_NODE_TYPE,
-        null,
-      );
-      if (result.singleNodeValue) {
-        return (
-          result.singleNodeValue.closest('[role="button"]') ||
-          result.singleNodeValue
-        );
+
+    const scoreCandidate = (el) => {
+      if (!el || !isElementVisible(el)) return -9999;
+      const rect = el.getBoundingClientRect();
+      if (rect.width < 40 || rect.height < 16) return -9999;
+
+      const text = (el.innerText || "").toLowerCase().trim();
+      const label = (el.getAttribute("aria-label") || "").toLowerCase().trim();
+      const ph = (el.getAttribute("aria-placeholder") || "").toLowerCase().trim();
+      const blob = `${text} ${label} ${ph}`;
+      const role = (el.getAttribute("role") || "").toLowerCase();
+      const isButtonish =
+        role === "button" ||
+        el.tagName === "BUTTON" ||
+        el.matches("button, a[role='button'], div[role='button']");
+
+      if (!isButtonish) return -9999;
+      if (negativeKeywords.some((k) => blob.includes(k))) return -9999;
+
+      let score = 0;
+      if (positiveKeywords.some((k) => blob.includes(k))) score += 40;
+      if (role === "button") score += 10;
+      if (rect.width > rect.height * 2) score += 10;
+      if (el.closest('[role="main"]')) score += 8;
+      if (el.closest('div[role="dialog"]')) score -= 12; // opener is usually outside dialog
+      if (blob.length === 0) score -= 8;
+      return score;
+    };
+
+    const candidates = Array.from(
+      document.querySelectorAll("button, a[role='button'], div[role='button']"),
+    );
+
+    let best = null;
+    let bestScore = -9999;
+    for (const candidate of candidates) {
+      const score = scoreCandidate(candidate);
+      if (score > bestScore) {
+        bestScore = score;
+        best = candidate;
       }
     }
 
-    return null;
+    if (best && bestScore >= 20) {
+      console.log("Found modal opener via scored candidate:", {
+        bestScore,
+        best,
+      });
+      return best;
+    }
+
+    // Fallback using visible contenteditable placeholders near feed header.
+    const fallback = Array.from(
+      document.querySelectorAll('[role="main"] [role="button"], [role="main"] button'),
+    ).find((el) => {
+      if (!isElementVisible(el)) return false;
+      const blob = `${el.innerText || ""} ${el.getAttribute("aria-label") || ""}`.toLowerCase();
+      return (
+        blob.includes("write") ||
+        blob.includes("mind") ||
+        blob.includes("create") ||
+        blob.includes("публика")
+      );
+    });
+
+    return fallback || null;
   }
 
   function getActionButton() {
@@ -3353,9 +3676,9 @@ if (window.autoPosterInjected) {
 
       // Find the first candidate that is actually enabled and visible in the layout
       const clickableElement = Array.from(elements).find((el) => {
-        // An element is clickable if it's visible (offsetParent check) AND not disabled (aria-disabled check).
+        // An element is clickable if it's visible and not disabled.
         return (
-          el.offsetParent !== null &&
+          isElementVisible(el) &&
           el.getAttribute("aria-disabled") !== "true"
         );
       });
@@ -3386,11 +3709,7 @@ if (window.autoPosterInjected) {
     const allDialogs = Array.from(
       document.querySelectorAll('div[role="dialog"]'),
     );
-    const visibleDialogs = allDialogs.filter(
-      (d) =>
-        d.offsetParent !== null &&
-        window.getComputedStyle(d).display !== "none",
-    );
+    const visibleDialogs = allDialogs.filter((d) => isElementVisible(d));
 
     if (visibleDialogs.length > 0) {
       // Restrict scope to the top-most modal
@@ -3407,7 +3726,7 @@ if (window.autoPosterInjected) {
         'div[role="button"], button, a[role="button"], span[role="button"], input[type="submit"], div[contenteditable="true"], textarea, input[type="text"]',
       ),
     ).filter((el) => {
-      if (!el.offsetParent) return false;
+      if (!isElementVisible(el)) return false;
       // Filter out tiny elements
       const rect = el.getBoundingClientRect();
       return rect.width >= 5 && rect.height >= 5;
@@ -3468,7 +3787,7 @@ if (window.autoPosterInjected) {
       const cachedEl = document.querySelector(cachedPostButtonSelector);
       if (
         cachedEl &&
-        cachedEl.offsetParent &&
+        isElementVisible(cachedEl) &&
         cachedEl.getAttribute("aria-disabled") !== "true"
       ) {
         console.log("Cache Hit! Found element via saved selector.");
@@ -3783,7 +4102,7 @@ if (window.autoPosterInjected) {
         for (const button of buttons) {
           // Check if the button is visible and inside a dialog
           if (
-            button.offsetParent !== null &&
+            isElementVisible(button) &&
             button.closest('[role="dialog"]')
           ) {
             console.log(
@@ -4601,26 +4920,21 @@ if (window.autoPosterInjected) {
   }
   function isElementVisible(element) {
     if (!element) return false;
-
-    const style = window.getComputedStyle(element);
-    if (
-      style.display === "none" ||
-      style.visibility === "hidden" ||
-      style.opacity === "0"
-    ) {
-      return false;
+    let cur = element;
+    while (cur && cur !== document.body) {
+      const style = window.getComputedStyle(cur);
+      if (
+        style.display === "none" ||
+        style.visibility === "hidden" ||
+        style.opacity === "0"
+      ) {
+        return false;
+      }
+      cur = cur.parentElement;
     }
 
     const rect = element.getBoundingClientRect();
-    return (
-      rect.width > 0 &&
-      rect.height > 0 &&
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <=
-        (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
+    return rect.width > 0 && rect.height > 0;
   }
 
   // --- UNIVERSAL TAB SWITCHER (Language Agnostic v2) ---
@@ -4955,14 +5269,17 @@ function disableUnloadPrompt() {
 }
 function isElementVisible(element) {
   if (!element) return false;
-  // offsetParent is unreliable for `position: fixed` elements (common in FB dialogs).
-  const style = window.getComputedStyle(element);
-  if (
-    style.display === "none" ||
-    style.visibility === "hidden" ||
-    style.opacity === "0"
-  ) {
-    return false;
+  let cur = element;
+  while (cur && cur !== document.body) {
+    const style = window.getComputedStyle(cur);
+    if (
+      style.display === "none" ||
+      style.visibility === "hidden" ||
+      style.opacity === "0"
+    ) {
+      return false;
+    }
+    cur = cur.parentElement;
   }
   const rect = element.getBoundingClientRect();
   return rect.width > 0 && rect.height > 0;
